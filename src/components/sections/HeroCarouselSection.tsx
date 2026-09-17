@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ArrowUpRight, Compass, Sparkles } from 'lucide-react';
-import { ClayImage } from '../common/ClayImage';
+import { Diorama3DParallax } from '../3d/Diorama3DParallax';
 import { MagneticButton } from '../3d/MagneticButton';
 import { CinematicReveal } from '../common/CinematicReveal';
 
@@ -176,34 +176,30 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
               </div>
             </div>
 
-            {/* Right Interactive Clay Photo Stage */}
+            {/* Right Top-Fold 3D Parallax Diorama Showcase */}
             <div className="lg:col-span-6 relative">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentSlide}
-                  initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                  initial={{ opacity: 0, scale: 0.96, y: 12 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 1.02, y: -15 }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="relative rounded-3xl overflow-hidden bg-[#FAF6EF] border border-[#E4D9C8] p-3 shadow-lg"
+                  exit={{ opacity: 0, scale: 1.02, y: -12 }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative"
                 >
-                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#E8DFD1]">
-                    <ClayImage
-                      src={heroSlides[currentSlide].image}
-                      alt={heroSlides[currentSlide].title}
-                      aspectRatio="4:3"
-                      clayVariant="water"
-                      badge={heroSlides[currentSlide].badge}
-                      className="w-full h-full object-cover shadow-sm"
-                    />
-                  </div>
+                  <Diorama3DParallax
+                    imageSrc={heroSlides[currentSlide].image}
+                    badge={heroSlides[currentSlide].badge}
+                    title={heroSlides[currentSlide].title}
+                    subtitle={heroSlides[currentSlide].quickTag}
+                  />
 
                   {/* Floating Stat Pill Badge */}
                   <motion.div
                     initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="absolute bottom-6 left-6 z-20 px-4 py-2 rounded-2xl bg-[#132422]/90 backdrop-blur-md text-[#FAF6EF] flex items-center gap-2.5 border border-white/20 shadow-lg"
+                    className="absolute -bottom-4 -left-3 sm:bottom-4 sm:left-4 z-30 px-4 py-2 rounded-2xl bg-[#132422]/90 backdrop-blur-md text-[#FAF6EF] flex items-center gap-2.5 border border-white/20 shadow-lg"
                   >
                     <div className="w-2.5 h-2.5 rounded-full bg-[#1A96AA] animate-pulse" />
                     <span className="text-xs font-bold">
