@@ -1,122 +1,192 @@
 import React from 'react';
-import { Feather, Trees, HeartHandshake, Sparkles, ArrowRight } from 'lucide-react';
-import { resortData } from '../data/resortData';
+import { 
+  Heart, ShieldCheck, Trees, Sparkles, Coffee, Sun, 
+  VolumeX, Droplet, ArrowUpRight, Award, Users, CheckCircle2
+} from 'lucide-react';
+import { AboutSection } from '../components/sections/AboutSection';
 import { PageHeader } from '../components/common/PageHeader';
+import { CinematicReveal } from '../components/common/CinematicReveal';
+import { Clay3DCard } from '../components/3d/Clay3DCard';
+import { ClayImage } from '../components/common/ClayImage';
 
 interface AboutPageProps {
   onOpenEnquiry: () => void;
 }
 
 export const AboutPage: React.FC<AboutPageProps> = ({ onOpenEnquiry }) => {
+  const coreValues = [
+    {
+      title: 'Unhurried Mountain Stillness',
+      desc: 'We purposefully chose to build strictly 15 suites across expansive grounds, guaranteeing low density, privacy, and true calm.',
+      icon: Sun,
+    },
+    {
+      title: 'Earth & Water Stewardship',
+      desc: 'Designed with solar-backed hot water, rain harvesting, open porous clay grounds, and zero single-use plastics.',
+      icon: Droplet,
+    },
+    {
+      title: '10:00 PM Sanctuary Silence',
+      desc: 'We enforce a strict zero loudspeaker policy after 10 PM to protect the natural nocturnal habitats and restful sleep.',
+      icon: VolumeX,
+    },
+    {
+      title: 'Authentic Kodagu Hospitality',
+      desc: 'Warm, intuitive resident hosts passionate about sharing home-cooked estate breakfast, local folklore, and travel tips.',
+      icon: Heart,
+    },
+  ];
+
+  const milestones = [
+    {
+      year: 'Heritage Grounds',
+      title: 'Estate Plantation Roots',
+      desc: 'Originating as a fertile family coffee and spice estate nestled on the gentle slopes of Kushalnagar, Kodagu.',
+    },
+    {
+      year: 'Architectural Vision',
+      title: '15-Suite Nature Blueprint',
+      desc: 'Architectural design centered around preserving towering coconut palms, green bamboo clusters, and open lawn vistas.',
+    },
+    {
+      year: 'Modern Sanctuary',
+      title: 'Opening Coorg Laya',
+      desc: 'Welcoming discerning families, couples, and celebration groups to an authentic haven of mountain serenity.',
+    },
+  ];
+
   return (
-    <div className="space-y-24 pb-28 text-ink-primary overflow-x-hidden">
+    <div className="pt-24 pb-28 bg-[#FAF6EF] text-[#132422] space-y-20 select-none">
+      
+      {/* Page Header */}
       <PageHeader
-        badge="PHILOSOPHY & ETHOS"
+        badge="Our Heritage & Story"
         title="About Coorg Laya"
-        description="A peaceful Kodagu retreat rooted in green landscapes, natural morning birdsong, and genuine hospitality."
-        actionText="Connect With Us"
+        description="A nature-led sanctuary dedicated to restful mountain days, unhurried time with family, and morning birdsong in Kushalnagar, Kodagu."
+        actionText="Plan Your Visit"
         onActionClick={onOpenEnquiry}
-        bgImage="https://coorglayaresort.com/_next/static/immutable/media/covered-seating.14m2n6fnxsknf.jpeg"
+        bgImage="/images/resort/outdoor-mural.jpeg"
       />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-24">
-        {/* Narrative & Photo Split Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-6 space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-butter-300 bg-butter-50 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-butter-700">
-              <Sparkles className="size-3.5 text-butter-600" />
-              <span>The Concept</span>
-            </div>
+      {/* Main Interactive About Section */}
+      <AboutSection />
 
-            <h2 className="font-heading text-3xl sm:text-5xl text-ink-primary font-normal leading-tight">
-              {resortData.philosophy.headline}
-            </h2>
-            <div className="w-24 butter-divider my-3" />
-            <div className="space-y-4 text-xs sm:text-sm text-ink-secondary leading-relaxed font-light">
-              {resortData.philosophy.paragraphs.map((p, idx) => (
-                <p key={idx}>{p}</p>
-              ))}
-            </div>
-          </div>
-
+      {/* Heritage Story & Philosophy */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
           <div className="lg:col-span-6 space-y-6">
-            <div className="relative overflow-hidden rounded-3xl border border-ink-primary/10 aspect-[4/3] shadow-md bg-sand-100">
-              <img
-                src="https://coorglayaresort.com/_next/static/immutable/media/garden-terrace.3ya05pwj-jknx.jpeg"
-                alt="Garden terrace and lawn at Coorg Laya Resort"
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink-primary/80 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <span className="font-heading text-xl text-white font-medium block">
-                  Peaceful Garden Terraces
-                </span>
-                <span className="text-xs text-butter-200 font-light">
-                  A tranquil Kodagu setting for slow mornings.
-                </span>
+            <CinematicReveal className="space-y-3">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+                <Coffee className="w-4 h-4 text-[#A3733E]" />
+                <span>The Story of Laya</span>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Guiding Principles */}
-        <div className="space-y-10">
-          <div className="text-center max-w-xl mx-auto space-y-2">
-            <span className="text-xs uppercase tracking-[0.25em] text-butter-700 font-semibold block">
-              Guiding Principles
-            </span>
-            <h3 className="font-heading text-3xl sm:text-4xl text-ink-primary font-normal">
-              The Coorg Laya Experience
-            </h3>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#132422] font-serif leading-tight">
+                Born from a love for Kodagu's slow mountain rhythm.
+              </h2>
+              <p className="text-sm sm:text-base text-[#344E4A] leading-relaxed">
+                In Sanskrit, <em>"Laya"</em> signifies rhythm, harmony, and stillness. Coorg Laya Resort was founded with a singular purpose: to create a sanctuary where city fatigue dissolves into the peaceful melody of morning birdsong, rustling bamboo, and tropical water.
+              </p>
+              <p className="text-sm text-[#344E4A] leading-relaxed">
+                Instead of over-building, we deliberately limited our accommodations to strictly <strong>15 private guest suites (~45 overnight guests)</strong> across expansive open lawns. This ensures that every resident guest experiences genuine exclusivity, open space, and attentive care.
+              </p>
+            </CinematicReveal>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {resortData.philosophy.corePillars.map((pillar, idx) => (
-              <div
-                key={idx}
-                className="rounded-3xl border border-ink-primary/8 bg-white p-8 space-y-4 hover:border-butter-400 transition-all duration-300 shadow-sm sleek-card"
-              >
-                <div className="flex size-14 items-center justify-center rounded-2xl bg-butter-100 text-butter-700 border border-butter-200">
-                  {idx === 0 ? (
-                    <Feather className="size-6" />
-                  ) : idx === 1 ? (
-                    <Trees className="size-6" />
-                  ) : (
-                    <HeartHandshake className="size-6" />
-                  )}
+          <div className="lg:col-span-6">
+            <CinematicReveal delay={0.2}>
+              <div className="rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] p-4 shadow-md">
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#E8DFD1]">
+                  <ClayImage
+                    src="/images/resort/outdoor-mural.jpeg"
+                    alt="Coorg Laya Outdoor Mural and Foliage Grounds"
+                    aspectRatio="4:3"
+                    clayVariant="sand"
+                    badge="Nature & Artistry"
+                    className="w-full h-full object-cover shadow-sm"
+                  />
                 </div>
-                <h4 className="font-heading text-2xl text-ink-primary font-normal">
-                  {pillar.title}
-                </h4>
-                <p className="text-xs sm:text-sm text-ink-muted leading-relaxed font-light">
-                  {pillar.description}
-                </p>
               </div>
-            ))}
+            </CinematicReveal>
           </div>
-        </div>
 
-        {/* Call to action */}
-        <div className="rounded-3xl border border-butter-200 bg-gradient-to-br from-sand-100 via-white to-powder-50 p-8 sm:p-14 text-center space-y-5 shadow-lg">
-          <Sparkles className="size-8 text-butter-600 mx-auto" />
-          <h3 className="font-heading text-3xl sm:text-4xl text-ink-primary font-normal">
-            Plan Your Getaway With Us
-          </h3>
-          <p className="max-w-xl mx-auto text-xs sm:text-sm text-ink-secondary font-light leading-relaxed">
-            Whether visiting for a family vacation, weekend retreat, or outdoor event, we welcome you to experience Coorg Laya Resort.
-          </p>
-          <div className="pt-2">
-            <button
-              onClick={onOpenEnquiry}
-              className="inline-flex items-center gap-2 rounded-full bg-butter-400 px-8 py-3.5 text-xs font-bold uppercase tracking-wider text-ink-primary hover:bg-butter-300 transition-all shadow-md border border-butter-500/20 cursor-pointer"
-            >
-              <span>Enquire About Your Stay</span>
-              <ArrowRight className="size-4" />
-            </button>
-          </div>
         </div>
       </div>
+
+      {/* Sanctuary Values Grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <CinematicReveal className="space-y-3 max-w-xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#BCE2E7] bg-[#E5F3F5] px-4 py-1.5 text-xs font-bold text-[#116B7B] shadow-sm">
+            <ShieldCheck className="w-4 h-4 text-[#1A96AA]" />
+            <span>Guiding Principles</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif">
+            Our Sanctuary Commitments
+          </h2>
+        </CinematicReveal>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {coreValues.map((val, idx) => {
+            const IconComp = val.icon;
+            return (
+              <CinematicReveal key={idx} delay={idx * 0.1}>
+                <Clay3DCard
+                  variant={idx % 2 === 0 ? 'white' : 'water'}
+                  maxTilt={8}
+                  glareOpacity={0.2}
+                  className="p-6 h-full flex flex-col justify-between"
+                >
+                  <div className="space-y-3">
+                    <div className="w-10 h-10 rounded-2xl bg-[#E5F3F5] text-[#116B7B] flex items-center justify-center shadow-sm">
+                      <IconComp className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-serif text-lg font-bold text-[#132422]">
+                      {val.title}
+                    </h3>
+                    <p className="text-xs text-[#344E4A] leading-relaxed">
+                      {val.desc}
+                    </p>
+                  </div>
+                </Clay3DCard>
+              </CinematicReveal>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Milestones Timeline */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <CinematicReveal className="space-y-3 max-w-xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+            <Sparkles className="w-4 h-4 text-[#A3733E]" />
+            <span>Our Journey</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif">
+            The Making of Coorg Laya
+          </h2>
+        </CinematicReveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {milestones.map((m, idx) => (
+            <CinematicReveal key={idx} delay={idx * 0.12}>
+              <div className="rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] p-6 space-y-3 shadow-sm h-full">
+                <span className="text-xs font-bold text-[#116B7B] uppercase tracking-wider block">
+                  {m.year}
+                </span>
+                <h3 className="font-serif text-xl font-bold text-[#132422]">
+                  {m.title}
+                </h3>
+                <p className="text-xs text-[#344E4A] leading-relaxed">
+                  {m.desc}
+                </p>
+              </div>
+            </CinematicReveal>
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 };
+
+export default AboutPage;

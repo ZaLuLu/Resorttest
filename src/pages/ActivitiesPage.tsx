@@ -1,90 +1,240 @@
 import React from 'react';
-import { Waves, Smile, Sparkles, Activity, Flame, ArrowRight } from 'lucide-react';
-import { resortData } from '../data/resortData';
+import { 
+  Compass, Waves, Activity, Sparkles, Sun, Smile, Flame, 
+  Coffee, Users, ArrowUpRight, CheckCircle2, ShieldCheck, Footprints
+} from 'lucide-react';
+import { ActivitiesSection } from '../components/sections/ActivitiesSection';
 import { PageHeader } from '../components/common/PageHeader';
+import { CinematicReveal } from '../components/common/CinematicReveal';
+import { Clay3DCard } from '../components/3d/Clay3DCard';
+import { ClayImage } from '../components/common/ClayImage';
 
 interface ActivitiesPageProps {
   onOpenEnquiry: () => void;
 }
 
 export const ActivitiesPage: React.FC<ActivitiesPageProps> = ({ onOpenEnquiry }) => {
-  const iconMap: Record<string, React.ReactNode> = {
-    Waves: <Waves className="size-6 text-powder-600" />,
-    Smile: <Smile className="size-6 text-butter-600" />,
-    Sparkles: <Sparkles className="size-6 text-butter-700" />,
-    Activity: <Activity className="size-6 text-emerald-600" />,
-    Flame: <Flame className="size-6 text-amber-600" />,
-  };
+  const curatedItineraries = [
+    {
+      title: 'The Slow Nature & Wellness Seeker',
+      tagline: 'Unhurried, restorative mountain days',
+      badge: 'Restorative',
+      steps: [
+        '07:00 AM: Guided birdsong listening & mist trail walk',
+        '08:30 AM: Freshly brewed Coorg coffee on raised terraces',
+        '11:30 AM: Relaxing circular pool float & sun deck reading',
+        '04:30 PM: Shaded verandah tea overlooking green bamboo',
+        '08:00 PM: Starlit night contemplation before quiet hours',
+      ],
+      idealFor: 'Couples, solo writers, mindfulness seekers',
+    },
+    {
+      title: 'The Energetic Family Adventure',
+      tagline: 'Lively games, laughter, and splashes',
+      badge: 'Family Fun',
+      steps: [
+        '08:00 AM: Wholesome estate breakfast spread',
+        '09:30 AM: Enclosed kids trampoline bounce session',
+        '11:00 AM: Family pool splashing in shallow lounge pool',
+        '04:00 PM: Tournament-style lawn badminton & volleyball',
+        '07:30 PM: Outdoor barbecue & evening storytelling lawn',
+      ],
+      idealFor: 'Families with young children, cousins, siblings',
+    },
+    {
+      title: 'The Group & Milestone Celebration',
+      tagline: 'Social gatherings under Kodagu skies',
+      badge: 'Celebrations',
+      steps: [
+        '09:00 AM: Group breakfast on expansive garden lawns',
+        '11:00 AM: Social pool games & lounge deck music',
+        '03:30 PM: Team volleyball matches on open greens',
+        '06:00 PM: Sunset toasts on raised terrace decks',
+        '08:00 PM: Private grand lawn dinner under festoon lights',
+      ],
+      idealFor: 'Milestone birthdays, reunions, corporate offsites',
+    },
+  ];
+
+  const activitiesBento = [
+    {
+      name: 'Bamboo Lawn Badminton',
+      category: 'Sports & Games',
+      image: '/images/amenities/badminton-court.png',
+      desc: 'Grass badminton court naturally sheltered by tall bamboo groves. Racquets and shuttlecocks provided free.',
+      timing: 'All Day (Best 4:30 PM - 6:30 PM)',
+    },
+    {
+      name: 'Palm-Fringed Swimming Pool',
+      category: 'Water Recreation',
+      image: '/images/amenities/swimming-pool.png',
+      desc: 'Crystal-clear pool with a dedicated shallow relaxation section for children and leisurely floats.',
+      timing: '7:00 AM – 7:00 PM Daily',
+    },
+    {
+      name: 'Kids Trampoline Play Arena',
+      category: 'Family Recreation',
+      image: '/images/amenities/kids-play-trampoline.png',
+      desc: 'Enclosed spring trampoline with safety netting surrounded by soft manicured lawn grass.',
+      timing: 'Open Daily',
+    },
+    {
+      name: 'Outdoor Volleyball Lawn',
+      category: 'Team Sports',
+      image: '/images/resort/garden-lawn.jpeg',
+      desc: 'Expansive grass court layout ideal for group volleyball and social team sports under the sun.',
+      timing: 'Morning & Late Afternoon',
+    },
+    {
+      name: 'Raised Garden Terraces',
+      category: 'Relaxation & Dining',
+      image: '/images/resort/garden-terrace.jpeg',
+      desc: 'Elevated timber decks overlooking the estate. Perfect for estate coffee, reading, and evening stargazing.',
+      timing: '24 Hours Accessible',
+    },
+    {
+      name: 'Outdoor Mural & Estate Trails',
+      category: 'Nature Walks',
+      image: '/images/resort/outdoor-mural.jpeg',
+      desc: 'Gentle pathways around the estate grounds featuring botanical art, flowering trees, and birdsong.',
+      timing: 'Best at Dawn & Dusk',
+    },
+  ];
 
   return (
-    <div className="space-y-24 pb-28 text-ink-primary overflow-x-hidden">
+    <div className="pt-24 pb-28 bg-[#FAF6EF] text-[#132422] space-y-20 select-none">
+      
+      {/* Page Header */}
       <PageHeader
-        badge="OUTDOOR & RECREATION"
-        title="Resort Activities"
-        description="Fill your days with relaxing swims, energizing matches, and carefree outdoor moments beneath the clear Kodagu sky."
-        actionText="Plan Activities"
+        badge="Experiences & Recreation"
+        title="Sanctuary Activities"
+        description="From refreshing afternoon swims and enclosed trampoline jumping to active games of lawn badminton and starlit coffee conversations."
+        actionText="Plan Your Experience"
         onActionClick={onOpenEnquiry}
-        bgImage="https://coorglayaresort.com/_next/static/immutable/media/badminton-court.0iu28t8sxg-vh.png"
+        bgImage="/images/amenities/badminton-court.png"
       />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {resortData.activities.map((act) => (
-            <div
-              key={act.id}
-              className="group relative overflow-hidden rounded-3xl border border-ink-primary/8 bg-white p-6 space-y-6 hover:border-butter-400 transition-all duration-300 shadow-sm sleek-card"
-            >
-              <div className="relative overflow-hidden rounded-2xl aspect-[16/10] bg-sand-100">
-                <img
-                  src={act.image}
-                  alt={act.imageAlt}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
-                <span className="absolute top-3 left-3 rounded-full bg-white/90 border border-ink-primary/10 px-3.5 py-1 font-mono text-xs text-ink-primary font-bold backdrop-blur-md shadow-sm">
-                  {act.number}
-                </span>
-              </div>
+      {/* Main Interactive Activities Section */}
+      <ActivitiesSection onOpenEnquiry={onOpenEnquiry} />
 
-              <div className="space-y-2.5">
-                <div className="flex items-center gap-3">
-                  <div className="size-10 rounded-xl bg-sand-50 border border-ink-primary/5 flex items-center justify-center shrink-0">
-                    {iconMap[act.iconName]}
+      {/* 3 Curated Guest Itineraries */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <CinematicReveal className="space-y-3 max-w-xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+            <Compass className="w-4 h-4 text-[#A3733E]" />
+            <span>Curated Stay Flow</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif leading-tight">
+            How Will You Spend Your Days?
+          </h2>
+          <p className="text-sm text-[#344E4A] leading-relaxed">
+            Choose a curated pace that fits your stay or weave together your own custom sanctuary rhythm.
+          </p>
+        </CinematicReveal>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {curatedItineraries.map((itin, idx) => (
+            <CinematicReveal key={idx} delay={idx * 0.12}>
+              <div className="rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] p-6 sm:p-8 flex flex-col justify-between h-full shadow-sm hover:shadow-md transition-all">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#E5F3F5] text-[#116B7B] border border-[#BCE2E7]">
+                      {itin.badge}
+                    </span>
                   </div>
-                  <h3 className="font-heading text-2xl text-ink-primary font-normal">
-                    {act.title}
+
+                  <h3 className="font-serif text-xl font-bold text-[#132422]">
+                    {itin.title}
                   </h3>
+                  <p className="text-xs text-[#A3733E] font-semibold">
+                    {itin.tagline}
+                  </p>
+
+                  <ul className="space-y-2.5 pt-2 border-t border-[#E4D9C8]/60">
+                    {itin.steps.map((step, sIdx) => (
+                      <li key={sIdx} className="text-xs text-[#344E4A] flex items-start gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#1A96AA] shrink-0 mt-0.5" />
+                        <span>{step}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <span className="text-xs text-butter-700 font-semibold block">
-                  {act.tagline}
-                </span>
-                <p className="text-xs sm:text-sm text-ink-muted leading-relaxed font-light">
-                  {act.description}
-                </p>
+
+                <div className="pt-6 mt-6 border-t border-[#E4D9C8]/60 flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] text-[#635546] font-bold uppercase block">Ideal For</span>
+                    <span className="text-xs font-bold text-[#132422]">{itin.idealFor}</span>
+                  </div>
+                  <button
+                    onClick={onOpenEnquiry}
+                    className="p-2.5 rounded-xl bg-[#EFE8DC] hover:bg-[#E4D9C8] text-[#132422] transition-colors"
+                    title="Plan this itinerary"
+                  >
+                    <ArrowUpRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
-            </div>
+            </CinematicReveal>
           ))}
         </div>
+      </div>
 
-        {/* Action Prompt */}
-        <div className="rounded-3xl border border-ink-primary/10 bg-gradient-to-r from-sand-100 via-white to-powder-50 p-8 sm:p-14 text-center space-y-5 shadow-lg">
-          <h3 className="font-heading text-3xl sm:text-4xl text-ink-primary font-normal">
-            Ready to Spend Relaxed Days in Coorg?
-          </h3>
-          <p className="max-w-xl mx-auto text-xs sm:text-sm text-ink-secondary font-light leading-relaxed">
-            All recreational activities are available on resort grounds for staying guests. Book your group getaway or family holiday today.
-          </p>
-          <div className="pt-2">
-            <button
-              onClick={onOpenEnquiry}
-              className="inline-flex items-center gap-2 rounded-full bg-butter-400 px-8 py-3.5 text-xs font-bold uppercase tracking-wider text-ink-primary hover:bg-butter-300 transition-all shadow-md border border-butter-500/20 cursor-pointer"
-            >
-              <span>Enquire About Your Stay</span>
-              <ArrowRight className="size-4" />
-            </button>
+      {/* Complete Activities Bento Grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <CinematicReveal className="space-y-3 max-w-xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#BCE2E7] bg-[#E5F3F5] px-4 py-1.5 text-xs font-bold text-[#116B7B] shadow-sm">
+            <Activity className="w-4 h-4 text-[#1A96AA]" />
+            <span>Complete Directory</span>
           </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif">
+            All On-Site Recreation
+          </h2>
+          <p className="text-sm text-[#344E4A]">
+            Everything you need for active sports or deep relaxation during your stay at Coorg Laya.
+          </p>
+        </CinematicReveal>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {activitiesBento.map((act, idx) => (
+            <CinematicReveal key={idx} delay={idx * 0.08}>
+              <div className="rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] p-4 shadow-sm hover:shadow-md transition-all h-full flex flex-col justify-between group">
+                <div className="space-y-3">
+                  <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-[#E8DFD1]">
+                    <ClayImage
+                      src={act.image}
+                      alt={act.name}
+                      aspectRatio="16:10"
+                      clayVariant="water"
+                      badge={act.category}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <span className="text-[11px] font-bold text-[#116B7B]">{act.timing}</span>
+                    <h4 className="font-serif text-base font-bold text-[#132422]">{act.name}</h4>
+                    <p className="text-xs text-[#344E4A] leading-relaxed">{act.desc}</p>
+                  </div>
+                </div>
+
+                <div className="pt-4 mt-4 border-t border-[#E4D9C8]/60 flex items-center justify-between">
+                  <span className="text-[11px] font-bold text-[#A3733E]">Included with Stay</span>
+                  <button
+                    onClick={onOpenEnquiry}
+                    className="text-xs font-bold text-[#116B7B] hover:underline flex items-center gap-1"
+                  >
+                    <span>Reserve</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </CinematicReveal>
+          ))}
         </div>
       </div>
+
     </div>
   );
 };
+
+export default ActivitiesPage;

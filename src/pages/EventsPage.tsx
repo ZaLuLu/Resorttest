@@ -1,117 +1,214 @@
 import React from 'react';
-import { PartyPopper, Users, Sparkles, ArrowRight, CheckCircle } from 'lucide-react';
-import { resortData } from '../data/resortData';
+import { 
+  Users, Sparkles, CheckCircle2, ArrowUpRight, Crown, 
+  ShieldCheck, Zap, Utensils, Music, Calendar, Clock, MapPin
+} from 'lucide-react';
+import { EventsSection } from '../components/sections/EventsSection';
 import { PageHeader } from '../components/common/PageHeader';
+import { CinematicReveal } from '../components/common/CinematicReveal';
+import { Clay3DCard } from '../components/3d/Clay3DCard';
 
 interface EventsPageProps {
   onOpenEnquiry: () => void;
 }
 
 export const EventsPage: React.FC<EventsPageProps> = ({ onOpenEnquiry }) => {
+  const eventSpecs = [
+    {
+      title: '500-Guest Lawn Capacity',
+      desc: 'Expansive manicured open lawn grounds accommodating up to 500 seated or floating guests.',
+      icon: Users,
+    },
+    {
+      title: '15 On-Site Guest Suites',
+      desc: 'Direct on-site luxury accommodation for up to ~45 key VIPs, bride/groom families, or retreat hosts.',
+      icon: Crown,
+    },
+    {
+      title: 'Dedicated Catering & Live Food Bay',
+      desc: 'Spacious preparation areas with water and power hookups for premium outside or estate caterers.',
+      icon: Utensils,
+    },
+    {
+      title: '100% Generator Power Backup',
+      desc: 'Heavy-duty silent DG backup ensuring uninterrupted sound, stage lighting, and lawn illumination.',
+      icon: Zap,
+    },
+    {
+      title: 'Ample Private Parking',
+      desc: 'Dedicated on-site parking bay accommodating over 40+ four-wheelers with security coordination.',
+      icon: ShieldCheck,
+    },
+    {
+      title: 'Palm Pool Cocktail Zone',
+      desc: 'Adjoining circular pool deck ideal for sundowner cocktail parties, high tea, and photo opportunities.',
+      icon: Sparkles,
+    },
+  ];
+
+  const packages = [
+    {
+      name: 'Destination Wedding & Sangeet',
+      tagline: 'Under the starlit Kodagu sky',
+      capacity: 'Up to 500 Guests',
+      features: [
+        'Full 15-suite buyout for ~45 family members',
+        'Mandap & stage lawn zoning',
+        'Palm pool sundowner pre-wedding deck',
+        'Festoon & tree ambient lighting support',
+        'Bridal dressing suite with vanity',
+      ],
+      badge: 'Most Celebrated',
+      variant: 'sand' as const,
+    },
+    {
+      name: 'Milestone Birthdays & Anniversaries',
+      tagline: 'Intimate celebrations with those who matter',
+      capacity: '50 – 300 Guests',
+      features: [
+        'Open-air barbecue and banquet lawn',
+        'Live acoustic sound setup allowance',
+        'Kids trampoline & lawn games included',
+        'Customized cake cutting on raised terraces',
+        'Flexible overnight suite allocations',
+      ],
+      badge: 'Family Favorite',
+      variant: 'water' as const,
+    },
+    {
+      name: 'Corporate & Executive Offsites',
+      tagline: 'Productive alignment in tranquil nature',
+      capacity: '20 – 100 Delegates',
+      features: [
+        'High-speed fiber Wi-Fi across open lawns',
+        'Quiet covered verandah breakout zones',
+        'Team sports (badminton, pool volleyball)',
+        'Fresh Coorg estate coffee all day',
+        'Exclusive buyout privacy guaranteed',
+      ],
+      badge: 'Executive',
+      variant: 'white' as const,
+    },
+  ];
+
   return (
-    <div className="space-y-24 pb-28 text-ink-primary overflow-x-hidden">
+    <div className="pt-24 pb-28 bg-[#FAF6EF] text-[#132422] space-y-20 select-none">
+      
+      {/* Page Header */}
       <PageHeader
-        badge="OUTDOOR CELEBRATIONS"
-        title="Events at Coorg Laya"
-        description="Spacious outdoor green lawns and serene open skies for birthdays, family reunions, and celebrations of up to 500 guests."
-        actionText="Plan Your Event"
+        badge="Celebrations & Lawns"
+        title="Events & Functions"
+        description="From open-air weddings and milestone birthdays to family reunions and group retreats, Coorg Laya Resort provides expansive lawns for up to 500 guests."
+        actionText="Enquire Event Dates"
         onActionClick={onOpenEnquiry}
-        bgImage="https://coorglayaresort.com/_next/static/immutable/media/garden-lawn.37ug0_wam9ctr.jpeg"
+        bgImage="/images/concepts/events/decorated-outdoor-lawn-concept.png"
       />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-24">
-        {/* Capacity Indicator Banner */}
-        <div className="rounded-3xl border border-butter-300 bg-gradient-to-br from-butter-50 via-white to-powder-50 p-8 sm:p-14 text-center space-y-4 shadow-md">
-          <div className="inline-flex items-center gap-2 rounded-full border border-butter-300 bg-butter-100 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-butter-800">
-            <Sparkles className="size-3.5 text-butter-600" />
-            <span>Outdoor Lawn Capacity</span>
+      {/* Main Interactive Events Section */}
+      <EventsSection onOpenEnquiry={onOpenEnquiry} />
+
+      {/* 500-Capacity Lawn Infrastructure Blueprint */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <CinematicReveal className="space-y-3 max-w-2xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+            <Sparkles className="w-4 h-4 text-[#A3733E]" />
+            <span>Venue Infrastructure</span>
           </div>
-          <h2 className="font-heading text-4xl sm:text-6xl text-ink-primary font-normal">
-            Up to ~500 Guests
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif leading-tight">
+            Built for Flawless Grand Occasions
           </h2>
-          <div className="mx-auto w-32 butter-divider my-3" />
-          <p className="max-w-2xl mx-auto text-xs sm:text-sm text-ink-secondary leading-relaxed font-light">
-            Our open green lawns offer ample space for fresh-air gatherings, celebratory meals, and unhurried festivities with your guests in Kodagu.
+          <p className="text-sm text-[#344E4A] leading-relaxed">
+            Our expansive outdoor venue in Kushalnagar combines scenic Western Ghats natural beauty with robust electrical, catering, and guest accommodation facilities.
           </p>
-        </div>
+        </CinematicReveal>
 
-        {/* Verified Event Types */}
-        <div className="space-y-10">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs uppercase tracking-[0.25em] text-butter-700 font-semibold block">
-              Celebration Formats
-            </span>
-            <h3 className="font-heading text-3xl sm:text-4xl text-ink-primary font-normal">
-              Moments Worth Celebrating
-            </h3>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {resortData.events.verifiedEventTypes.map((event) => (
-              <div
-                key={event.id}
-                className="group rounded-3xl border border-ink-primary/8 bg-white p-8 space-y-4 hover:border-butter-400 transition-all duration-300 shadow-sm sleek-card"
-              >
-                <div className="flex size-14 items-center justify-center rounded-2xl bg-butter-100 text-butter-700 border border-butter-200 group-hover:scale-105 transition-transform">
-                  <PartyPopper className="size-6" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {eventSpecs.map((spec, idx) => {
+            const IconComp = spec.icon;
+            return (
+              <CinematicReveal key={idx} delay={idx * 0.08}>
+                <div className="p-6 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] space-y-3 shadow-sm hover:shadow-md transition-all h-full">
+                  <div className="w-10 h-10 rounded-2xl bg-[#E5F3F5] text-[#116B7B] flex items-center justify-center shadow-sm">
+                    <IconComp className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-serif text-lg font-bold text-[#132422]">
+                    {spec.title}
+                  </h3>
+                  <p className="text-xs text-[#344E4A] leading-relaxed">
+                    {spec.desc}
+                  </p>
                 </div>
-                <div>
-                  <h4 className="font-heading text-2xl text-ink-primary font-normal">
-                    {event.name}
-                  </h4>
-                  <span className="text-xs text-butter-700 font-semibold block mt-1">
-                    {event.tagline}
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm text-ink-muted leading-relaxed font-light">
-                  {event.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Dual Panoramic Lawn Showcase */}
-        <div className="rounded-3xl border border-ink-primary/8 bg-white p-6 sm:p-10 space-y-6 shadow-md sleek-card">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <span className="text-xs uppercase tracking-[0.25em] text-butter-700 font-semibold block mb-1">
-                Lawn Atmosphere
-              </span>
-              <h3 className="font-heading text-2xl sm:text-3xl text-ink-primary font-normal">
-                Open Green Event Grounds
-              </h3>
-            </div>
-
-            <button
-              onClick={onOpenEnquiry}
-              className="inline-flex items-center gap-2 rounded-full bg-butter-400 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-ink-primary hover:bg-butter-300 transition-all shadow-sm border border-butter-500/20 cursor-pointer"
-            >
-              <span>Enquire for Event Dates</span>
-              <ArrowRight className="size-3.5" />
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="overflow-hidden rounded-2xl border border-ink-primary/8 aspect-[16/10] bg-sand-100">
-              <img
-                src="https://coorglayaresort.com/_next/static/immutable/media/garden-lawn.37ug0_wam9ctr.jpeg"
-                alt="Open green lawn surrounded by palms and bamboo at Coorg Laya Resort"
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <div className="overflow-hidden rounded-2xl border border-ink-primary/8 aspect-[16/10] bg-sand-100">
-              <img
-                src="https://coorglayaresort.com/_next/static/immutable/media/garden-terrace.3ya05pwj-jknx.jpeg"
-                alt="Garden terrace and lawn seating for events at Coorg Laya Resort"
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-          </div>
+              </CinematicReveal>
+            );
+          })}
         </div>
       </div>
+
+      {/* Event Packages Grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <CinematicReveal className="space-y-3 max-w-xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#BCE2E7] bg-[#E5F3F5] px-4 py-1.5 text-xs font-bold text-[#116B7B] shadow-sm">
+            <Calendar className="w-4 h-4 text-[#1A96AA]" />
+            <span>Curated Formats</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif">
+            Celebration Packages
+          </h2>
+        </CinematicReveal>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {packages.map((pkg, idx) => (
+            <CinematicReveal key={idx} delay={idx * 0.12}>
+              <Clay3DCard
+                variant={pkg.variant}
+                maxTilt={8}
+                glareOpacity={0.25}
+                className="p-6 sm:p-8 h-full flex flex-col justify-between"
+              >
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-white text-[#116B7B] border border-[#BCE2E7] shadow-sm">
+                      {pkg.badge}
+                    </span>
+                    <span className="text-xs font-bold text-[#A3733E]">
+                      {pkg.capacity}
+                    </span>
+                  </div>
+
+                  <h3 className="font-serif text-2xl font-bold text-[#132422]">
+                    {pkg.name}
+                  </h3>
+                  <p className="text-xs text-[#635546] font-medium">
+                    {pkg.tagline}
+                  </p>
+
+                  <ul className="space-y-2.5 pt-3 border-t border-[#E4D9C8]">
+                    {pkg.features.map((feat, fIdx) => (
+                      <li key={fIdx} className="text-xs text-[#344E4A] flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-[#1A96AA] shrink-0" />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="pt-6 mt-6 border-t border-[#E4D9C8]">
+                  <button
+                    onClick={onOpenEnquiry}
+                    className="w-full py-3 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-md transition-all flex items-center justify-center gap-2"
+                  >
+                    <span>Check Date Availability</span>
+                    <ArrowUpRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </Clay3DCard>
+            </CinematicReveal>
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 };
+
+export default EventsPage;

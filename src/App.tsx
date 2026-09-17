@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Navbar } from './components/layout/Navbar';
-import { Footer } from './components/layout/Footer';
+import Lenis from 'lenis';
+import { ResortNavbar } from './components/layout/ResortNavbar';
+import { ResortFooter } from './components/layout/ResortFooter';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import { EnquiryModal } from './components/common/EnquiryModal';
-import { SanctuaryDock } from './components/ui/SanctuaryDock';
 
 // Pages
 import { HomePage } from './pages/HomePage';
@@ -22,6 +22,34 @@ import { NotFoundPage } from './pages/NotFoundPage';
 export const App: React.FC = () => {
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
 
+  // Initialize Lenis Momentum Smooth Scroll
+  useEffect(() => {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const lenis = new Lenis({
+      duration: 1.1,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      touchMultiplier: 1.5,
+    });
+
+    let animationFrameId: number;
+
+    function raf(time: number) {
+      lenis.raf(time);
+      animationFrameId = requestAnimationFrame(raf);
+    }
+
+    animationFrameId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      lenis.destroy();
+    };
+  }, []);
+
   const handleOpenEnquiry = () => {
     setIsEnquiryOpen(true);
   };
@@ -34,8 +62,8 @@ export const App: React.FC = () => {
     <Router>
       <ScrollToTop />
 
-      <div className="min-h-screen flex flex-col bg-sand-50 text-ink-primary selection:bg-butter-300 selection:text-ink-primary font-sans antialiased">
-        <Navbar onOpenEnquiry={handleOpenEnquiry} />
+      <div className="min-h-screen flex flex-col bg-[#F5F0E8] text-[#162926] selection:bg-water-500/20 selection:text-water-900 font-sans antialiased">
+        <ResortNavbar onOpenEnquiry={handleOpenEnquiry} />
 
         <main id="main-content" className="flex-1" tabIndex={-1}>
           <Routes>
@@ -44,8 +72,8 @@ export const App: React.FC = () => {
             <Route path="/amenities" element={<AmenitiesPage onOpenEnquiry={handleOpenEnquiry} />} />
             <Route path="/activities" element={<ActivitiesPage onOpenEnquiry={handleOpenEnquiry} />} />
             <Route path="/events" element={<EventsPage onOpenEnquiry={handleOpenEnquiry} />} />
-            <Route path="/gallery" element={<GalleryPage onOpenEnquiry={handleOpenEnquiry} />} />
             <Route path="/nearby" element={<NearbyPage onOpenEnquiry={handleOpenEnquiry} />} />
+            <Route path="/gallery" element={<GalleryPage onOpenEnquiry={handleOpenEnquiry} />} />
             <Route path="/about" element={<AboutPage onOpenEnquiry={handleOpenEnquiry} />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
@@ -53,11 +81,9 @@ export const App: React.FC = () => {
           </Routes>
         </main>
 
-        <SanctuaryDock onOpenEnquiry={handleOpenEnquiry} />
-
         <EnquiryModal isOpen={isEnquiryOpen} onClose={handleCloseEnquiry} />
 
-        <Footer />
+        <ResortFooter />
       </div>
     </Router>
   );

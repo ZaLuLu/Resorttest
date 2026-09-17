@@ -1,373 +1,307 @@
 import React, { useState } from 'react';
-import {
-  MapPin,
-  Mail,
-  ExternalLink,
-  User,
-  Phone,
-  Calendar,
-  Users,
-  MessageSquare,
-  Send,
-  CheckCircle,
-  Sparkles,
-  ShieldCheck
+import { 
+  Mail, MapPin, Compass, Phone, MessageSquare, Clock, 
+  Car, Navigation, CheckCircle2, ArrowRight, Sparkles, Send
 } from 'lucide-react';
-import { resortData } from '../data/resortData';
+import { ContactEnquirySection } from '../components/sections/ContactEnquirySection';
 import { PageHeader } from '../components/common/PageHeader';
+import { CinematicReveal } from '../components/common/CinematicReveal';
+import { Clay3DCard } from '../components/3d/Clay3DCard';
+import { ClayImage } from '../components/common/ClayImage';
 
 export const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
-    checkIn: '',
-    checkOut: '',
-    guests: '2 Guests',
-    enquiryType: 'stay',
+    stayType: '15 Suites Stay',
+    guests: '2-4 Guests',
+    dates: '',
     message: '',
   });
-
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'sent' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus('submitting');
-    setErrorMessage('');
-
-    if (!formData.name.trim() || !formData.email.trim()) {
-      setStatus('error');
-      setErrorMessage('Please provide your name and email address.');
-      return;
-    }
-
-    try {
-      const subject = encodeURIComponent(
-        `Reservation Enquiry - ${formData.enquiryType.toUpperCase()} - ${formData.name}`
-      );
-      const body = encodeURIComponent(
-        `Dear Coorg Laya Resort Team,\n\n` +
-        `I would like to enquire with the following details:\n\n` +
-        `• Guest Name: ${formData.name}\n` +
-        `• Contact Phone: ${formData.phone || 'Not provided'}\n` +
-        `• Email Address: ${formData.email}\n` +
-        `• Check-in Date: ${formData.checkIn || 'To be decided'}\n` +
-        `• Check-out Date: ${formData.checkOut || 'To be decided'}\n` +
-        `• Total Guests: ${formData.guests}\n` +
-        `• Enquiry Type: ${formData.enquiryType}\n\n` +
-        `Additional Message / Requests:\n${formData.message || 'No additional notes.'}\n\n` +
-        `Warm regards,\n${formData.name}`
-      );
-
-      const mailtoUrl = `mailto:${resortData.contact.reservationEmail}?subject=${subject}&body=${body}`;
-      window.location.href = mailtoUrl;
-
-      setTimeout(() => {
-        setStatus('sent');
-      }, 600);
-    } catch {
-      setStatus('error');
-      setErrorMessage('Unable to dispatch email. Please email us directly at ' + resortData.contact.reservationEmail);
-    }
+    const mailSubject = encodeURIComponent(`Reservation Enquiry from ${formData.name} - ${formData.stayType}`);
+    const mailBody = encodeURIComponent(
+      `Name: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email}\nStay Type: ${formData.stayType}\nEstimated Guests: ${formData.guests}\nDates: ${formData.dates}\nNotes: ${formData.message}`
+    );
+    window.location.href = `mailto:reservations@coorglayaresort.com?subject=${mailSubject}&body=${mailBody}`;
+    setSubmitted(true);
   };
 
+  const routes = [
+    {
+      from: 'From Bangalore (Bengaluru)',
+      dist: '220 km · ~4 Hours',
+      route: 'Bangalore-Mysore Expressway (NH 275) → Srirangapatna → Hunsur bypass → Kushalnagar',
+      highlights: 'Smooth 10-lane expressway up to Mysore bypass, followed by scenic 4-lane state highway.',
+    },
+    {
+      from: 'From Mysore (Mysuru)',
+      dist: '85 km · ~1.5 - 2 Hours',
+      route: 'Mysore Ring Road → Hunsur → Kushalnagar (NH 275)',
+      highlights: 'Closest major railhead and domestic airport connection to Coorg Laya.',
+    },
+    {
+      from: 'From Mangalore (Mangaluru)',
+      dist: '135 km · ~3.5 Hours',
+      route: 'Mangalore → Bantwal → Mani → Puttur → Sullia → Madikeri → Kushalnagar',
+      highlights: 'Picturesque Western Ghats mountain pass via Sampaje ghat road.',
+    },
+  ];
+
   return (
-    <div className="space-y-24 pb-28 text-ink-primary overflow-x-hidden">
+    <div className="pt-24 pb-28 bg-[#FAF6EF] text-[#132422] space-y-20 select-none">
+      
+      {/* Page Header */}
       <PageHeader
-        badge="RESERVATION DESK"
-        title="Contact & Reservations"
-        description="Connect directly with our reservation team for room availability, group vacations, and celebration enquiries in Kushalnagar, Kodagu."
-        bgImage="https://coorglayaresort.com/_next/static/immutable/media/garden-terrace.3ya05pwj-jknx.jpeg"
+        badge="Connect & Reserve"
+        title="Contact Our Desk"
+        description="Reach our direct reservation desk for room bookings, 500-guest lawn dates, and private resort buyout enquiries."
+        bgImage="/images/resort/covered-seating.jpeg"
       />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Left: Contact Details & Coordinates */}
-          <div className="lg:col-span-5 space-y-8">
-            <div className="rounded-3xl border border-ink-primary/8 bg-white p-8 space-y-6 shadow-sm sleek-card">
-              <span className="text-xs uppercase tracking-[0.25em] text-butter-700 font-semibold block">
-                Official Resort Details
-              </span>
+      {/* Main Interactive Contact Section */}
+      <ContactEnquirySection />
 
-              {/* Address */}
-              <div className="flex items-start gap-4">
-                <div className="flex size-12 items-center justify-center rounded-2xl bg-butter-100 text-butter-700 border border-butter-200 shrink-0 mt-1">
-                  <MapPin className="size-6" />
-                </div>
-                <div className="space-y-1 text-xs sm:text-sm">
-                  <span className="text-[0.68rem] uppercase tracking-wider text-ink-muted font-semibold block">
-                    Resort Address
-                  </span>
-                  <p className="text-ink-primary font-bold">{resortData.brand.name}</p>
-                  <p className="text-ink-secondary font-light">{resortData.contact.address.line1},</p>
-                  <p className="text-ink-secondary font-light">{resortData.contact.address.line2},</p>
-                  <p className="text-ink-secondary font-light">
-                    {resortData.contact.address.town} - {resortData.contact.address.pincode},
-                  </p>
-                  <p className="text-ink-secondary font-light">
-                    {resortData.contact.address.district}, {resortData.contact.address.state}, {resortData.contact.address.country}
-                  </p>
-                  <div className="pt-2">
-                    <a
-                      href={resortData.contact.mapsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs text-butter-700 hover:text-powder-700 uppercase tracking-wider font-bold"
-                    >
-                      <span>Open in Google Maps</span>
-                      <ExternalLink className="size-3.5" />
-                    </a>
+      {/* Direct Interactive Multi-Channel Reservation Suite */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          
+          {/* Left: Quick Channels & Hours */}
+          <div className="lg:col-span-5 space-y-6">
+            <CinematicReveal className="space-y-3">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+                <Sparkles className="w-4 h-4 text-[#A3733E]" />
+                <span>Direct Concierge</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif leading-tight">
+                Get in Touch Instantly
+              </h2>
+              <p className="text-sm text-[#344E4A] leading-relaxed">
+                Whether you have questions about our 15 private suites, catering for the 500-guest lawn, or local Kushalnagar sightseeing cabs, we are always here.
+              </p>
+            </CinematicReveal>
+
+            <div className="space-y-4 pt-2">
+              <CinematicReveal delay={0.1}>
+                <a
+                  href="https://wa.me/919480123456?text=Hi%20Coorg%20Laya%20Team%2C%20I%20would%20like%20to%20enquire%20about%20booking%20suites%20at%20your%20resort."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-[#E5F3F5] text-[#116B7B] flex items-center justify-center shadow-sm">
+                    <MessageSquare className="w-6 h-6" />
                   </div>
-                </div>
-              </div>
+                  <div className="flex-1">
+                    <span className="text-[11px] font-bold uppercase text-[#116B7B]">Fastest Response</span>
+                    <h4 className="font-serif text-base font-bold text-[#132422]">WhatsApp Reservation Desk</h4>
+                    <p className="text-xs text-[#344E4A]">+91 94801 23456 (9 AM – 9 PM)</p>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-[#116B7B] group-hover:translate-x-1 transition-transform" />
+                </a>
+              </CinematicReveal>
 
-              {/* Email */}
-              <div className="flex items-start gap-4 pt-4 border-t border-ink-primary/8">
-                <div className="flex size-12 items-center justify-center rounded-2xl bg-powder-100 text-powder-700 border border-powder-200 shrink-0 mt-1">
-                  <Mail className="size-6" />
-                </div>
-                <div className="space-y-1 text-xs sm:text-sm">
-                  <span className="text-[0.68rem] uppercase tracking-wider text-ink-muted font-semibold block">
-                    Reservation Email
-                  </span>
-                  <a
-                    href={`mailto:${resortData.contact.reservationEmail}`}
-                    className="text-ink-primary hover:text-butter-700 transition-colors font-medium break-all block"
-                  >
-                    {resortData.contact.reservationEmail}
-                  </a>
-                  <p className="text-[0.7rem] text-ink-muted italic">
-                    Direct verified channel for booking dates and celebration confirmation.
-                  </p>
-                </div>
-              </div>
-            </div>
+              <CinematicReveal delay={0.15}>
+                <a
+                  href="tel:+919480123456"
+                  className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-[#EFE8DC] text-[#A3733E] flex items-center justify-center shadow-sm">
+                    <Phone className="w-6 h-6" />
+                  </div>
+                  <div className="flex-1">
+                    <span className="text-[11px] font-bold uppercase text-[#A3733E]">Direct Voice Call</span>
+                    <h4 className="font-serif text-base font-bold text-[#132422]">Resort Phone Line</h4>
+                    <p className="text-xs text-[#344E4A]">+91 94801 23456</p>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-[#A3733E] group-hover:translate-x-1 transition-transform" />
+                </a>
+              </CinematicReveal>
 
-            {/* Quick Summary Box */}
-            <div className="rounded-3xl border border-powder-200 bg-powder-50/70 p-8 space-y-3 text-xs shadow-sm">
-              <span className="text-[0.68rem] uppercase tracking-wider text-powder-800 font-bold block">
-                Sanctuary Overview
-              </span>
-              <ul className="space-y-2 text-ink-secondary font-light">
-                <li>• 15 Private Rooms (~45 overnight guests)</li>
-                <li>• Open lawn event space for up to ~500 guests</li>
-                <li>• Swimming pool, kids trampoline, badminton & volleyball</li>
-              </ul>
+              <CinematicReveal delay={0.2}>
+                <a
+                  href="mailto:reservations@coorglayaresort.com"
+                  className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-[#E5F3F5] text-[#116B7B] flex items-center justify-center shadow-sm">
+                    <Mail className="w-6 h-6" />
+                  </div>
+                  <div className="flex-1">
+                    <span className="text-[11px] font-bold uppercase text-[#116B7B]">Event & Buyout RFPs</span>
+                    <h4 className="font-serif text-base font-bold text-[#132422]">Email Desk</h4>
+                    <p className="text-xs text-[#344E4A]">reservations@coorglayaresort.com</p>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-[#116B7B] group-hover:translate-x-1 transition-transform" />
+                </a>
+              </CinematicReveal>
             </div>
           </div>
 
-          {/* Right: 7-Field Enquiry Form */}
-          <div id="enquiry" className="lg:col-span-7 rounded-3xl border border-ink-primary/8 bg-white p-8 sm:p-12 shadow-sm sleek-card space-y-6">
-            <div>
-              <span className="text-xs uppercase tracking-[0.25em] text-butter-700 font-semibold block mb-1">
-                Reservation & Celebration Enquiry
-              </span>
-              <h3 className="font-heading text-3xl sm:text-4xl text-ink-primary font-normal">
-                Send a Direct Message
-              </h3>
-              <p className="text-xs text-ink-muted mt-1">
-                Fill in your anticipated travel dates or event scale. We will respond via email.
-              </p>
-            </div>
-
-            {status === 'sent' ? (
-              <div className="py-12 text-center space-y-4">
-                <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-butter-100 text-butter-700 border border-butter-200">
-                  <CheckCircle className="size-8" />
+          {/* Right: Direct Reservation Consultation Form */}
+          <div className="lg:col-span-7">
+            <CinematicReveal delay={0.2}>
+              <div className="rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] p-6 sm:p-8 md:p-10 shadow-lg space-y-6">
+                <div>
+                  <h3 className="font-serif text-2xl font-bold text-[#132422]">
+                    Submit Stay or Event Inquiry
+                  </h3>
+                  <p className="text-xs text-[#344E4A] mt-1">
+                    Our host team responds within 2 hours with customized rates and confirmed suite allocations.
+                  </p>
                 </div>
-                <h4 className="font-heading text-2xl text-ink-primary">Enquiry Prepared</h4>
-                <p className="text-xs sm:text-sm text-ink-secondary max-w-md mx-auto leading-relaxed">
-                  Your enquiry has been formatted and opened in your email client addressed to{' '}
-                  <span className="text-butter-700 font-medium">{resortData.contact.reservationEmail}</span>.
-                </p>
-                <button
-                  onClick={() => setStatus('idle')}
-                  className="rounded-full border border-ink-primary/15 px-6 py-2.5 text-xs text-ink-primary hover:bg-sand-50 transition-colors"
-                >
-                  Send Another Enquiry
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
-                {errorMessage && (
-                  <div className="rounded-2xl border border-red-500/20 bg-red-50 p-4 text-xs text-red-700">
-                    {errorMessage}
-                  </div>
-                )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-ink-secondary mb-1.5">
-                      Your Full Name <span className="text-butter-700">*</span>
-                    </label>
-                    <div className="relative">
-                      <User className="absolute left-3.5 top-3.5 size-4 text-ink-muted" />
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-[#132422] mb-1.5">Full Name *</label>
                       <input
                         type="text"
                         required
-                        name="name"
                         value={formData.name}
-                        onChange={handleChange}
-                        placeholder="e.g. Rohith Kumar"
-                        className="w-full rounded-2xl border border-ink-primary/15 bg-sand-50/50 py-3 pl-10 pr-4 text-sm text-ink-primary placeholder-ink-muted/60 focus:border-butter-500 focus:bg-white focus:outline-none transition-all"
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="e.g. Ananya Rao"
+                        className="w-full px-4 py-3 rounded-2xl bg-[#F5EFE6] border border-[#E4D9C8] text-xs font-medium text-[#132422] focus:outline-none focus:border-[#1A96AA]"
                       />
                     </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-ink-secondary mb-1.5">
-                      Phone Number
-                    </label>
-                    <div className="relative">
-                      <Phone className="absolute left-3.5 top-3.5 size-4 text-ink-muted" />
+                    <div>
+                      <label className="block text-xs font-bold text-[#132422] mb-1.5">Phone / WhatsApp *</label>
                       <input
                         type="tel"
-                        name="phone"
+                        required
                         value={formData.phone}
-                        onChange={handleChange}
-                        placeholder="+91 98765 43210"
-                        className="w-full rounded-2xl border border-ink-primary/15 bg-sand-50/50 py-3 pl-10 pr-4 text-sm text-ink-primary placeholder-ink-muted/60 focus:border-butter-500 focus:bg-white focus:outline-none transition-all"
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder="e.g. +91 98765 43210"
+                        className="w-full px-4 py-3 rounded-2xl bg-[#F5EFE6] border border-[#E4D9C8] text-xs font-medium text-[#132422] focus:outline-none focus:border-[#1A96AA]"
                       />
                     </div>
                   </div>
-                </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-ink-secondary mb-1.5">
-                      Email Address <span className="text-butter-700">*</span>
-                    </label>
-                    <div className="relative">
-                      <Mail className="absolute left-3.5 top-3.5 size-4 text-ink-muted" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-[#132422] mb-1.5">Email Address</label>
                       <input
                         type="email"
-                        required
-                        name="email"
                         value={formData.email}
-                        onChange={handleChange}
-                        placeholder="rohith@example.com"
-                        className="w-full rounded-2xl border border-ink-primary/15 bg-sand-50/50 py-3 pl-10 pr-4 text-sm text-ink-primary placeholder-ink-muted/60 focus:border-butter-500 focus:bg-white focus:outline-none transition-all"
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="e.g. ananya@example.com"
+                        className="w-full px-4 py-3 rounded-2xl bg-[#F5EFE6] border border-[#E4D9C8] text-xs font-medium text-[#132422] focus:outline-none focus:border-[#1A96AA]"
                       />
                     </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-ink-secondary mb-1.5">
-                      Enquiry Category
-                    </label>
-                    <select
-                      name="enquiryType"
-                      value={formData.enquiryType}
-                      onChange={handleChange}
-                      className="w-full rounded-2xl border border-ink-primary/15 bg-sand-50/50 py-3 px-4 text-sm text-ink-primary focus:border-butter-500 focus:bg-white focus:outline-none transition-all"
-                    >
-                      <option value="stay">Resort Stay (15 Rooms / ~45 Guests)</option>
-                      <option value="event">Outdoor Event (Up to 500 Guests)</option>
-                      <option value="general">General Information</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-ink-secondary mb-1.5">
-                      Check-in Date
-                    </label>
-                    <div className="relative">
-                      <Calendar className="absolute left-3.5 top-3.5 size-4 text-ink-muted" />
-                      <input
-                        type="date"
-                        name="checkIn"
-                        value={formData.checkIn}
-                        onChange={handleChange}
-                        className="w-full rounded-2xl border border-ink-primary/15 bg-sand-50/50 py-3 pl-10 pr-2 text-sm text-ink-primary focus:border-butter-500 focus:bg-white focus:outline-none transition-all"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-ink-secondary mb-1.5">
-                      Check-out Date
-                    </label>
-                    <div className="relative">
-                      <Calendar className="absolute left-3.5 top-3.5 size-4 text-ink-muted" />
-                      <input
-                        type="date"
-                        name="checkOut"
-                        value={formData.checkOut}
-                        onChange={handleChange}
-                        className="w-full rounded-2xl border border-ink-primary/15 bg-sand-50/50 py-3 pl-10 pr-2 text-sm text-ink-primary focus:border-butter-500 focus:bg-white focus:outline-none transition-all"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold text-ink-secondary mb-1.5">
-                      Guest Count
-                    </label>
-                    <div className="relative">
-                      <Users className="absolute left-3.5 top-3.5 size-4 text-ink-muted" />
+                    <div>
+                      <label className="block text-xs font-bold text-[#132422] mb-1.5">Type of Enquiry</label>
                       <select
-                        name="guests"
-                        value={formData.guests}
-                        onChange={handleChange}
-                        className="w-full rounded-2xl border border-ink-primary/15 bg-sand-50/50 py-3 pl-10 pr-2 text-sm text-ink-primary focus:border-butter-500 focus:bg-white focus:outline-none transition-all"
+                        value={formData.stayType}
+                        onChange={(e) => setFormData({ ...formData, stayType: e.target.value })}
+                        className="w-full px-4 py-3 rounded-2xl bg-[#F5EFE6] border border-[#E4D9C8] text-xs font-medium text-[#132422] focus:outline-none focus:border-[#1A96AA]"
                       >
-                        <option value="1-2 Guests">1 - 2 Guests</option>
-                        <option value="3-5 Guests">3 - 5 Guests (Family)</option>
-                        <option value="6-15 Guests">6 - 15 Guests (Group)</option>
-                        <option value="16-45 Guests">16 - 45 Guests (Full Stay)</option>
-                        <option value="50-100 Guests">50 - 100 Guests (Event)</option>
-                        <option value="100-500 Guests">100 - 500 Guests (Event)</option>
+                        <option value="15 Suites Stay">Suite Booking (1 - 4 Suites)</option>
+                        <option value="Exclusive 15-Suite Buyout">Full 15-Suite Resort Buyout (~45 Guests)</option>
+                        <option value="500-Guest Lawn Wedding">Grand Lawn Wedding / Sangeet (Up to 500)</option>
+                        <option value="Corporate Offsite">Corporate & Wellness Retreat</option>
+                        <option value="Family Milestone">Family Birthday / Anniversary</option>
                       </select>
                     </div>
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-ink-secondary mb-1.5">
-                    Your Message / Special Requests
-                  </label>
-                  <div className="relative">
-                    <MessageSquare className="absolute left-3.5 top-3.5 size-4 text-ink-muted" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-[#132422] mb-1.5">Estimated Guests</label>
+                      <input
+                        type="text"
+                        value={formData.guests}
+                        onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
+                        placeholder="e.g. 6 Adults, 2 Kids"
+                        className="w-full px-4 py-3 rounded-2xl bg-[#F5EFE6] border border-[#E4D9C8] text-xs font-medium text-[#132422] focus:outline-none focus:border-[#1A96AA]"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-[#132422] mb-1.5">Intended Dates</label>
+                      <input
+                        type="text"
+                        value={formData.dates}
+                        onChange={(e) => setFormData({ ...formData, dates: e.target.value })}
+                        placeholder="e.g. 24th Oct - 27th Oct"
+                        className="w-full px-4 py-3 rounded-2xl bg-[#F5EFE6] border border-[#E4D9C8] text-xs font-medium text-[#132422] focus:outline-none focus:border-[#1A96AA]"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-[#132422] mb-1.5">Special Requests or Questions</label>
                     <textarea
-                      name="message"
-                      rows={4}
+                      rows={3}
                       value={formData.message}
-                      onChange={handleChange}
-                      placeholder="Please mention dates, number of rooms required, or event type..."
-                      className="w-full rounded-2xl border border-ink-primary/15 bg-sand-50/50 py-3 pl-10 pr-4 text-sm text-ink-primary placeholder-ink-muted/60 focus:border-butter-500 focus:bg-white focus:outline-none transition-all"
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="e.g. Interested in lawn dinner setup, extra rollaway bed, and early check-in."
+                      className="w-full px-4 py-3 rounded-2xl bg-[#F5EFE6] border border-[#E4D9C8] text-xs font-medium text-[#132422] focus:outline-none focus:border-[#1A96AA]"
                     />
                   </div>
-                </div>
-
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
-                  <span className="text-[0.72rem] text-ink-muted italic">
-                    Emails directly to {resortData.contact.reservationEmail}
-                  </span>
 
                   <button
                     type="submit"
-                    disabled={status === 'submitting'}
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-butter-400 px-9 py-3.5 text-xs font-bold uppercase tracking-wider text-ink-primary hover:bg-butter-300 transition-all shadow-md border border-butter-500/20 disabled:opacity-50 cursor-pointer"
+                    className="w-full py-4 rounded-2xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-[0_8px_24px_rgba(26,150,170,0.35)] transition-all flex items-center justify-center gap-2"
                   >
-                    <span>{status === 'submitting' ? 'Preparing...' : 'Send Enquiry'}</span>
-                    <Send className="size-3.5" />
+                    <Send className="w-4 h-4" />
+                    <span>Send Reservation Request</span>
                   </button>
-                </div>
-              </form>
-            )}
+                </form>
+              </div>
+            </CinematicReveal>
           </div>
+
         </div>
       </div>
+
+      {/* Getting Here Driving Guide */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        <CinematicReveal className="space-y-3 max-w-xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#BCE2E7] bg-[#E5F3F5] px-4 py-1.5 text-xs font-bold text-[#116B7B] shadow-sm">
+            <Car className="w-4 h-4 text-[#1A96AA]" />
+            <span>Travel & Accessibility</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif">
+            Getting to Coorg Laya Resort
+          </h2>
+          <p className="text-sm text-[#344E4A]">
+            Kushalnagar, Kodagu District, Karnataka · 850m Altitude above sea level.
+          </p>
+        </CinematicReveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {routes.map((rt, idx) => (
+            <CinematicReveal key={idx} delay={idx * 0.1}>
+              <div className="p-6 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] space-y-3 shadow-sm h-full flex flex-col justify-between">
+                <div className="space-y-2">
+                  <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#E5F3F5] text-[#116B7B] border border-[#BCE2E7] inline-block">
+                    {rt.dist}
+                  </span>
+                  <h3 className="font-serif text-lg font-bold text-[#132422]">
+                    {rt.from}
+                  </h3>
+                  <p className="text-xs font-mono text-[#A3733E] font-medium">
+                    {rt.route}
+                  </p>
+                  <p className="text-xs text-[#344E4A] leading-relaxed pt-1">
+                    {rt.highlights}
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-[#E4D9C8]/60 flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#116B7B]">GPS Navigation Ready</span>
+                  <Navigation className="w-4 h-4 text-[#1A96AA]" />
+                </div>
+              </div>
+            </CinematicReveal>
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 };
+
+export default ContactPage;
