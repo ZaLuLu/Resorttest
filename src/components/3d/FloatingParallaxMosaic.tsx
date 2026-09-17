@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { Sparkles, Maximize2, Compass, Waves, BedDouble, Trees } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { ClayImage } from '../common/ClayImage';
 
 interface MosaicPhoto {
@@ -10,7 +10,7 @@ interface MosaicPhoto {
   title: string;
   description: string;
   tag: string;
-  ratio: '4:3' | '1:1' | '3:2';
+  ratio: '4:3' | '1:1' | '3:2' | '16:10';
 }
 
 export const FloatingParallaxMosaic: React.FC = () => {
@@ -22,11 +22,11 @@ export const FloatingParallaxMosaic: React.FC = () => {
     offset: ['start end', 'end start'],
   });
 
-  // Staggered Up/Down Column Transforms
-  const col1Y = useTransform(scrollYProgress, [0, 1], [80, -160]);
-  const col2Y = useTransform(scrollYProgress, [0, 1], [-140, 120]);
-  const col3Y = useTransform(scrollYProgress, [0, 1], [120, -190]);
-  const col4Y = useTransform(scrollYProgress, [0, 1], [-100, 140]);
+  // Tightly calibrated and smooth transform ranges
+  const col1Y = useTransform(scrollYProgress, [0, 1], [40, -80]);
+  const col2Y = useTransform(scrollYProgress, [0, 1], [-60, 50]);
+  const col3Y = useTransform(scrollYProgress, [0, 1], [50, -90]);
+  const col4Y = useTransform(scrollYProgress, [0, 1], [-50, 60]);
 
   const column1: MosaicPhoto[] = [
     {
@@ -113,10 +113,9 @@ export const FloatingParallaxMosaic: React.FC = () => {
   ];
 
   const renderCard = (photo: MosaicPhoto) => (
-    <motion.div
+    <div
       key={photo.id}
-      whileHover={{ scale: prefersReduced ? 1 : 1.04, y: -8 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      style={{ transform: 'translate3d(0,0,0)', willChange: 'transform' }}
       className="group relative rounded-3xl overflow-hidden bg-[#FAF6EF] border border-[#E4D9C8] p-3 shadow-[0_12px_28px_rgba(22,41,38,0.08),_inset_0_2px_4px_rgba(255,255,255,0.9)] transition-all duration-300 hover:shadow-[0_24px_50px_rgba(26,150,170,0.18)] hover:border-[#1A96AA]"
     >
       <div className="relative rounded-2xl overflow-hidden bg-[#E8DFD1]">
@@ -126,7 +125,7 @@ export const FloatingParallaxMosaic: React.FC = () => {
           aspectRatio={photo.ratio}
           clayVariant="water"
           badge={photo.badge}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
         {/* Gradient Scrim */}
@@ -149,37 +148,37 @@ export const FloatingParallaxMosaic: React.FC = () => {
           {photo.description}
         </p>
       </div>
-    </motion.div>
+    </div>
   );
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full min-h-screen py-24 sm:py-32 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none"
+      className="relative w-full py-20 sm:py-28 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none"
     >
-      {/* Floating Center Header Banner */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 text-center space-y-4">
+      {/* Center Header Banner */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center space-y-3">
         <div className="inline-flex items-center gap-2 rounded-full border border-[#BCE2E7] bg-[#E5F3F5] px-4 py-1.5 text-xs font-bold text-[#116B7B] shadow-sm">
           <Sparkles className="w-4 h-4 text-[#1A96AA]" />
           <span>Full-Viewport Kinetic Parallax Canvas</span>
         </div>
 
-        <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-[#132422] font-serif leading-tight max-w-3xl mx-auto">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#132422] font-serif leading-tight max-w-3xl mx-auto">
           The Living Canvas of Coorg Laya
         </h2>
 
-        <p className="text-sm sm:text-base text-[#344E4A] max-w-xl mx-auto leading-relaxed">
+        <p className="text-xs sm:text-sm text-[#344E4A] max-w-xl mx-auto leading-relaxed">
           Scroll down to watch our real resort spaces glide across 3D floating parallax currents. Hover any space to inspect its details.
         </p>
       </div>
 
-      {/* 4-Column Floating Parallax Grid */}
+      {/* 4-Column Floating Parallax Grid with GPU Promotion */}
       <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
           
           {/* Column 1 (Ascending) */}
           <motion.div
-            style={{ y: prefersReduced ? 0 : col1Y }}
+            style={{ y: prefersReduced ? 0 : col1Y, willChange: 'transform' }}
             className="space-y-6"
           >
             {column1.map(renderCard)}
@@ -187,24 +186,24 @@ export const FloatingParallaxMosaic: React.FC = () => {
 
           {/* Column 2 (Descending) */}
           <motion.div
-            style={{ y: prefersReduced ? 0 : col2Y }}
-            className="space-y-6 pt-0 sm:pt-12 lg:pt-20"
+            style={{ y: prefersReduced ? 0 : col2Y, willChange: 'transform' }}
+            className="space-y-6 pt-0 sm:pt-8 lg:pt-12"
           >
             {column2.map(renderCard)}
           </motion.div>
 
-          {/* Column 3 (Fast Ascending) */}
+          {/* Column 3 (Ascending) */}
           <motion.div
-            style={{ y: prefersReduced ? 0 : col3Y }}
-            className="space-y-6 pt-0 sm:pt-6 lg:pt-8"
+            style={{ y: prefersReduced ? 0 : col3Y, willChange: 'transform' }}
+            className="space-y-6 pt-0 sm:pt-4 lg:pt-6"
           >
             {column3.map(renderCard)}
           </motion.div>
 
           {/* Column 4 (Descending) */}
           <motion.div
-            style={{ y: prefersReduced ? 0 : col4Y }}
-            className="space-y-6 pt-0 sm:pt-16 lg:pt-28"
+            style={{ y: prefersReduced ? 0 : col4Y, willChange: 'transform' }}
+            className="space-y-6 pt-0 sm:pt-10 lg:pt-16"
           >
             {column4.map(renderCard)}
           </motion.div>

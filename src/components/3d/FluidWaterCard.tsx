@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import { Waves, Sparkles } from 'lucide-react';
 
 interface FluidWaterCardProps {
@@ -22,10 +21,12 @@ export const FluidWaterCard: React.FC<FluidWaterCardProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const isVisibleRef = useRef(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -40,10 +41,21 @@ export const FluidWaterCard: React.FC<FluidWaterCardProps> = ({
       imgLoaded = true;
     };
 
+    // IntersectionObserver to pause render loop when offscreen
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisibleRef.current = entry.isIntersecting;
+        });
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(container);
+
     const handleResize = () => {
       if (!containerRef.current || !canvas) return;
       const rect = containerRef.current.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5); // Cap DPR for performance
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
       ctx.scale(dpr, dpr);
@@ -64,67 +76,65 @@ export const FluidWaterCard: React.FC<FluidWaterCardProps> = ({
       mouse.strength = 0;
     };
 
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener('mousemove', handleMouseMove);
-      container.addEventListener('mouseleave', handleMouseLeave);
-    }
+    container.addEventListener('mousemove', handleMouseMove);
+    container.addEventListener('mouseleave', handleMouseLeave);
 
     const render = () => {
-      time += 0.03;
-      mouse.x += (mouse.targetX - mouse.x) * 0.1;
-      mouse.y += (mouse.targetY - mouse.y) * 0.1;
-      mouse.strength += (0 - mouse.strength) * 0.05;
+      // ONLY render if currently visible on screen
+      if (isVisibleRef.current) {
+        time += 0.03;
+        mouse.x += (mouse.targetX - mouse.x) * 0.1;
+        mouse.y += (mouse.targetY - mouse.y) * 0.1;
+        mouse.strength += (0 - mouse.strength) * 0.05;
 
-      const width = canvas.width / (Math.min(window.devicePixelRatio || 1, 2));
-      const height = canvas.height / (Math.min(window.devicePixelRatio || 1, 2));
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        const width = canvas.width / dpr;
+        const height = canvas.height / dpr;
 
-      ctx.clearRect(0, 0, width, height);
+        ctx.clearRect(0, 0, width, height);
 
-      if (imgLoaded) {
-        // Draw the base image
-        ctx.drawImage(img, 0, 0, width, height);
+        if (imgLoaded) {
+          ctx.drawImage(img, 0, 0, width, height);
 
-        // Draw interactive water caustics & shimmer overlay
-        ctx.save();
-        ctx.globalCompositeOperation = 'overlay';
+          ctx.save();
+          ctx.globalCompositeOperation = 'overlay';
 
-        const gradient = ctx.createRadialGradient(
-          mouse.x,
-          mouse.y,
-          10,
-          mouse.x,
-          mouse.y,
-          160
-        );
-        gradient.addColorStop(0, 'rgba(26, 150, 170, 0.45)');
-        gradient.addColorStop(0.5, 'rgba(116, 180, 192, 0.2)');
-        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+          const gradient = ctx.createRadialGradient(
+            mouse.x,
+            mouse.y,
+            10,
+            mouse.x,
+            mouse.y,
+            160
+          );
+          gradient.addColorStop(0, 'rgba(26, 150, 170, 0.45)');
+          gradient.addColorStop(0.5, 'rgba(116, 180, 192, 0.2)');
+          gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, width, height);
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, width, height);
 
-        // Gentle sinusoidal water caustic bands
-        ctx.globalAlpha = 0.18 + mouse.strength * 0.15;
-        ctx.strokeStyle = 'rgba(230, 248, 250, 0.6)';
-        ctx.lineWidth = 2.5;
+          ctx.globalAlpha = 0.18 + mouse.strength * 0.15;
+          ctx.strokeStyle = 'rgba(230, 248, 250, 0.6)';
+          ctx.lineWidth = 2.0;
 
-        for (let i = 0; i < 4; i++) {
-          ctx.beginPath();
-          const waveOffset = time * 2 + i * 1.5;
-          const yBase = (height / 5) * (i + 1);
-          ctx.moveTo(0, yBase + Math.sin(waveOffset) * 12);
+          for (let i = 0; i < 3; i++) {
+            ctx.beginPath();
+            const waveOffset = time * 2 + i * 1.5;
+            const yBase = (height / 4) * (i + 1);
+            ctx.moveTo(0, yBase + Math.sin(waveOffset) * 10);
 
-          for (let x = 0; x <= width; x += 20) {
-            const distToMouse = Math.hypot(x - mouse.x, yBase - mouse.y);
-            const mouseWave = Math.max(0, 1 - distToMouse / 120) * 18 * Math.sin(time * 5 + x * 0.05);
-            const y = yBase + Math.sin(x * 0.015 + waveOffset) * 10 + mouseWave;
-            ctx.lineTo(x, y);
+            for (let x = 0; x <= width; x += 25) {
+              const distToMouse = Math.hypot(x - mouse.x, yBase - mouse.y);
+              const mouseWave = Math.max(0, 1 - distToMouse / 120) * 14 * Math.sin(time * 5 + x * 0.05);
+              const y = yBase + Math.sin(x * 0.015 + waveOffset) * 8 + mouseWave;
+              ctx.lineTo(x, y);
+            }
+            ctx.stroke();
           }
-          ctx.stroke();
-        }
 
-        ctx.restore();
+          ctx.restore();
+        }
       }
 
       animationFrameId = requestAnimationFrame(render);
@@ -135,10 +145,9 @@ export const FluidWaterCard: React.FC<FluidWaterCardProps> = ({
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
-      if (container) {
-        container.removeEventListener('mousemove', handleMouseMove);
-        container.removeEventListener('mouseleave', handleMouseLeave);
-      }
+      observer.disconnect();
+      container.removeEventListener('mousemove', handleMouseMove);
+      container.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, [imageSrc]);
 
@@ -147,7 +156,8 @@ export const FluidWaterCard: React.FC<FluidWaterCardProps> = ({
       ref={containerRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`relative group rounded-3xl overflow-hidden bg-[#FAF6EF] border border-[#E4D9C8] shadow-[0_16px_36px_rgba(22,41,38,0.08),_inset_0_2px_4px_rgba(255,255,255,0.9)] transition-all duration-500 hover:shadow-[0_24px_48px_rgba(26,150,170,0.18)] ${className}`}
+      style={{ willChange: 'transform', transform: 'translate3d(0,0,0)' }}
+      className={`relative group rounded-3xl overflow-hidden bg-[#FAF6EF] border border-[#E4D9C8] shadow-[0_16px_36px_rgba(22,41,38,0.08),_inset_0_2px_4px_rgba(255,255,255,0.9)] transition-all duration-300 hover:shadow-[0_24px_48px_rgba(26,150,170,0.18)] ${className}`}
     >
       {/* Canvas Layer */}
       <div className="relative h-[320px] w-full overflow-hidden bg-[#E5DFD3]">
@@ -156,7 +166,7 @@ export const FluidWaterCard: React.FC<FluidWaterCardProps> = ({
           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
 
-        {/* Fallback image layer if canvas is loading */}
+        {/* Fallback image */}
         <img
           src={imageSrc}
           alt={title}
@@ -183,7 +193,7 @@ export const FluidWaterCard: React.FC<FluidWaterCardProps> = ({
           <span className="text-xs uppercase tracking-widest font-bold text-[#74B4C0]">
             {subtitle}
           </span>
-          <h3 className="text-2xl font-extrabold text-white mt-0.5 font-serif">
+          <h3 className="font-serif text-2xl font-extrabold text-white mt-0.5">
             {title}
           </h3>
         </div>
@@ -192,7 +202,7 @@ export const FluidWaterCard: React.FC<FluidWaterCardProps> = ({
       {/* Card Info Footer */}
       {description && (
         <div className="p-5 bg-[#FAF6EF]">
-          <p className="text-sm text-[#344E4A] leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#344E4A] leading-relaxed">
             {description}
           </p>
         </div>

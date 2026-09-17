@@ -1,117 +1,283 @@
-import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Compass, MoveHorizontal, ArrowRight, Sparkles, Waves } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Compass, Sparkles, Waves, Smile, Activity, Sun, ArrowUpRight, CheckCircle2, Clock, Zap } from 'lucide-react';
 import { ClayImage } from '../common/ClayImage';
-import { fadeUp, staggerContainer, springTransition } from '../../utils/motionVariants';
+import { CinematicReveal } from '../common/CinematicReveal';
 
 interface ActivitiesSectionProps {
   onOpenEnquiry?: () => void;
 }
 
 export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnquiry }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeIdx, setActiveIdx] = useState<number>(0);
 
   const activities = [
     {
-      id: 'activities-01',
+      id: 'act-01',
+      index: '01',
       image: '/images/amenities/swimming-pool.png',
-      badge: 'Water & Sun',
-      title: 'Poolside Swimming & Deck Relaxation',
-      energy: 'Relaxed · All Day',
-      description: 'Take leisure laps or unwind in the shallow circular lounge framed by tropical palms and blue skies.',
-      clayType: 'water' as const,
+      badge: 'Water Recreation',
+      title: 'Palm Pool & Shallow Lounging',
+      timeSlot: '11:00 AM – 03:00 PM',
+      energy: 'Relaxed Floating',
+      energyLevel: 45,
+      description: 'Take refreshing leisure laps or unwind in the shallow circular lounge framed by towering coconut palms, timber loungers, and pure mountain air.',
+      highlights: ['Shallow relaxation area', 'Tropical palm canopy', 'Poolside loungers'],
+      variant: 'water' as const,
     },
     {
-      id: 'activities-02',
+      id: 'act-02',
+      index: '02',
       image: '/images/amenities/kids-play-trampoline.png',
-      badge: 'Active Play',
-      title: 'Kids Trampoline & Lawn Games',
-      energy: 'High Energy · Safe Fun',
-      description: 'Enclosed jumping trampoline and open grass running space for children to play freely in clean mountain air.',
-      clayType: 'sand' as const,
+      badge: 'Family & Kids',
+      title: 'Kids Trampoline & Soft Lawns',
+      timeSlot: '03:30 PM – 05:00 PM',
+      energy: 'High Energy Fun',
+      energyLevel: 90,
+      description: 'Enclosed jumping trampoline with full-perimeter mesh netting and open manicured lawn running space for children to play safely under the sun.',
+      highlights: ['Enclosed safety netting', 'Soft manicured grass', 'Supervised play zone'],
+      variant: 'sand' as const,
     },
     {
-      id: 'activities-03',
+      id: 'act-03',
+      index: '03',
       image: '/images/amenities/badminton-court.png',
-      badge: 'Friendly Match',
-      title: 'Bamboo Lawn Badminton Rallies',
-      energy: 'Moderate · Afternoon',
-      description: 'Pick up racquets for friendly rallies on our landscaped grass court sheltered by natural bamboo borders.',
-      clayType: 'water' as const,
+      badge: 'Active Sports',
+      title: 'Bamboo Lawn Badminton',
+      timeSlot: '05:00 PM – 06:30 PM',
+      energy: 'Friendly Matches',
+      energyLevel: 75,
+      description: 'Lively friendly rallies on grass courts sheltered naturally by towering green bamboo canopies during the golden sunset hour.',
+      highlights: ['Natural bamboo shelter', 'Tournament racquets provided', 'Sunset grass court'],
+      variant: 'water' as const,
     },
     {
-      id: 'activities-04',
+      id: 'act-04',
+      index: '04',
       image: '/images/resort/covered-seating.jpeg',
       badge: 'Evening Chill',
       title: 'Verandah Lounge & Stargazing',
-      energy: 'Gentle · Starlit Night',
-      description: 'Savor steaming hot local coffee on the covered verandah and watch the clear, starlit Kodagu skies.',
-      clayType: 'sand' as const,
+      timeSlot: '07:30 PM – 10:00 PM',
+      energy: 'Starlit Stillness',
+      energyLevel: 25,
+      description: 'Savor freshly brewed hot Coorg estate coffee on the covered verandah and gaze at the unpolluted night skies before sanctuary quiet hours.',
+      highlights: ['Fresh estate coffee', 'Unpolluted night sky', 'Quiet sanctuary hours'],
+      variant: 'sand' as const,
     },
   ];
 
   return (
-    <section id="activities" className="relative w-full py-20 sm:py-28 bg-sand-100/40 text-riverbed-900 overflow-hidden select-none">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
+    <section id="activities" className="relative w-full py-20 sm:py-28 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-3 max-w-xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-sand-300 bg-white px-4 py-1.5 text-xs font-bold text-sand-600 shadow-clay-pill">
-              <Compass className="size-4 text-sand-600" />
+          <CinematicReveal className="space-y-3 max-w-xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+              <Compass className="w-4 h-4 text-[#A3733E]" />
               <span>Sanctuary Experiences</span>
             </div>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-riverbed-900 leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#132422] font-serif leading-tight">
               Curated Kodagu activities for everyone.
             </h2>
-          </div>
+            <p className="text-sm text-[#344E4A] font-medium leading-relaxed">
+              Hover or click any panel to expand its 3D details and daily timing.
+            </p>
+          </CinematicReveal>
 
-          <div className="flex items-center gap-2 text-xs font-bold text-water-700 self-start md:self-auto clay-pill px-4 py-2 bg-white">
-            <MoveHorizontal className="size-4 text-water-500 animate-pulse" />
-            <span>Swipe or drag experiences</span>
-          </div>
+          <CinematicReveal delay={0.15}>
+            <span className="text-xs font-bold text-[#116B7B] px-4 py-2 rounded-full bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm inline-flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-[#1A96AA]" />
+              <span>4 Interactive Experience Panels</span>
+            </span>
+          </CinematicReveal>
         </div>
 
-        {/* Drag-Based Horizontal Clay Carousel */}
-        <div ref={containerRef} className="overflow-hidden cursor-grab active:cursor-grabbing py-3">
-          <motion.div
-            drag="x"
-            dragConstraints={containerRef}
-            whileTap={{ cursor: 'grabbing' }}
-            className="flex gap-6 w-max"
-          >
-            {activities.map((act) => (
+        {/* 3D Interactive Expanding Bento Accordion Stage (Desktop) */}
+        <div className="hidden lg:flex gap-4 h-[520px] w-full">
+          {activities.map((act, idx) => {
+            const isExpanded = activeIdx === idx;
+            return (
               <motion.div
                 key={act.id}
-                whileHover={{ y: -6, scale: 1.02 }}
-                transition={springTransition}
-                className={`w-[290px] sm:w-[340px] md:w-[380px] p-4 border-2 border-white space-y-4 shrink-0 ${
-                  act.clayType === 'water' ? 'clay-card-water' : 'clay-card-sand'
+                onMouseEnter={() => setActiveIdx(idx)}
+                onClick={() => setActiveIdx(idx)}
+                animate={{
+                  flex: isExpanded ? 3.5 : 1,
+                }}
+                transition={{
+                  duration: 0.6,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className={`relative rounded-3xl overflow-hidden border cursor-pointer transition-all duration-300 ${
+                  isExpanded
+                    ? 'bg-[#FAF6EF] border-[#1A96AA] shadow-[0_20px_45px_rgba(26,150,170,0.18),_inset_0_2px_4px_rgba(255,255,255,0.9)]'
+                    : 'bg-[#EFE8DC] border-[#DFD3C0] hover:border-[#C2B5A0] shadow-sm'
                 }`}
               >
-                <ClayImage
-                  src={act.image}
-                  alt={act.title}
-                  aspectRatio="4:3"
-                  clayVariant={act.clayType}
-                  badge={act.badge}
-                  className="w-full shadow-clay-sm"
-                />
+                {isExpanded ? (
+                  /* Expanded 3D Active Panel Content */
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.4 }}
+                    className="p-6 h-full flex flex-col justify-between"
+                  >
+                    <div className="space-y-4">
+                      {/* Top Badges */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="w-8 h-8 rounded-full bg-[#132422] text-[#FAF6EF] text-xs font-bold font-mono flex items-center justify-center">
+                            {act.index}
+                          </span>
+                          <span className="px-3 py-1 rounded-full bg-[#E5F3F5] text-[#116B7B] text-xs font-bold border border-[#BCE2E7]">
+                            {act.badge}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-xs font-bold text-[#635546]">
+                          <Clock className="w-3.5 h-3.5 text-[#1A96AA]" />
+                          <span>{act.timeSlot}</span>
+                        </div>
+                      </div>
 
-                <div className="space-y-2">
-                  <span className="clay-pill px-2.5 py-0.5 text-[0.68rem] font-bold text-water-800 bg-white/90 inline-block">
-                    {act.energy}
-                  </span>
-                  <h3 className="font-display text-lg sm:text-xl font-bold text-riverbed-900 leading-snug">
-                    {act.title}
-                  </h3>
-                  <p className="text-xs text-riverbed-600 font-medium leading-relaxed">
-                    {act.description}
-                  </p>
-                </div>
+                      {/* Photo Banner with 3D Clay Frame */}
+                      <div className="relative h-[220px] rounded-2xl overflow-hidden bg-[#E8DFD1] shadow-sm">
+                        <ClayImage
+                          src={act.image}
+                          alt={act.title}
+                          aspectRatio="16:10"
+                          clayVariant="water"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#132422]/60 to-transparent pointer-events-none" />
+                        <div className="absolute bottom-3 left-3 right-3 z-10 text-white">
+                          <h3 className="font-serif text-2xl font-extrabold">
+                            {act.title}
+                          </h3>
+                        </div>
+                      </div>
+
+                      {/* Description & Inclusions */}
+                      <p className="text-xs sm:text-sm text-[#344E4A] leading-relaxed">
+                        {act.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        {act.highlights.map((hl, hIdx) => (
+                          <span
+                            key={hIdx}
+                            className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#162926] bg-[#EFE8DC] px-2.5 py-1 rounded-full border border-[#DFD3C0]"
+                          >
+                            <CheckCircle2 className="w-3 h-3 text-[#116B7B]" />
+                            {hl}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Bottom Action Row */}
+                    <div className="pt-4 border-t border-[#E4D9C8] flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Zap className="w-4 h-4 text-[#A3733E]" />
+                        <span className="text-xs font-bold text-[#132422]">{act.energy}</span>
+                      </div>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (onOpenEnquiry) onOpenEnquiry();
+                        }}
+                        className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-md transition-all flex items-center gap-1.5"
+                      >
+                        <span>Plan Activity</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </motion.div>
+                ) : (
+                  /* Collapsed Vertical Typographic Spine */
+                  <div className="h-full p-4 flex flex-col justify-between items-center py-8">
+                    <span className="w-8 h-8 rounded-full bg-[#FAF6EF] text-[#A3733E] text-xs font-bold font-mono flex items-center justify-center border border-[#DFD3C0]">
+                      {act.index}
+                    </span>
+
+                    {/* Vertical Title */}
+                    <div className="flex-1 flex items-center justify-center my-4">
+                      <span
+                        className="font-serif text-sm font-bold text-[#132422] tracking-wider uppercase [writing-mode:vertical-rl] rotate-180 line-clamp-1"
+                      >
+                        {act.title}
+                      </span>
+                    </div>
+
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#1A96AA] animate-pulse" />
+                  </div>
+                )}
               </motion.div>
-            ))}
-          </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Mobile & Tablet Vertical Accordion */}
+        <div className="flex lg:hidden flex-col gap-4">
+          {activities.map((act, idx) => {
+            const isExpanded = activeIdx === idx;
+            return (
+              <div
+                key={act.id}
+                onClick={() => setActiveIdx(idx)}
+                className={`rounded-3xl border overflow-hidden transition-all ${
+                  isExpanded
+                    ? 'bg-[#FAF6EF] border-[#1A96AA] p-5 shadow-md'
+                    : 'bg-[#EFE8DC] border-[#DFD3C0] p-4'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-7 h-7 rounded-full bg-[#132422] text-white text-xs font-bold font-mono flex items-center justify-center">
+                      {act.index}
+                    </span>
+                    <h4 className="font-serif text-base font-bold text-[#132422]">
+                      {act.title}
+                    </h4>
+                  </div>
+                  <span className="text-xs text-[#116B7B] font-bold">
+                    {isExpanded ? 'Active' : 'View'}
+                  </span>
+                </div>
+
+                {isExpanded && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    className="mt-4 space-y-3 pt-3 border-t border-[#E4D9C8]"
+                  >
+                    <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-[#E8DFD1]">
+                      <ClayImage
+                        src={act.image}
+                        alt={act.title}
+                        aspectRatio="16:10"
+                        clayVariant="water"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <p className="text-xs text-[#344E4A] leading-relaxed">
+                      {act.description}
+                    </p>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (onOpenEnquiry) onOpenEnquiry();
+                      }}
+                      className="w-full py-3 rounded-xl text-xs font-bold text-white bg-[#1A96AA] text-center"
+                    >
+                      Plan This Activity
+                    </button>
+                  </motion.div>
+                )}
+              </div>
+            );
+          })}
         </div>
 
       </div>
