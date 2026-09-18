@@ -14,14 +14,24 @@ export const ResortNavbar: React.FC<ResortNavbarProps> = ({ onOpenEnquiry, onRep
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const isHomepage = location.pathname === '/';
+  const [showNavbar, setShowNavbar] = useState(!isHomepage);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+      if (isHomepage) {
+        // Hide navbar during 3D space scene, show once zoomed into resort (scrollY > 2400px)
+        setShowNavbar(window.scrollY > 2400);
+      } else {
+        setShowNavbar(true);
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isHomepage]);
 
   const navLinks = [
     { name: 'Resort', path: '/' },
@@ -36,7 +46,11 @@ export const ResortNavbar: React.FC<ResortNavbarProps> = ({ onOpenEnquiry, onRep
   ];
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 px-4 sm:px-6 lg:px-8 pt-3 sm:pt-4 transition-all duration-300 pointer-events-auto">
+    <header
+      className={`fixed top-0 inset-x-0 z-50 px-4 sm:px-6 lg:px-8 pt-3 sm:pt-4 transition-all duration-500 ease-out ${
+        showNavbar ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-32 opacity-0 pointer-events-none'
+      }`}
+    >
       <div className="mx-auto max-w-7xl">
         {/* Floating Clay Pill Navbar with Pure Black Shadows */}
         <div
@@ -73,10 +87,10 @@ export const ResortNavbar: React.FC<ResortNavbarProps> = ({ onOpenEnquiry, onRep
               <button
                 onClick={onReplayIntro}
                 className="px-3 py-1.5 rounded-full transition-all duration-200 text-[#A3733E] hover:text-[#132422] hover:bg-[#FAF6EF] flex items-center gap-1 font-semibold text-xs ml-1 cursor-pointer"
-                title="Replay Calligraphy Intro"
+                title="Scroll to Top"
               >
                 <Play className="w-3 h-3 text-[#A3733E]" />
-                <span>Intro</span>
+                <span>Space Hero</span>
               </button>
             )}
           </nav>
@@ -145,7 +159,7 @@ export const ResortNavbar: React.FC<ResortNavbarProps> = ({ onOpenEnquiry, onRep
                 className="w-full py-2.5 rounded-2xl bg-[#FAF6EF] border border-[#E0D7C8] text-xs font-bold text-[#A3733E] flex items-center justify-center gap-1.5 shadow-[0_4px_10px_rgba(0,0,0,0.08)] cursor-pointer"
               >
                 <Play className="w-3.5 h-3.5 text-[#A3733E]" />
-                <span>Replay Calligraphy Intro</span>
+                <span>Space Hero</span>
               </button>
             )}
 

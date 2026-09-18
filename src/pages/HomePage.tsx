@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeroCarouselSection } from '../components/sections/HeroCarouselSection';
+import { EarthHeroScrollSection } from '../components/sections/EarthHeroScrollSection';
 import { WelcomeSection } from '../components/sections/WelcomeSection';
 import { FloatingParallaxMosaic } from '../components/3d/FloatingParallaxMosaic';
 import { BirdsongNatureSection } from '../components/sections/BirdsongNatureSection';
@@ -19,8 +19,8 @@ interface HomePageProps {
 export const HomePage: React.FC<HomePageProps> = ({ onOpenEnquiry }) => {
   return (
     <div className="relative w-full bg-[#FAF6EF] text-[#132422] overflow-x-hidden select-none">
-      {/* 1. HERO CAROUSEL (Real images, 3D Clay Frame, Auto-advance, Magnetic CTA) */}
-      <HeroCarouselSection onOpenEnquiry={onOpenEnquiry} />
+      {/* 1. CINEMATIC 3D EARTH TO COORG SCROLL-ZOOM HERO (Photorealistic Globe, Subcontinent Alignment & Block LAYA Reveal) */}
+      <EarthHeroScrollSection onOpenEnquiry={onOpenEnquiry} />
 
       {/* 2. WELCOME / INTRO (Real Covered Lounge photo, 3D Clay Stat Cards) */}
       <WelcomeSection />

@@ -5,7 +5,6 @@ import { ResortNavbar } from './components/layout/ResortNavbar';
 import { ResortFooter } from './components/layout/ResortFooter';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import { EnquiryModal } from './components/common/EnquiryModal';
-import { CalligraphyIntroScreen } from './components/common/CalligraphyIntroScreen';
 
 // Pages
 import { HomePage } from './pages/HomePage';
@@ -22,13 +21,6 @@ import { NotFoundPage } from './pages/NotFoundPage';
 
 export const App: React.FC = () => {
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
-  const [showIntro, setShowIntro] = useState<boolean>(() => {
-    try {
-      return !sessionStorage.getItem('coorg_laya_intro_seen');
-    } catch {
-      return true;
-    }
-  });
 
   // Initialize Lenis Momentum Smooth Scroll
   useEffect(() => {
@@ -65,23 +57,18 @@ export const App: React.FC = () => {
     setIsEnquiryOpen(false);
   };
 
-  const handleReplayIntro = () => {
-    setShowIntro(true);
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <Router>
       <ScrollToTop />
 
-      {/* Cinematic Calligraphy SVG Stroke Intro Screen */}
-      {showIntro && (
-        <CalligraphyIntroScreen onComplete={() => setShowIntro(false)} />
-      )}
-
       <div className="min-h-screen flex flex-col bg-[#F5F0E8] text-[#162926] selection:bg-[#1A96AA]/20 selection:text-[#116B7B] font-sans antialiased">
         <ResortNavbar
           onOpenEnquiry={handleOpenEnquiry}
-          onReplayIntro={handleReplayIntro}
+          onReplayIntro={handleScrollToTop}
         />
 
         <main id="main-content" className="flex-1" tabIndex={-1}>
