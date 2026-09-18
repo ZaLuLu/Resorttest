@@ -316,30 +316,42 @@ export const VinylBirdsongPlayer: React.FC = () => {
             </motion.div>
 
             {/* Realistic Mechanical Tonearm with Smooth Swing & Needle Drop */}
-            <div className="absolute top-3 right-3 z-20 pointer-events-none">
-              <div className="relative w-11 h-11 rounded-full bg-[#D5C7B2] border border-[#B8A78F] shadow-lg flex items-center justify-center">
-                <div className="w-4 h-4 rounded-full bg-[#635546]" />
+            <div className="absolute top-4 right-4 z-20 pointer-events-none">
+              {/* Pivot Base */}
+              <div className="relative w-12 h-12 rounded-full bg-gradient-to-br from-[#E5E7EB] via-[#D1D5DB] to-[#9CA3AF] border-2 border-[#9CA3AF] shadow-[0_4px_12px_rgba(0,0,0,0.35)] flex items-center justify-center">
+                {/* Knurled Counterweight Dial */}
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#374151] to-[#111827] border border-[#6B7280] shadow-inner flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-[#E5E7EB]" />
+                </div>
                 
                 {/* Arm Wand with Realistic Pivot */}
                 <motion.div
                   animate={{
-                    rotate: isPlaying ? 26 : 0,
+                    rotate: isPlaying ? 30 : 0,
                   }}
-                  transition={{ duration: 0.85, ease: [0.25, 1, 0.5, 1] }}
-                  className="absolute top-5 left-5 w-2 h-40 origin-top-left"
+                  transition={{ duration: 0.9, ease: [0.25, 1, 0.5, 1] }}
+                  className="absolute top-6 left-6 origin-top-left"
                 >
-                  <div className="w-2 h-34 bg-gradient-to-r from-[#E5D7C2] via-white to-[#A3733E] rounded-full shadow-md" />
+                  {/* Metallic Tonearm Stem (Explicit 145px length) */}
+                  <div className="relative w-2.5 h-[145px] rounded-full shadow-[2px_4px_10px_rgba(0,0,0,0.4)] bg-gradient-to-r from-[#F3F4F6] via-[#E5E7EB] to-[#9CA3AF] border border-[#9CA3AF]/60">
+                    {/* Lateral Tonearm Rest clip */}
+                    <div className="absolute top-10 -left-1 w-4 h-1 bg-[#4B5563] rounded" />
+                  </div>
                   
-                  {/* Cartridge & Stylus Needle Head */}
+                  {/* Cartridge Headshell & Stylus Needle */}
                   <motion.div
                     animate={{
-                      scale: needleOnRecord ? 0.95 : 1,
-                      y: needleOnRecord ? 2 : 0,
+                      scale: needleOnRecord ? 0.96 : 1,
+                      y: needleOnRecord ? 2.5 : 0,
                     }}
-                    transition={{ duration: 0.3 }}
-                    className="w-4 h-7 bg-[#132422] rounded-md border border-[#E2BA84] -mt-1 -ml-1 shadow-md flex items-center justify-center"
+                    transition={{ duration: 0.25 }}
+                    className="absolute -bottom-2 -left-2 w-6 h-10 rounded-md bg-[#18181B] border border-[#F59E0B] shadow-[0_4px_8px_rgba(0,0,0,0.4)] flex flex-col items-center justify-between p-1"
                   >
-                    <div className="w-1 h-2 bg-[#FFE4A0] rounded-full" />
+                    {/* Headshell finger lift bar */}
+                    <div className="w-1.5 h-3 bg-[#D97706] rounded-full -mt-2 -mr-5" />
+                    <div className="w-3 h-1 bg-[#F59E0B] rounded-full" />
+                    {/* Glowing Ruby/Diamond Stylus tip */}
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#EF4444] shadow-[0_0_6px_#EF4444]" />
                   </motion.div>
                 </motion.div>
               </div>

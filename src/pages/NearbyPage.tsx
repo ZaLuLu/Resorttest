@@ -16,58 +16,74 @@ interface NearbyPageProps {
 export const NearbyPage: React.FC<NearbyPageProps> = ({ onOpenEnquiry }) => {
   const allDestinations = [
     {
-      name: 'Kaveri Nisargadhama (Hanging Bridge)',
-      dist: '4 km',
+      name: 'Kaveri Nisargadhama',
+      dist: '3.8 km',
       time: '8 mins',
       type: 'Riverside Island & Deer Park',
       bestTime: '9:00 AM – 11:30 AM',
-      highlight: 'Bamboo groves, suspension bridge across Kaveri, and tree-top walkways.',
-      image: '/images/nearby/kaveri-river.png',
+      highlight: 'Bamboo groves, suspension bridge across Kaveri river, and treetop walkways.',
+      image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&q=80',
+      mapQuery: 'Kaveri+Nisargadhama+Kushalnagar',
     },
     {
-      name: 'Tibetan Golden Temple (Bylakuppe)',
-      dist: '6 km',
+      name: 'Tibetan Golden Temple (Namdroling)',
+      dist: '6.5 km',
       time: '12 mins',
-      type: 'Namdroling Monastery',
+      type: 'Tibetan Monastery & Heritage',
       bestTime: '10:00 AM – 4:00 PM',
-      highlight: 'Second largest Tibetan settlement in India with majestic 40ft golden statues.',
-      image: '/images/nearby/nearby-attractions-overview.png',
+      highlight: 'Major Tibetan settlement with ornate prayer halls and 40ft golden Buddha statues.',
+      image: 'https://images.unsplash.com/photo-1590073242678-70ee3fc28e8e?w=800&q=80',
+      mapQuery: 'Namdroling+Monastery+Golden+Temple+Bylakuppe',
+    },
+    {
+      name: 'Harangi Dam & Reservoir',
+      dist: '9.2 km',
+      time: '18 mins',
+      type: 'Dam & Sunset Scenic Lake',
+      bestTime: '4:30 PM – 6:30 PM',
+      highlight: 'Serene lakeside breeze, calm water reflections, and scenic evening views.',
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80',
+      mapQuery: 'Harangi+Reservoir+Kushalnagar',
     },
     {
       name: 'Dubare Elephant Camp',
-      dist: '18 km',
+      dist: '14.5 km',
       time: '25 mins',
-      type: 'Elephant River Habitat & Rafting',
+      type: 'Elephant Sanctuary & Kaveri Rafting',
       bestTime: '8:30 AM – 10:30 AM',
-      highlight: 'Observe elephant bathing in Kaveri river and natural forest wildlife trails.',
-      image: '/images/resort/garden-lawn.jpeg',
+      highlight: 'Observe elephant bathing rituals in Kaveri river and explore tranquil forest trails.',
+      image: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=800&q=80',
+      mapQuery: 'Dubare+Elephant+Camp+Coorg',
     },
     {
-      name: 'Harangi Reservoir & Backwaters',
-      dist: '12 km',
-      time: '20 mins',
-      type: 'Dam & Sunset Scenic Lake',
-      bestTime: '4:30 PM – 6:30 PM',
-      highlight: 'Serene lakeside breeze, calm water reflections, and scenic picnic vistas.',
-      image: '/images/amenities/swimming-pool.png',
+      name: 'Chiklihole Reservoir',
+      dist: '16.0 km',
+      time: '25 mins',
+      type: 'Secluded Forest Lake & Dam',
+      bestTime: '3:30 PM – 6:00 PM',
+      highlight: 'Curved spillway dam nestled in dense evergreen woods, peaceful and uncrowded.',
+      image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80',
+      mapQuery: 'Chiklihole+Reservoir+Coorg',
     },
     {
       name: "Raja's Seat (Madikeri)",
-      dist: '28 km',
+      dist: '29.0 km',
       time: '40 mins',
-      type: 'Historic Sunset Viewpoint',
+      type: 'Historic Valley Sunset Viewpoint',
       bestTime: '5:00 PM – 6:45 PM',
-      highlight: 'Panoramic valley sunset views where Kodagu kings enjoyed evening skies.',
-      image: '/images/resort/garden-terrace.jpeg',
+      highlight: 'Panoramic Western Ghats sunset terrace where Kodagu kings spent peaceful evenings.',
+      image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
+      mapQuery: 'Rajas+Seat+Madikeri',
     },
     {
-      name: 'Abbey Falls (Coffee Waterfall)',
-      dist: '35 km',
+      name: 'Abbey Falls (Madikeri)',
+      dist: '35.0 km',
       time: '50 mins',
-      type: 'Coffee Plantation Cascades',
+      type: 'Coffee Estate Waterfall',
       bestTime: '9:00 AM – 1:00 PM',
-      highlight: 'Roaring waterfall nestled amidst spice and coffee plantations with a bridge.',
-      image: '/images/rooms/room-interior-neutral.jpeg',
+      highlight: 'Roaring cascade nestled inside spice and coffee plantations with a suspension viewbridge.',
+      image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=800&q=80',
+      mapQuery: 'Abbey+Falls+Madikeri',
     },
   ];
 
@@ -133,35 +149,60 @@ export const NearbyPage: React.FC<NearbyPageProps> = ({ onOpenEnquiry }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {allDestinations.map((dest, idx) => (
             <CinematicReveal key={idx} delay={idx * 0.08}>
-              <div className="rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] p-5 space-y-4 shadow-sm hover:shadow-md transition-all h-full flex flex-col justify-between">
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#E5F3F5] text-[#116B7B] border border-[#BCE2E7]">
+              <div className="rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] overflow-hidden shadow-sm hover:shadow-md hover:border-[#1A96AA]/40 transition-all h-full flex flex-col justify-between group">
+                <div className="relative h-44 overflow-hidden bg-[#EFE8DC]">
+                  <img
+                    src={dest.image}
+                    alt={dest.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute top-3 left-3">
+                    <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#FAF6EF]/90 backdrop-blur-md text-[#116B7B] border border-[#BCE2E7] shadow-sm">
                       {dest.dist} · {dest.time}
                     </span>
-                    <span className="text-xs text-[#635546] font-semibold">{dest.bestTime}</span>
                   </div>
-
-                  <h3 className="font-serif text-lg font-bold text-[#132422]">
-                    {dest.name}
-                  </h3>
-                  <span className="text-xs font-bold text-[#A3733E] block">
-                    {dest.type}
-                  </span>
-                  <p className="text-xs text-[#344E4A] leading-relaxed">
-                    {dest.highlight}
-                  </p>
+                  <div className="absolute bottom-3 left-3 right-3 text-white">
+                    <span className="text-[11px] font-semibold text-[#FFD285] block uppercase tracking-wider">
+                      {dest.type}
+                    </span>
+                    <h3 className="font-serif text-lg font-bold text-white drop-shadow-sm line-clamp-1">
+                      {dest.name}
+                    </h3>
+                  </div>
                 </div>
 
-                <div className="pt-3 border-t border-[#E4D9C8]/60 flex items-center justify-between">
-                  <span className="text-[11px] text-[#116B7B] font-bold">Taxi / Self-Drive Available</span>
-                  <button
-                    onClick={onOpenEnquiry}
-                    className="p-2 rounded-xl bg-[#EFE8DC] hover:bg-[#E4D9C8] text-[#132422] transition-colors"
-                    title="Enquire sightseeing taxi"
-                  >
-                    <ArrowUpRight className="w-4 h-4" />
-                  </button>
+                <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-1.5 text-xs text-[#635546] font-medium">
+                      <Clock className="w-3.5 h-3.5 text-[#A3733E]" />
+                      <span>Best Hours: {dest.bestTime}</span>
+                    </div>
+                    <p className="text-xs text-[#344E4A] leading-relaxed">
+                      {dest.highlight}
+                    </p>
+                  </div>
+
+                  <div className="pt-3 border-t border-[#E4D9C8]/60 flex items-center gap-2">
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${dest.mapQuery}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 py-2 px-3 rounded-xl bg-[#E5F3F5] hover:bg-[#D2EDF2] text-[#116B7B] font-bold text-xs transition-colors flex items-center justify-center gap-1.5 border border-[#BCE2E7]"
+                    >
+                      <Navigation className="w-3.5 h-3.5" />
+                      <span>Google Maps</span>
+                    </a>
+                    <button
+                      onClick={onOpenEnquiry}
+                      className="py-2 px-3 rounded-xl bg-[#EFE8DC] hover:bg-[#E4D9C8] text-[#132422] font-semibold text-xs transition-colors flex items-center justify-center gap-1 border border-[#D5C7B2]"
+                      title="Enquire cab transfer"
+                    >
+                      <span>Taxi</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </CinematicReveal>
