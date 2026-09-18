@@ -184,24 +184,16 @@ export const NearbyPage: React.FC<NearbyPageProps> = ({ onOpenEnquiry }) => {
                     </p>
                   </div>
 
-                  <div className="pt-3 border-t border-[#E4D9C8]/60 flex items-center gap-2">
+                  <div className="pt-3 border-t border-[#E4D9C8]/60">
                     <a
                       href={`https://www.google.com/maps/search/?api=1&query=${dest.mapQuery}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 py-2 px-3 rounded-xl bg-[#E5F3F5] hover:bg-[#D2EDF2] text-[#116B7B] font-bold text-xs transition-colors flex items-center justify-center gap-1.5 border border-[#BCE2E7]"
+                      className="w-full py-2.5 px-3 rounded-xl bg-[#E5F3F5] hover:bg-[#D2EDF2] text-[#116B7B] font-bold text-xs transition-colors flex items-center justify-center gap-1.5 border border-[#BCE2E7]"
                     >
                       <Navigation className="w-3.5 h-3.5" />
-                      <span>Google Maps</span>
+                      <span>Open in Google Maps</span>
                     </a>
-                    <button
-                      onClick={onOpenEnquiry}
-                      className="py-2 px-3 rounded-xl bg-[#EFE8DC] hover:bg-[#E4D9C8] text-[#132422] font-semibold text-xs transition-colors flex items-center justify-center gap-1 border border-[#D5C7B2]"
-                      title="Enquire cab transfer"
-                    >
-                      <span>Taxi</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </button>
                   </div>
                 </div>
               </div>
@@ -263,7 +255,7 @@ export const NearbyPage: React.FC<NearbyPageProps> = ({ onOpenEnquiry }) => {
                     onClick={onOpenEnquiry}
                     className="w-full py-3 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-md transition-all flex items-center justify-center gap-2"
                   >
-                    <span>Request Resort Cab / Driver</span>
+                    <span>Enquire with Resort Concierge</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>

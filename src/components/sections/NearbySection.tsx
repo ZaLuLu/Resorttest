@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, ArrowRight, MapPin } from 'lucide-react';
+import { Compass, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { CinematicReveal } from '../common/CinematicReveal';
 import { NearbyInteractiveMap } from '../interactive/NearbyInteractiveMap';
@@ -11,41 +11,61 @@ export const NearbySection: React.FC = () => {
       id: 'pc-1',
       image: '/images/nearby/hanging-bridge.png',
       title: 'Kaveri Nisargadhama',
-      badge: 'Riverside Island',
+      badge: 'Riverside Island & Deer Park',
       dist: '3.8 km · 8 mins',
-      description: 'Hanging suspension bridge over the Kaveri, bamboo groves, and peaceful deer park.',
+      elevation: '815m MSL',
+      description: 'Hanging suspension rope bridge over flowing Kaveri river, dense bamboo groves, and peaceful deer reserve.',
+      googleMapsUrl: 'https://maps.google.com/?q=Kaveri+Nisargadhama+Kushalnagar+Coorg',
     },
     {
       id: 'pc-2',
       image: '/images/nearby/nearby-attractions-overview.png',
       title: 'Tibetan Golden Temple',
-      badge: 'Namdroling',
+      badge: 'Namdroling Monastic Center',
       dist: '6.5 km · 12 mins',
-      description: 'Majestic 40ft golden statues and serene Buddhist chanting halls in Bylakuppe.',
+      elevation: '835m MSL',
+      description: 'Towering 40ft gold-plated Buddha statues, ornate Tibetan murals, prayer wheels, and serene chanting halls.',
+      googleMapsUrl: 'https://maps.google.com/?q=Namdroling+Monastery+Golden+Temple+Bylakuppe',
     },
     {
       id: 'pc-3',
-      image: '/images/resort/garden-lawn.jpeg',
+      image: '/images/nearby/dubare-camp.jpg',
       title: 'Dubare Elephant Camp',
-      badge: 'Elephant Haven',
+      badge: 'Kaveri Elephant Sanctuary',
       dist: '14.5 km · 25 mins',
-      description: 'Historic elephant river camp with morning river bathing and natural boat rides.',
+      elevation: '810m MSL',
+      description: 'Historic elephant river camp with morning river bathing in Kaveri waters and naturalist-led forest sessions.',
+      googleMapsUrl: 'https://maps.google.com/?q=Dubare+Elephant+Camp+Coorg',
     },
     {
       id: 'pc-4',
-      image: '/images/resort/garden-terrace.jpeg',
-      title: "Raja's Seat Madikeri",
-      badge: 'Sunset Viewpoint',
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80',
+      title: "Raja's Seat (Madikeri)",
+      badge: 'Historic Sunset Viewpoint',
       dist: '29.0 km · 40 mins',
-      description: 'Historic vantage pavilion overlooking mist-filled valleys and sunsets.',
+      elevation: '1,150m MSL',
+      description: 'Historic royal stone pavilion perched on a cliff edge overlooking layered mist valleys and sunsets across Western Ghats.',
+      googleMapsUrl: 'https://maps.google.com/?q=Rajas+Seat+Madikeri+Coorg',
     },
     {
       id: 'pc-5',
-      image: '/images/rooms/room-interior-neutral.jpeg',
+      image: '/images/nearby/abbey-falls.jpg',
       title: 'Abbey Falls Cascades',
-      badge: 'Plantation Falls',
+      badge: 'Plantation Waterfall',
       dist: '35.0 km · 50 mins',
-      description: 'Roaring waterfall nestled amidst dense coffee bushes and spice trees.',
+      elevation: '1,060m MSL',
+      description: 'Roaring 70-foot waterfall cascading between private coffee estates, aromatic pepper vines, and spice trees.',
+      googleMapsUrl: 'https://maps.google.com/?q=Abbey+Falls+Madikeri+Coorg',
+    },
+    {
+      id: 'pc-6',
+      image: '/images/nearby/kaveri-river.png',
+      title: 'Harangi Dam & Reservoir',
+      badge: 'Lakeside Reservoir',
+      dist: '9.2 km · 18 mins',
+      elevation: '850m MSL',
+      description: 'Sweeping reservoir backwaters with lakeside promenades, cool valley winds, and serene evening reflection views.',
+      googleMapsUrl: 'https://maps.google.com/?q=Harangi+Dam+Hudgur+Coorg',
     },
   ];
 
@@ -69,27 +89,27 @@ export const NearbySection: React.FC = () => {
           </p>
         </CinematicReveal>
 
-        {/* Interactive Google Maps Route & Distance Explorer Hub */}
+        {/* Interactive Offline Regional Cartographic Map Showcase */}
         <CinematicReveal delay={0.15} duration={0.8}>
           <NearbyInteractiveMap />
         </CinematicReveal>
 
-        {/* Tactile 3D Fan-Out Postcard Deck Component */}
+        {/* Luxury Editorial Postcard Gallery */}
         <CinematicReveal delay={0.25} duration={0.8}>
           <div className="rounded-4xl bg-[#FAF6EF] border border-[#E4D9C8] p-6 sm:p-10 shadow-sm space-y-6">
             <FanOutCardDeck
               cards={postcards}
               title="Kodagu Sightseeing Postcard Collection"
-              subtitle="Hover or tap any postcard to fan out the 3D deck and explore details"
+              subtitle="Verified distances and authentic highlights within scenic reach of Coorg Laya Resort"
             />
             
             <div className="text-center pt-4">
               <Link
                 to="/nearby"
-                className="px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-[0_8px_20px_rgba(26,150,170,0.35)] inline-flex items-center gap-2 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+                className="px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold text-white bg-[#132422] hover:bg-[#1E3633] shadow-md inline-flex items-center gap-2 transition-all hover:scale-105 active:scale-95 cursor-pointer"
               >
                 <span>View Full Tourism Itinerary & Directions</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-[#D4AF37]" />
               </Link>
             </div>
           </div>
