@@ -23,7 +23,7 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
     },
     {
       id: 2,
-      image: '/images/amenities/swimming-pool.png',
+      image: '/images/amenities/swimming-pool.jpeg',
       badge: 'Palm Pool Deck',
       title: 'Cool Off in Tropical Sanctuary Waters',
       subtitle: 'Circular relaxation shallow pool framed by tall coconut palms, timber loungers, and clean mountain air.',

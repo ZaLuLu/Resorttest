@@ -67,7 +67,7 @@ export const ActivitiesPage: React.FC<ActivitiesPageProps> = ({ onOpenEnquiry })
     {
       name: 'Palm-Fringed Swimming Pool',
       category: 'Water Recreation',
-      image: '/images/amenities/swimming-pool.png',
+      image: '/images/amenities/swimming-pool.jpeg',
       desc: 'Crystal-clear pool with a dedicated shallow relaxation section for children and leisurely floats.',
       timing: '7:00 AM – 7:00 PM Daily',
     },

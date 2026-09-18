@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   Mail, MapPin, Compass, Phone, MessageSquare, Clock, 
-  Car, Navigation, CheckCircle2, ArrowRight, Sparkles, Send
+  Car, Navigation, CheckCircle2, ArrowRight, Sparkles, Send, Instagram
 } from 'lucide-react';
 import { ContactEnquirySection } from '../components/sections/ContactEnquirySection';
 import { PageHeader } from '../components/common/PageHeader';
@@ -21,13 +21,17 @@ export const ContactPage: React.FC = () => {
   });
   const [submitted, setSubmitted] = useState(false);
 
+  const WHATSAPP_NUMBER = '917411695533';
+  const PHONE_DISPLAY = '+91 7411695533';
+  const INSTAGRAM_URL = 'https://www.instagram.com/p/Ddb0dXLBLPa/?stkn=MTd0ZzN2dGZzOTZrdQ==';
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const mailSubject = encodeURIComponent(`Reservation Enquiry from ${formData.name} - ${formData.stayType}`);
     const mailBody = encodeURIComponent(
       `Name: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email}\nStay Type: ${formData.stayType}\nEstimated Guests: ${formData.guests}\nDates: ${formData.dates}\nNotes: ${formData.message}`
     );
-    window.location.href = `mailto:reservations@coorglayaresort.com?subject=${mailSubject}&body=${mailBody}`;
+    window.location.href = `mailto:stay@coorglaya.com?subject=${mailSubject}&body=${mailBody}`;
     setSubmitted(true);
   };
 
@@ -88,26 +92,26 @@ export const ContactPage: React.FC = () => {
             <div className="space-y-4 pt-2">
               <CinematicReveal delay={0.1}>
                 <a
-                  href="https://wa.me/919480123456?text=Hi%20Coorg%20Laya%20Team%2C%20I%20would%20like%20to%20enquire%20about%20booking%20suites%20at%20your%20resort."
+                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi Coorg Laya Team, I would like to enquire about booking suites at your resort.')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-[#E5F3F5] text-[#116B7B] flex items-center justify-center shadow-sm">
-                    <MessageSquare className="w-6 h-6" />
+                  <div className="w-12 h-12 rounded-2xl bg-[#E8F8EE] text-[#1E7E34] flex items-center justify-center shadow-sm">
+                    <MessageSquare className="w-6 h-6 text-[#25D366]" />
                   </div>
                   <div className="flex-1">
-                    <span className="text-[11px] font-bold uppercase text-[#116B7B]">Fastest Response</span>
+                    <span className="text-[11px] font-bold uppercase text-[#1E7E34]">Fastest Response</span>
                     <h4 className="font-serif text-base font-bold text-[#132422]">WhatsApp Reservation Desk</h4>
-                    <p className="text-xs text-[#344E4A]">+91 94801 23456 (9 AM – 9 PM)</p>
+                    <p className="text-xs text-[#344E4A]">{PHONE_DISPLAY} (9 AM – 9 PM)</p>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-[#116B7B] group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 text-[#1E7E34] group-hover:translate-x-1 transition-transform" />
                 </a>
               </CinematicReveal>
 
               <CinematicReveal delay={0.15}>
                 <a
-                  href="tel:+919480123456"
+                  href={`tel:${PHONE_DISPLAY}`}
                   className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group"
                 >
                   <div className="w-12 h-12 rounded-2xl bg-[#EFE8DC] text-[#A3733E] flex items-center justify-center shadow-sm">
@@ -116,15 +120,34 @@ export const ContactPage: React.FC = () => {
                   <div className="flex-1">
                     <span className="text-[11px] font-bold uppercase text-[#A3733E]">Direct Voice Call</span>
                     <h4 className="font-serif text-base font-bold text-[#132422]">Resort Phone Line</h4>
-                    <p className="text-xs text-[#344E4A]">+91 94801 23456</p>
+                    <p className="text-xs text-[#344E4A]">{PHONE_DISPLAY}</p>
                   </div>
                   <ArrowRight className="w-4 h-4 text-[#A3733E] group-hover:translate-x-1 transition-transform" />
                 </a>
               </CinematicReveal>
 
+              <CinematicReveal delay={0.18}>
+                <a
+                  href={INSTAGRAM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#F58529]/20 via-[#DD2A7B]/20 to-[#8134AF]/20 text-[#DD2A7B] flex items-center justify-center shadow-sm">
+                    <Instagram className="w-6 h-6" />
+                  </div>
+                  <div className="flex-1">
+                    <span className="text-[11px] font-bold uppercase text-[#DD2A7B]">Stories & Reels</span>
+                    <h4 className="font-serif text-base font-bold text-[#132422]">Instagram Profile</h4>
+                    <p className="text-xs text-[#344E4A]">Follow our daily retreat moments</p>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-[#DD2A7B] group-hover:translate-x-1 transition-transform" />
+                </a>
+              </CinematicReveal>
+
               <CinematicReveal delay={0.2}>
                 <a
-                  href="mailto:reservations@coorglayaresort.com"
+                  href="mailto:stay@coorglaya.com"
                   className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group"
                 >
                   <div className="w-12 h-12 rounded-2xl bg-[#E5F3F5] text-[#116B7B] flex items-center justify-center shadow-sm">
@@ -133,7 +156,7 @@ export const ContactPage: React.FC = () => {
                   <div className="flex-1">
                     <span className="text-[11px] font-bold uppercase text-[#116B7B]">Event & Buyout RFPs</span>
                     <h4 className="font-serif text-base font-bold text-[#132422]">Email Desk</h4>
-                    <p className="text-xs text-[#344E4A]">reservations@coorglayaresort.com</p>
+                    <p className="text-xs text-[#344E4A]">stay@coorglaya.com</p>
                   </div>
                   <ArrowRight className="w-4 h-4 text-[#116B7B] group-hover:translate-x-1 transition-transform" />
                 </a>

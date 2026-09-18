@@ -87,7 +87,7 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({ onOpenEnquiry }) =
         description="Thoughtful recreational and relaxation facilities designed to bring families, friends, and groups closer together in Kodagu."
         actionText="Reserve Your Stay"
         onActionClick={onOpenEnquiry}
-        bgImage="/images/amenities/swimming-pool.png"
+        bgImage="/images/amenities/swimming-pool.jpeg"
       />
 
       {/* Main Interactive Amenities Section (With Live Fluid Water Caustics) */}

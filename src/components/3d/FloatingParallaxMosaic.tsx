@@ -52,7 +52,7 @@ export const FloatingParallaxMosaic: React.FC = () => {
   const column2: MosaicPhoto[] = [
     {
       id: 'mos-3',
-      src: '/images/amenities/swimming-pool.png',
+      src: '/images/amenities/swimming-pool.jpeg',
       badge: '03 · Living Water',
       title: 'Palm-Fringed Swimming Pool',
       description: 'Circular shallow relaxation section shaded by tall tropical coconut trees.',

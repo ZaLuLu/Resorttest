@@ -95,14 +95,28 @@ export const ResortNavbar: React.FC<ResortNavbarProps> = ({ onOpenEnquiry, onRep
             )}
           </nav>
 
-          {/* Enquire CTA Button */}
-          <div className="flex items-center gap-3">
+          {/* Enquire CTA & WhatsApp Button */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <a
+              href="https://wa.me/917411695533?text=Hello%20Coorg%20Laya%20Resort%2C%20I%20would%20like%20to%20enquire%20about%20booking%20and%20rates."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#E8F8EE] text-[#1E7E34] border border-[#BDE5C8] text-xs font-bold hover:bg-[#D4F1DE] transition-all hover:scale-105 active:scale-95 shadow-sm"
+              title="Chat on WhatsApp (+91 7411695533)"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#25D366]"></span>
+              </span>
+              <span>WhatsApp</span>
+            </a>
+
             <motion.button
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
               transition={springTransition}
               onClick={onOpenEnquiry}
-              className="clay-btn-water text-xs sm:text-sm !py-2.5 !px-6 shadow-[0_8px_20px_rgba(0,0,0,0.25)]"
+              className="clay-btn-water text-xs sm:text-sm !py-2.5 !px-5 sm:!px-6 shadow-[0_8px_20px_rgba(0,0,0,0.25)]"
             >
               <span>Enquire & Reserve</span>
               <ArrowUpRight className="size-4" />

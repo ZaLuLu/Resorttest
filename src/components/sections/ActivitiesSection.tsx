@@ -15,7 +15,7 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
     {
       id: 'act-01',
       index: '01',
-      image: '/images/amenities/swimming-pool.png',
+      image: '/images/amenities/swimming-pool.jpeg',
       badge: 'Water Recreation',
       title: 'Palm Pool & Shallow Lounging',
       timeSlot: '11:00 AM – 03:00 PM',
@@ -71,7 +71,7 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E4D9C8] pb-8">
           <CinematicReveal className="space-y-3 max-w-xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
               <Compass className="w-4 h-4 text-[#A3733E]" />
@@ -81,20 +81,20 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
               Curated Kodagu activities for everyone.
             </h2>
             <p className="text-sm text-[#344E4A] font-medium leading-relaxed">
-              Hover or click any panel to expand its 3D details and daily timing.
+              Hover or click any panel to expand its 3D details, energy level, and daily timing.
             </p>
           </CinematicReveal>
 
-          <CinematicReveal delay={0.15}>
+          <CinematicReveal delay={0.15} direction="left">
             <span className="text-xs font-bold text-[#116B7B] px-4 py-2 rounded-full bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm inline-flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-[#1A96AA]" />
+              <Sparkles className="w-3.5 h-3.5 text-[#1A96AA] animate-pulse" />
               <span>4 Interactive Experience Panels</span>
             </span>
           </CinematicReveal>
         </div>
 
         {/* 3D Interactive Expanding Bento Accordion Stage (Desktop) */}
-        <div className="hidden lg:flex gap-4 h-[520px] w-full">
+        <div className="hidden lg:flex gap-4 h-[530px] w-full">
           {activities.map((act, idx) => {
             const isExpanded = activeIdx === idx;
             return (
@@ -103,23 +103,23 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
                 onMouseEnter={() => setActiveIdx(idx)}
                 onClick={() => setActiveIdx(idx)}
                 animate={{
-                  flex: isExpanded ? 3.5 : 1,
+                  flex: isExpanded ? 3.6 : 1,
                 }}
                 transition={{
-                  duration: 0.6,
+                  duration: 0.55,
                   ease: [0.22, 1, 0.36, 1],
                 }}
                 className={`relative rounded-3xl overflow-hidden border cursor-pointer transition-all duration-300 ${
                   isExpanded
-                    ? 'bg-[#FAF6EF] border-[#1A96AA] shadow-[0_20px_45px_rgba(26,150,170,0.18),_inset_0_2px_4px_rgba(255,255,255,0.9)]'
-                    : 'bg-[#EFE8DC] border-[#DFD3C0] hover:border-[#C2B5A0] shadow-sm'
+                    ? 'bg-[#FAF6EF] border-[#1A96AA] shadow-[0_22px_50px_rgba(26,150,170,0.2),_inset_0_2px_4px_rgba(255,255,255,0.9)]'
+                    : 'bg-[#EFE8DC] border-[#DFD3C0] hover:border-[#A3733E]/50 shadow-sm'
                 }`}
               >
                 {isExpanded ? (
                   /* Expanded 3D Active Panel Content */
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
                     className="p-6 h-full flex flex-col justify-between"
                   >
@@ -127,29 +127,29 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
                       {/* Top Badges */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <span className="w-8 h-8 rounded-full bg-[#132422] text-[#FAF6EF] text-xs font-bold font-mono flex items-center justify-center">
+                          <span className="w-8 h-8 rounded-full bg-[#132422] text-[#FAF6EF] text-xs font-bold font-mono flex items-center justify-center shadow-sm">
                             {act.index}
                           </span>
                           <span className="px-3 py-1 rounded-full bg-[#E5F3F5] text-[#116B7B] text-xs font-bold border border-[#BCE2E7]">
                             {act.badge}
                           </span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-xs font-bold text-[#635546]">
+                        <div className="flex items-center gap-1.5 text-xs font-bold text-[#635546] bg-white/80 px-3 py-1 rounded-full border border-[#E4D9C8]">
                           <Clock className="w-3.5 h-3.5 text-[#1A96AA]" />
                           <span>{act.timeSlot}</span>
                         </div>
                       </div>
 
                       {/* Photo Banner with 3D Clay Frame */}
-                      <div className="relative h-[220px] rounded-2xl overflow-hidden bg-[#E8DFD1] shadow-sm">
+                      <div className="relative h-[220px] rounded-2xl overflow-hidden bg-[#E8DFD1] shadow-sm group/img">
                         <ClayImage
                           src={act.image}
                           alt={act.title}
                           aspectRatio="16:10"
                           clayVariant="water"
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-108"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#132422]/60 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#132422]/70 via-transparent to-transparent pointer-events-none" />
                         <div className="absolute bottom-3 left-3 right-3 z-10 text-white">
                           <h3 className="font-serif text-2xl font-extrabold">
                             {act.title}
@@ -158,7 +158,7 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
                       </div>
 
                       {/* Description & Inclusions */}
-                      <p className="text-xs sm:text-sm text-[#344E4A] leading-relaxed">
+                      <p className="text-xs sm:text-sm text-[#344E4A] leading-relaxed font-medium">
                         {act.description}
                       </p>
 
@@ -175,29 +175,42 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
                       </div>
                     </div>
 
-                    {/* Bottom Action Row */}
+                    {/* Bottom Action Row with Animated Energy Meter */}
                     <div className="pt-4 border-t border-[#E4D9C8] flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Zap className="w-4 h-4 text-[#A3733E]" />
-                        <span className="text-xs font-bold text-[#132422]">{act.energy}</span>
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-1.5">
+                          <Zap className="w-4 h-4 text-[#A3733E]" />
+                          <span className="text-xs font-bold text-[#132422]">{act.energy}</span>
+                        </div>
+                        {/* Energy Bar */}
+                        <div className="w-20 h-2 rounded-full bg-[#E8DFD1] overflow-hidden hidden sm:block">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${act.energyLevel}%` }}
+                            transition={{ duration: 0.6, ease: 'easeOut' }}
+                            className="h-full bg-gradient-to-r from-[#1A96AA] to-[#A3733E] rounded-full"
+                          />
+                        </div>
                       </div>
 
-                      <button
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                         onClick={(e) => {
                           e.stopPropagation();
                           if (onOpenEnquiry) onOpenEnquiry();
                         }}
-                        className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-md transition-all flex items-center gap-1.5"
+                        className="clay-btn-water text-xs font-bold shadow-md cursor-pointer"
                       >
                         <span>Plan Activity</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
-                      </button>
+                      </motion.button>
                     </div>
                   </motion.div>
                 ) : (
                   /* Collapsed Vertical Typographic Spine */
                   <div className="h-full p-4 flex flex-col justify-between items-center py-8">
-                    <span className="w-8 h-8 rounded-full bg-[#FAF6EF] text-[#A3733E] text-xs font-bold font-mono flex items-center justify-center border border-[#DFD3C0]">
+                    <span className="w-8 h-8 rounded-full bg-[#FAF6EF] text-[#A3733E] text-xs font-bold font-mono flex items-center justify-center border border-[#DFD3C0] shadow-sm">
                       {act.index}
                     </span>
 
@@ -226,9 +239,9 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
               <div
                 key={act.id}
                 onClick={() => setActiveIdx(idx)}
-                className={`rounded-3xl border overflow-hidden transition-all ${
+                className={`rounded-3xl border overflow-hidden transition-all duration-300 ${
                   isExpanded
-                    ? 'bg-[#FAF6EF] border-[#1A96AA] p-5 shadow-md'
+                    ? 'bg-[#FAF6EF] border-[#1A96AA] p-5 shadow-lg'
                     : 'bg-[#EFE8DC] border-[#DFD3C0] p-4'
                 }`}
               >
@@ -261,18 +274,19 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <p className="text-xs text-[#344E4A] leading-relaxed">
+                    <p className="text-xs text-[#344E4A] leading-relaxed font-medium">
                       {act.description}
                     </p>
-                    <button
+                    <motion.button
+                      whileTap={{ scale: 0.97 }}
                       onClick={(e) => {
                         e.stopPropagation();
                         if (onOpenEnquiry) onOpenEnquiry();
                       }}
-                      className="w-full py-3 rounded-xl text-xs font-bold text-white bg-[#1A96AA] text-center"
+                      className="w-full py-3 rounded-xl text-xs font-bold text-white bg-[#1A96AA] text-center cursor-pointer shadow-md"
                     >
                       Plan This Activity
-                    </button>
+                    </motion.button>
                   </motion.div>
                 )}
               </div>
@@ -285,3 +299,4 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
   );
 };
 export default ActivitiesSection;
+

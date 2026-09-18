@@ -42,14 +42,14 @@ export const SuiteInspectionCard3D: React.FC<SuiteInspectionCard3DProps> = ({
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rotateX = ((y - centerY) / centerY) * -8;
-    const rotateY = ((x - centerX) / centerX) * 8;
+    const rotateX = ((y - centerY) / centerY) * -10;
+    const rotateY = ((x - centerX) / centerX) * 10;
 
     setTilt({ rotateX, rotateY });
     setGlarePos({
       x: (x / rect.width) * 100,
       y: (y / rect.height) * 100,
-      opacity: 0.25,
+      opacity: 0.28,
     });
   };
 
@@ -69,7 +69,7 @@ export const SuiteInspectionCard3D: React.FC<SuiteInspectionCard3DProps> = ({
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`relative h-[560px] w-full [perspective:1200px] ${className}`}
+      className={`relative h-[560px] w-full [perspective:1400px] ${className}`}
     >
       <motion.div
         animate={{
@@ -77,20 +77,20 @@ export const SuiteInspectionCard3D: React.FC<SuiteInspectionCard3DProps> = ({
           rotateX: isFlipped ? 0 : tilt.rotateX,
         }}
         transition={{
-          rotateY: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
-          rotateX: { type: 'spring', stiffness: 200, damping: 25 },
+          rotateY: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+          rotateX: { type: 'spring', stiffness: 220, damping: 20 },
         }}
         className="relative w-full h-full [transform-style:preserve-3d] transition-shadow duration-300"
       >
         {/* ================= FRONT SIDE ================= */}
         <div
-          className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-[0_16px_36px_rgba(22,41,38,0.08),_inset_0_2px_4px_rgba(255,255,255,0.9)] overflow-hidden flex flex-col group"
+          className="absolute inset-0 w-full h-full [backface-visibility:hidden] rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-[0_16px_36px_rgba(22,41,38,0.08),_inset_0_2px_4px_rgba(255,255,255,0.9)] overflow-hidden flex flex-col group hover:shadow-[0_24px_50px_rgba(22,41,38,0.14)] transition-all duration-300"
         >
           {/* Dynamic Specular Sunlight Glare */}
           <div
             className="pointer-events-none absolute inset-0 z-20 rounded-3xl transition-opacity duration-300"
             style={{
-              background: `radial-gradient(circle at ${glarePos.x}% ${glarePos.y}%, rgba(255,255,255,0.7) 0%, rgba(26,150,170,0.08) 35%, transparent 70%)`,
+              background: `radial-gradient(circle at ${glarePos.x}% ${glarePos.y}%, rgba(255,255,255,0.75) 0%, rgba(26,150,170,0.1) 35%, transparent 70%)`,
               opacity: glarePos.opacity,
             }}
           />
@@ -101,9 +101,9 @@ export const SuiteInspectionCard3D: React.FC<SuiteInspectionCard3DProps> = ({
               <ClayImage
                 src={suite.image}
                 alt={suite.name}
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#132422]/70 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#132422]/75 via-transparent to-transparent pointer-events-none" />
 
               {/* Category Pill */}
               <div className="absolute top-3 left-3 z-10 px-3 py-1 rounded-full bg-[#132422]/85 backdrop-blur-md border border-white/20 text-[#FAF6EF] text-xs font-semibold tracking-wide flex items-center gap-1.5 shadow-sm">
@@ -114,7 +114,7 @@ export const SuiteInspectionCard3D: React.FC<SuiteInspectionCard3DProps> = ({
               {/* Flip Trigger Button */}
               <button
                 onClick={toggleFlip}
-                className="absolute top-3 right-3 z-10 px-3 py-1.5 rounded-full bg-[#FAF6EF]/90 backdrop-blur-md border border-[#E4D9C8] text-[#132422] text-xs font-bold hover:bg-[#1A96AA] hover:text-white transition-colors duration-200 flex items-center gap-1.5 shadow-md group/flip"
+                className="absolute top-3 right-3 z-10 px-3 py-1.5 rounded-full bg-[#FAF6EF]/90 backdrop-blur-md border border-[#E4D9C8] text-[#132422] text-xs font-bold hover:bg-[#1A96AA] hover:text-white transition-all duration-200 flex items-center gap-1.5 shadow-md group/flip active:scale-95 cursor-pointer"
                 title="Inspect Architectural Specs"
               >
                 <RotateCw className="w-3.5 h-3.5 transition-transform duration-500 group-hover/flip:rotate-180 text-[#116B7B] group-hover/flip:text-white" />
@@ -122,7 +122,7 @@ export const SuiteInspectionCard3D: React.FC<SuiteInspectionCard3DProps> = ({
               </button>
 
               {/* Capacity Badge */}
-              <div className="absolute bottom-3 left-3 z-10 flex items-center gap-2 text-white text-xs font-medium bg-[#132422]/60 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10">
+              <div className="absolute bottom-3 left-3 z-10 flex items-center gap-2 text-white text-xs font-medium bg-[#132422]/65 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10">
                 <Users className="w-3.5 h-3.5 text-[#A3733E]" />
                 <span>{suite.capacity}</span>
                 <span className="text-white/40">•</span>
@@ -135,10 +135,10 @@ export const SuiteInspectionCard3D: React.FC<SuiteInspectionCard3DProps> = ({
           {/* Front Content */}
           <div className="flex-1 p-5 flex flex-col justify-between">
             <div>
-              <h3 className="text-xl font-extrabold text-[#132422] tracking-tight font-serif">
+              <h3 className="text-xl font-extrabold text-[#132422] tracking-tight font-serif group-hover:text-[#116B7B] transition-colors">
                 {suite.name}
               </h3>
-              <p className="mt-1.5 text-xs text-[#344E4A] line-clamp-2 leading-relaxed">
+              <p className="mt-1.5 text-xs text-[#344E4A] line-clamp-2 leading-relaxed font-medium">
                 {suite.description}
               </p>
 
@@ -147,7 +147,7 @@ export const SuiteInspectionCard3D: React.FC<SuiteInspectionCard3DProps> = ({
                 {suite.highlights.slice(0, 3).map((item, idx) => (
                   <span
                     key={idx}
-                    className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#162926] bg-[#EFE8DC] px-2.5 py-0.5 rounded-full border border-[#DFD3C0]"
+                    className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#162926] bg-[#EFE8DC] px-2.5 py-0.5 rounded-full border border-[#DFD3C0] hover:bg-[#E5F3F5] transition-colors"
                   >
                     <CheckCircle2 className="w-3 h-3 text-[#116B7B]" />
                     {item}
@@ -169,17 +169,19 @@ export const SuiteInspectionCard3D: React.FC<SuiteInspectionCard3DProps> = ({
               <div className="flex items-center gap-2">
                 <button
                   onClick={toggleFlip}
-                  className="px-3 py-2 rounded-xl text-xs font-bold text-[#116B7B] bg-[#E5F3F5] hover:bg-[#D2ECF0] border border-[#BCE2E7] transition-colors"
+                  className="px-3 py-2 rounded-xl text-xs font-bold text-[#116B7B] bg-[#E5F3F5] hover:bg-[#D2ECF0] border border-[#BCE2E7] transition-all hover:-translate-y-0.5 cursor-pointer"
                 >
                   Details
                 </button>
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => onBookNow(suite.name)}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-[0_4px_12px_rgba(26,150,170,0.3)] transition-all flex items-center gap-1"
+                  className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-[0_4px_12px_rgba(26,150,170,0.3)] transition-all flex items-center gap-1 cursor-pointer"
                 >
                   <span>Reserve</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                </motion.button>
               </div>
             </div>
           </div>
@@ -198,7 +200,7 @@ export const SuiteInspectionCard3D: React.FC<SuiteInspectionCard3DProps> = ({
               </div>
               <button
                 onClick={toggleFlip}
-                className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 text-xs font-bold text-[#FAF6EF] transition-colors flex items-center gap-1 border border-white/15"
+                className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 text-xs font-bold text-[#FAF6EF] transition-colors flex items-center gap-1 border border-white/15 cursor-pointer"
               >
                 <RotateCw className="w-3 h-3 text-[#1A96AA]" />
                 <span>Photo</span>
@@ -208,34 +210,34 @@ export const SuiteInspectionCard3D: React.FC<SuiteInspectionCard3DProps> = ({
             <h3 className="text-2xl font-extrabold text-white mt-3 font-serif">
               {suite.name}
             </h3>
-            <p className="text-xs text-[#BED4D0] mt-1">
+            <p className="text-xs text-[#BED4D0] mt-1 font-medium">
               Part of Coorg Laya's strictly limited 15 private guest suites.
             </p>
 
             {/* Spec Matrix Grid */}
             <div className="grid grid-cols-2 gap-2.5 mt-4">
-              <div className="bg-[#1D3531] p-2.5 rounded-xl border border-white/5">
+              <div className="bg-[#1D3531] p-2.5 rounded-xl border border-white/5 hover:border-[#1A96AA]/40 transition-colors">
                 <span className="text-[10px] text-[#A3733E] font-bold uppercase">Suite Area</span>
                 <div className="text-sm font-bold text-white flex items-center gap-1.5 mt-0.5">
                   <Maximize2 className="w-3.5 h-3.5 text-[#1A96AA]" />
                   {suite.sqft}
                 </div>
               </div>
-              <div className="bg-[#1D3531] p-2.5 rounded-xl border border-white/5">
+              <div className="bg-[#1D3531] p-2.5 rounded-xl border border-white/5 hover:border-[#1A96AA]/40 transition-colors">
                 <span className="text-[10px] text-[#A3733E] font-bold uppercase">Bed Layout</span>
                 <div className="text-sm font-bold text-white flex items-center gap-1.5 mt-0.5">
                   <Bed className="w-3.5 h-3.5 text-[#1A96AA]" />
                   {suite.bedType}
                 </div>
               </div>
-              <div className="bg-[#1D3531] p-2.5 rounded-xl border border-white/5">
+              <div className="bg-[#1D3531] p-2.5 rounded-xl border border-white/5 hover:border-[#1A96AA]/40 transition-colors">
                 <span className="text-[10px] text-[#A3733E] font-bold uppercase">Orientation</span>
                 <div className="text-sm font-bold text-white flex items-center gap-1.5 mt-0.5">
                   <Eye className="w-3.5 h-3.5 text-[#1A96AA]" />
                   {suite.view}
                 </div>
               </div>
-              <div className="bg-[#1D3531] p-2.5 rounded-xl border border-white/5">
+              <div className="bg-[#1D3531] p-2.5 rounded-xl border border-white/5 hover:border-[#1A96AA]/40 transition-colors">
                 <span className="text-[10px] text-[#A3733E] font-bold uppercase">Max Guests</span>
                 <div className="text-sm font-bold text-white flex items-center gap-1.5 mt-0.5">
                   <Users className="w-3.5 h-3.5 text-[#1A96AA]" />
@@ -266,16 +268,19 @@ export const SuiteInspectionCard3D: React.FC<SuiteInspectionCard3DProps> = ({
               <span className="text-[10px] uppercase font-bold text-[#A3733E]">Rate Starting At</span>
               <div className="text-lg font-extrabold text-white">{suite.startingRate}</div>
             </div>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => onBookNow(suite.name)}
-              className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-[0_4px_16px_rgba(26,150,170,0.4)] transition-all flex items-center gap-1.5"
+              className="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-[0_4px_16px_rgba(26,150,170,0.4)] transition-all flex items-center gap-1.5 cursor-pointer"
             >
               <span>Instant Enquiry</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+            </motion.button>
           </div>
         </div>
       </motion.div>
     </div>
   );
 };
+

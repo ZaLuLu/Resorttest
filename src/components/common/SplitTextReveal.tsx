@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 interface SplitTextRevealProps {
   text: string;
@@ -14,13 +14,19 @@ export const SplitTextReveal: React.FC<SplitTextRevealProps> = ({
   delay = 0,
   type = 'words',
 }) => {
+  const prefersReduced = useReducedMotion();
+
+  if (prefersReduced) {
+    return <span className={className}>{text}</span>;
+  }
+
   const words = text.split(' ');
 
   const containerVariants = {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: type === 'words' ? 0.08 : 0.03,
+        staggerChildren: type === 'words' ? 0.06 : 0.025,
         delayChildren: delay,
       },
     },
@@ -29,16 +35,18 @@ export const SplitTextReveal: React.FC<SplitTextRevealProps> = ({
   const itemVariants = {
     hidden: {
       opacity: 0,
-      y: 20,
-      rotateX: -20,
+      y: 24,
+      rotateX: -30,
+      filter: 'blur(4px)',
     },
     visible: {
       opacity: 1,
       y: 0,
       rotateX: 0,
+      filter: 'blur(0px)',
       transition: {
         type: 'spring',
-        stiffness: 260,
+        stiffness: 280,
         damping: 24,
       },
     },
@@ -53,7 +61,7 @@ export const SplitTextReveal: React.FC<SplitTextRevealProps> = ({
         whileInView="visible"
         viewport={{ once: true, margin: '-40px' }}
         aria-label={text}
-        className={`inline-block ${className}`}
+        className={`inline-block [perspective:1000px] ${className}`}
       >
         {chars.map((char, index) => (
           <motion.span
@@ -76,10 +84,10 @@ export const SplitTextReveal: React.FC<SplitTextRevealProps> = ({
       whileInView="visible"
       viewport={{ once: true, margin: '-40px' }}
       aria-label={text}
-      className={`inline-block ${className}`}
+      className={`inline-block [perspective:1000px] ${className}`}
     >
       {words.map((word, index) => (
-        <span key={index} className="inline-block overflow-hidden mr-[0.25em]">
+        <span key={index} className="inline-block overflow-hidden mr-[0.25em] align-bottom">
           <motion.span
             variants={itemVariants}
             aria-hidden="true"
@@ -93,3 +101,4 @@ export const SplitTextReveal: React.FC<SplitTextRevealProps> = ({
   );
 };
 export default SplitTextReveal;
+
