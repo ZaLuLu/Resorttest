@@ -111,9 +111,13 @@ export const ResortFooter: React.FC = () => {
             <p className="leading-relaxed text-[#635546] font-medium">
               Teppadakandi, Siddapura Main Road, Basavanahalli Village, Gudde Hosur Post, Kushalnagar - 571234, Kodagu, Karnataka.
             </p>
-            <div className="pt-1">
+            <div className="pt-1 flex flex-wrap gap-3">
               <Link to="/privacy" className="text-[#116B7B] hover:underline font-semibold">
-                Privacy Policy & Guest Terms
+                Privacy Policy
+              </Link>
+              <span>·</span>
+              <Link to="/terms" className="text-[#116B7B] hover:underline font-semibold">
+                Terms & Policies
               </Link>
             </div>
           </div>

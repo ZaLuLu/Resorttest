@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Compass, Sparkles, Waves, Smile, Activity, Sun, ArrowUpRight, CheckCircle2, Clock, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Compass, Sparkles, Clock, CheckCircle2, Zap, ArrowUpRight } from 'lucide-react';
 import { ClayImage } from '../common/ClayImage';
 import { CinematicReveal } from '../common/CinematicReveal';
 
@@ -67,7 +67,7 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
   ];
 
   return (
-    <section id="activities" className="relative w-full py-20 sm:py-28 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none">
+    <section id="activities" className="relative w-full py-12 sm:py-16 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Section Header */}
@@ -81,7 +81,7 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
               Curated Kodagu activities for everyone.
             </h2>
             <p className="text-sm text-[#344E4A] font-medium leading-relaxed">
-              Hover or click any panel to expand its 3D details, energy level, and daily timing.
+              Hover or click any panel to expand its details, energy level, and daily timing.
             </p>
           </CinematicReveal>
 
@@ -94,7 +94,7 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
         </div>
 
         {/* 3D Interactive Expanding Bento Accordion Stage (Desktop) */}
-        <div className="hidden lg:flex gap-4 h-[530px] w-full">
+        <div className="hidden lg:flex gap-4 min-h-[550px] w-full items-stretch">
           {activities.map((act, idx) => {
             const isExpanded = activeIdx === idx;
             return (
@@ -109,19 +109,19 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
                   duration: 0.55,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className={`relative rounded-3xl overflow-hidden border cursor-pointer transition-all duration-300 ${
+                className={`relative rounded-3xl overflow-hidden border cursor-pointer transition-all duration-300 flex flex-col ${
                   isExpanded
                     ? 'bg-[#FAF6EF] border-[#1A96AA] shadow-[0_22px_50px_rgba(26,150,170,0.2),_inset_0_2px_4px_rgba(255,255,255,0.9)]'
                     : 'bg-[#EFE8DC] border-[#DFD3C0] hover:border-[#A3733E]/50 shadow-sm'
                 }`}
               >
                 {isExpanded ? (
-                  /* Expanded 3D Active Panel Content */
+                  /* Expanded Active Panel Content */
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
-                    className="p-6 h-full flex flex-col justify-between"
+                    className="p-6 h-full flex flex-col justify-between space-y-4"
                   >
                     <div className="space-y-4">
                       {/* Top Badges */}
@@ -140,8 +140,8 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
                         </div>
                       </div>
 
-                      {/* Photo Banner with 3D Clay Frame */}
-                      <div className="relative h-[220px] rounded-2xl overflow-hidden bg-[#E8DFD1] shadow-sm group/img">
+                      {/* Photo Banner with Clay Frame */}
+                      <div className="relative h-[200px] rounded-2xl overflow-hidden bg-[#E8DFD1] shadow-sm group/img">
                         <ClayImage
                           src={act.image}
                           alt={act.title}
@@ -151,7 +151,7 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#132422]/70 via-transparent to-transparent pointer-events-none" />
                         <div className="absolute bottom-3 left-3 right-3 z-10 text-white">
-                          <h3 className="font-serif text-2xl font-extrabold">
+                          <h3 className="font-serif text-xl sm:text-2xl font-extrabold">
                             {act.title}
                           </h3>
                         </div>
@@ -176,7 +176,7 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
                     </div>
 
                     {/* Bottom Action Row with Animated Energy Meter */}
-                    <div className="pt-4 border-t border-[#E4D9C8] flex items-center justify-between">
+                    <div className="pt-3 border-t border-[#E4D9C8] flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className="flex items-center gap-1.5">
                           <Zap className="w-4 h-4 text-[#A3733E]" />
@@ -200,7 +200,7 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
                           e.stopPropagation();
                           if (onOpenEnquiry) onOpenEnquiry();
                         }}
-                        className="clay-btn-water text-xs font-bold shadow-md cursor-pointer"
+                        className="clay-btn-water text-xs font-bold shadow-md cursor-pointer !py-2 !px-4"
                       >
                         <span>Plan Activity</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
@@ -298,5 +298,5 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
     </section>
   );
 };
-export default ActivitiesSection;
 
+export default ActivitiesSection;

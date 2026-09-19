@@ -29,7 +29,7 @@ export const GallerySection: React.FC = () => {
     : spatialPhotos.filter(item => item.category === selectedCategory);
 
   return (
-    <section id="gallery" className="relative w-full py-20 sm:py-28 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none">
+    <section id="gallery" className="relative w-full py-12 sm:py-16 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
         
         {/* Header & View Switcher */}

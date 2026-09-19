@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BedDouble, ArrowUpRight, Sparkles } from 'lucide-react';
+import { BedDouble, ArrowUpRight, Sparkles, Layers, LayoutGrid } from 'lucide-react';
 import { SuiteInspectionCard3D, SuiteSpecData } from '../3d/SuiteInspectionCard3D';
+import { CardStackScroll } from '../3d/CardStackScroll';
 import { CinematicReveal } from '../common/CinematicReveal';
 
 interface RoomsSectionProps {
@@ -9,6 +10,18 @@ interface RoomsSectionProps {
 }
 
 export const RoomsSection: React.FC<RoomsSectionProps> = ({ onOpenEnquiry }) => {
+  const [viewMode, setViewMode] = useState<'stack' | 'grid'>('stack');
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile, { passive: true });
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const suites: SuiteSpecData[] = [
     {
       id: 'rooms-01',
@@ -85,8 +98,8 @@ export const RoomsSection: React.FC<RoomsSectionProps> = ({ onOpenEnquiry }) => 
   ];
 
   return (
-    <section id="rooms" className="relative w-full py-20 sm:py-28 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
+    <section id="rooms" className="relative w-full py-12 sm:py-16 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E4D9C8] pb-8">
@@ -99,16 +112,44 @@ export const RoomsSection: React.FC<RoomsSectionProps> = ({ onOpenEnquiry }) => 
               15 private suites crafted for peaceful mountain nights.
             </h2>
             <p className="text-sm sm:text-base text-[#344E4A] font-medium leading-relaxed">
-              Accommodating up to approximately 45 overnight guests across restful garden-facing suites. Click <strong>Specs</strong> to flip and inspect architectural specifications.
+              Accommodating up to approximately 45 overnight guests across restful garden-facing suites.
             </p>
           </CinematicReveal>
 
-          <CinematicReveal delay={0.2} direction="left">
+          {/* Desktop View Switcher & Action Button */}
+          <CinematicReveal delay={0.15} direction="left" className="flex flex-wrap items-center gap-3">
+            {!isMobile && (
+              <div className="hidden lg:flex items-center gap-1 p-1 rounded-full bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm">
+                <button
+                  onClick={() => setViewMode('stack')}
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                    viewMode === 'stack'
+                      ? 'bg-[#1A96AA] text-white shadow-sm'
+                      : 'text-[#344E4A] hover:text-[#116B7B]'
+                  }`}
+                >
+                  <Layers className="w-3.5 h-3.5" />
+                  <span>Card Stack</span>
+                </button>
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                    viewMode === 'grid'
+                      ? 'bg-[#1A96AA] text-white shadow-sm'
+                      : 'text-[#344E4A] hover:text-[#116B7B]'
+                  }`}
+                >
+                  <LayoutGrid className="w-3.5 h-3.5" />
+                  <span>Grid</span>
+                </button>
+              </div>
+            )}
+
             <motion.button
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.96 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
               onClick={onOpenEnquiry}
-              className="clay-btn-water text-xs sm:text-sm font-bold shadow-[0_10px_25px_rgba(26,150,170,0.35)] cursor-pointer"
+              className="clay-btn-water text-xs sm:text-sm font-bold shadow-md cursor-pointer"
             >
               <span>Reserve All 15 Suites</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -116,21 +157,26 @@ export const RoomsSection: React.FC<RoomsSectionProps> = ({ onOpenEnquiry }) => 
           </CinematicReveal>
         </div>
 
-        {/* 3D Interactive Suite Cards Grid with 180° Flip */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {suites.map((suite, idx) => (
-            <CinematicReveal key={suite.id} delay={idx * 0.1} duration={0.7} spring>
-              <SuiteInspectionCard3D
-                suite={suite}
-                onBookNow={() => onOpenEnquiry()}
-              />
-            </CinematicReveal>
-          ))}
-        </div>
+        {/* View Mode: Card Stack Scroll on Laptop/Desktop (skiper16/skiper17) */}
+        {!isMobile && viewMode === 'stack' ? (
+          <CardStackScroll suites={suites} onBookNow={() => onOpenEnquiry()} />
+        ) : (
+          /* View Mode: Responsive 3D Flip Inspection Cards Grid (Mobile / Grid Mode) */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {suites.map((suite, idx) => (
+              <CinematicReveal key={suite.id} delay={idx * 0.08} duration={0.6}>
+                <SuiteInspectionCard3D
+                  suite={suite}
+                  onBookNow={() => onOpenEnquiry()}
+                />
+              </CinematicReveal>
+            ))}
+          </div>
+        )}
 
       </div>
     </section>
   );
 };
-export default RoomsSection;
 
+export default RoomsSection;

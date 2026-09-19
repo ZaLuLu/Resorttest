@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ArrowUpRight, Compass, Sparkles, ChevronDown, CheckCircle2 } from 'lucide-react';
 import { Diorama3DParallax } from '../3d/Diorama3DParallax';
@@ -283,12 +284,12 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
                   <ArrowUpRight className="w-4 h-4" />
                 </MagneticButton>
 
-                <a
-                  href="/rooms"
+                <Link
+                  to="/rooms"
                   className="px-5 py-3.5 rounded-2xl text-xs sm:text-sm font-bold text-[#132422] bg-[#EFE8DC] hover:bg-[#E4D9C8] border border-[#DFD3C0] shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors"
                 >
                   Explore 15 Suites
-                </a>
+                </Link>
               </div>
 
               {/* Slide Navigation & Indicator Bar */}

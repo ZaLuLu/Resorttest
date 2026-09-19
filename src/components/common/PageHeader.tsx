@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Sparkles, Waves } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface PageHeaderProps {
@@ -21,16 +21,16 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   bgImage = "/images/resort/resort-exteriors.jpeg",
 }) => {
   return (
-    <div className="relative isolate min-h-[340px] sm:min-h-[400px] flex items-center justify-center overflow-hidden pt-28 pb-14 px-4 sm:px-6 select-none">
-      {/* Background Image with Clay Scrim */}
+    <div className="relative isolate min-h-[360px] sm:min-h-[420px] flex items-center justify-center overflow-hidden pt-32 sm:pt-36 pb-14 px-4 sm:px-6 select-none">
+      {/* Background Image with Scrim */}
       <div className="absolute inset-0 -z-20">
         <img
           src={bgImage}
           alt=""
           aria-hidden="true"
-          className="h-full w-full object-cover scale-105 opacity-25"
+          className="h-full w-full object-cover scale-105 opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-sand-50/90 via-sand-50/70 to-sand-50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FAF6EF]/90 via-[#FAF6EF]/70 to-[#FAF6EF]" />
       </div>
 
       <div className="mx-auto max-w-4xl text-center z-10 space-y-4">
@@ -39,10 +39,10 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="inline-flex items-center gap-2 rounded-full border border-sand-300 bg-white/95 px-4 py-1.5 text-xs font-bold text-sand-700 shadow-clay-pill"
+          className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-white/95 px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm"
         >
-          <Link to="/" className="text-water-700 hover:underline">Coorg Laya</Link>
-          <ChevronRight className="size-3 text-sand-400" />
+          <Link to="/" className="text-[#116B7B] hover:underline">Coorg Laya</Link>
+          <ChevronRight className="size-3 text-[#A3733E]" />
           <span>{badge}</span>
         </motion.div>
 
@@ -51,7 +51,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-riverbed-900"
+          className="font-serif text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[#132422]"
         >
           {title}
         </motion.h1>
@@ -61,7 +61,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mx-auto max-w-2xl text-sm sm:text-base leading-relaxed text-riverbed-600 font-medium"
+          className="mx-auto max-w-2xl text-sm sm:text-base leading-relaxed text-[#344E4A] font-medium"
         >
           {description}
         </motion.p>
@@ -76,7 +76,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           >
             <button
               onClick={onActionClick}
-              className="clay-btn-water text-xs sm:text-sm font-bold shadow-clay-btn-water cursor-pointer"
+              className="clay-btn-water text-xs sm:text-sm font-bold shadow-md cursor-pointer"
             >
               {actionText}
             </button>
@@ -86,4 +86,5 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
     </div>
   );
 };
+
 export default PageHeader;

@@ -5,7 +5,7 @@ import { CinematicReveal } from '../common/CinematicReveal';
 
 export const WelcomeSection: React.FC = () => {
   return (
-    <section className="relative w-full py-20 sm:py-28 bg-[#FAF6EF] text-[#132422] overflow-hidden select-none">
+    <section className="relative w-full py-12 sm:py-16 bg-[#FAF6EF] text-[#132422] overflow-hidden select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           

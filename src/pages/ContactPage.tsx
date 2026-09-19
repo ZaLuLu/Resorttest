@@ -27,11 +27,18 @@ export const ContactPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const mailSubject = encodeURIComponent(`Reservation Enquiry from ${formData.name} - ${formData.stayType}`);
-    const mailBody = encodeURIComponent(
-      `Name: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email}\nStay Type: ${formData.stayType}\nEstimated Guests: ${formData.guests}\nDates: ${formData.dates}\nNotes: ${formData.message}`
-    );
-    window.location.href = `mailto:stay@coorglaya.com?subject=${mailSubject}&body=${mailBody}`;
+    const summary =
+      `*Reservation Enquiry — Coorg Laya Resort*\n\n` +
+      `• *Name:* ${formData.name}\n` +
+      `• *Phone:* ${formData.phone || 'Not provided'}\n` +
+      `• *Email:* ${formData.email}\n` +
+      `• *Stay Type:* ${formData.stayType}\n` +
+      `• *Guests:* ${formData.guests}\n` +
+      `• *Dates:* ${formData.dates || 'Flexible'}\n` +
+      `• *Notes:* ${formData.message || 'None'}`;
+
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(summary)}`;
+    window.open(whatsappUrl, '_blank');
     setSubmitted(true);
   };
 

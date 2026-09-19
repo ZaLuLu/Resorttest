@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Heart, ShieldCheck, Trees, Sparkles, Coffee, Sun, 
-  VolumeX, Droplet, ArrowUpRight, Award, Users, CheckCircle2
+  VolumeX, Droplet, ArrowUpRight
 } from 'lucide-react';
 import { AboutSection } from '../components/sections/AboutSection';
 import { PageHeader } from '../components/common/PageHeader';
@@ -56,7 +56,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenEnquiry }) => {
   ];
 
   return (
-    <div className="pt-24 pb-28 bg-[#FAF6EF] text-[#132422] space-y-20 select-none">
+    <div className="pt-24 sm:pt-28 pb-28 bg-[#FAF6EF] text-[#132422] space-y-16 sm:space-y-20 select-none">
       
       {/* Page Header */}
       <PageHeader

@@ -4,8 +4,7 @@ import {
   Mail, Phone, MapPin, CheckCircle2, Loader2, Send, 
   Sparkles, MessageSquare, ArrowUpRight, Compass, Clock, ShieldCheck, Instagram
 } from 'lucide-react';
-import { springTransition, fadeUp } from '../../utils/motionVariants';
-import { resortData } from '../../data/resortData';
+import { springTransition } from '../../utils/motionVariants';
 
 export const ContactEnquirySection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -30,20 +29,17 @@ export const ContactEnquirySection: React.FC = () => {
     e.preventDefault();
     setFormState('loading');
 
-    const subject = encodeURIComponent(`Reservation Enquiry - ${formData.name}`);
-    const body = encodeURIComponent(
-      `Dear Coorg Laya Resort Team,\n\n` +
-      `I would like to enquire about a reservation:\n\n` +
-      `• Name: ${formData.name}\n` +
-      `• Email: ${formData.email}\n` +
-      `• Phone: ${formData.phone}\n` +
-      `• Guests: ${formData.guests}\n` +
-      `• Target Date: ${formData.date || 'Flexible'}\n\n` +
-      `Message:\n${formData.message || 'No additional notes'}`
-    );
+    const summary =
+      `*Reservation Enquiry — Coorg Laya Resort*\n\n` +
+      `• *Name:* ${formData.name}\n` +
+      `• *Email:* ${formData.email}\n` +
+      `• *Phone:* ${formData.phone}\n` +
+      `• *Guests:* ${formData.guests}\n` +
+      `• *Target Date:* ${formData.date || 'Flexible'}\n\n` +
+      `*Notes:* ${formData.message || 'No additional notes'}`;
 
-    const mailto = `mailto:stay@coorglaya.com?subject=${subject}&body=${body}`;
-    window.location.href = mailto;
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(summary)}`;
+    window.open(whatsappUrl, '_blank');
 
     setTimeout(() => {
       setFormState('success');
@@ -51,11 +47,11 @@ export const ContactEnquirySection: React.FC = () => {
         setFormState('idle');
         setFormData({ name: '', email: '', phone: '', guests: '2 Guests', date: '', message: '' });
       }, 4000);
-    }, 800);
+    }, 600);
   };
 
   return (
-    <section id="contact" className="relative w-full py-20 sm:py-28 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none">
+    <section id="contact" className="relative w-full py-12 sm:py-16 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Section Title Header */}
@@ -74,15 +70,15 @@ export const ContactEnquirySection: React.FC = () => {
           </p>
         </div>
 
-        {/* 5 Commercial Contact Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+        {/* 5 Commercial Contact Cards Grid - Balanced on All Breakpoints */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           
           {/* 1. WhatsApp Card */}
           <motion.a
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ y: -5, scale: 1.02 }}
+            whileHover={{ y: -4, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="p-5 rounded-3xl bg-[#FAF6EF] border-2 border-[#25D366]/30 hover:border-[#25D366] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer"
           >
@@ -91,11 +87,11 @@ export const ContactEnquirySection: React.FC = () => {
                 <MessageSquare className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[11px] font-bold text-[#128C7E] uppercase tracking-wider block">
+                <span className="text-[10px] font-bold text-[#128C7E] uppercase tracking-wider block">
                   Instant Chat
                 </span>
-                <h4 className="font-serif text-lg font-bold text-[#132422]">
-                  WhatsApp Concierge
+                <h4 className="font-serif text-base sm:text-lg font-bold text-[#132422]">
+                  WhatsApp
                 </h4>
                 <p className="text-xs text-[#344E4A] mt-1 font-mono">
                   {PHONE_DISPLAY}
@@ -103,7 +99,7 @@ export const ContactEnquirySection: React.FC = () => {
               </div>
             </div>
             <div className="pt-4 mt-2 border-t border-[#E4D9C8] flex items-center justify-between text-xs font-bold text-[#128C7E]">
-              <span>Start WhatsApp</span>
+              <span>Start Chat</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </div>
           </motion.a>
@@ -111,7 +107,7 @@ export const ContactEnquirySection: React.FC = () => {
           {/* 2. Direct Phone Call Card */}
           <motion.a
             href={`tel:${PHONE_DISPLAY}`}
-            whileHover={{ y: -5, scale: 1.02 }}
+            whileHover={{ y: -4, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="p-5 rounded-3xl bg-[#FAF6EF] border-2 border-[#E4D9C8] hover:border-[#1A96AA] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer"
           >
@@ -120,11 +116,11 @@ export const ContactEnquirySection: React.FC = () => {
                 <Phone className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[11px] font-bold text-[#116B7B] uppercase tracking-wider block">
+                <span className="text-[10px] font-bold text-[#116B7B] uppercase tracking-wider block">
                   Direct Line
                 </span>
-                <h4 className="font-serif text-lg font-bold text-[#132422]">
-                  Phone Reservations
+                <h4 className="font-serif text-base sm:text-lg font-bold text-[#132422]">
+                  Voice Call
                 </h4>
                 <p className="text-xs text-[#344E4A] mt-1 font-mono">
                   {PHONE_DISPLAY}
@@ -142,7 +138,7 @@ export const ContactEnquirySection: React.FC = () => {
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ y: -5, scale: 1.02 }}
+            whileHover={{ y: -4, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="p-5 rounded-3xl bg-[#FAF6EF] border-2 border-[#E1306C]/30 hover:border-[#E1306C] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer"
           >
@@ -151,19 +147,19 @@ export const ContactEnquirySection: React.FC = () => {
                 <Instagram className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[11px] font-bold text-[#DD2A7B] uppercase tracking-wider block">
-                  Reels & Stories
+                <span className="text-[10px] font-bold text-[#DD2A7B] uppercase tracking-wider block">
+                  Stories & Reels
                 </span>
-                <h4 className="font-serif text-lg font-bold text-[#132422]">
-                  Instagram Feed
+                <h4 className="font-serif text-base sm:text-lg font-bold text-[#132422]">
+                  Instagram
                 </h4>
                 <p className="text-xs text-[#344E4A] mt-1 font-medium">
-                  Watch Resort Stories
+                  Watch Stories
                 </p>
               </div>
             </div>
             <div className="pt-4 mt-2 border-t border-[#E4D9C8] flex items-center justify-between text-xs font-bold text-[#DD2A7B]">
-              <span>View On Instagram</span>
+              <span>Open Feed</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </div>
           </motion.a>
@@ -171,7 +167,7 @@ export const ContactEnquirySection: React.FC = () => {
           {/* 4. Email Card */}
           <motion.a
             href="mailto:stay@coorglaya.com"
-            whileHover={{ y: -5, scale: 1.02 }}
+            whileHover={{ y: -4, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="p-5 rounded-3xl bg-[#FAF6EF] border-2 border-[#E4D9C8] hover:border-[#A3733E] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer"
           >
@@ -180,19 +176,19 @@ export const ContactEnquirySection: React.FC = () => {
                 <Mail className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[11px] font-bold text-[#A3733E] uppercase tracking-wider block">
-                  Email Support
+                <span className="text-[10px] font-bold text-[#A3733E] uppercase tracking-wider block">
+                  Email Desk
                 </span>
-                <h4 className="font-serif text-lg font-bold text-[#132422]">
+                <h4 className="font-serif text-base sm:text-lg font-bold text-[#132422]">
                   stay@coorglaya.com
                 </h4>
-                <p className="text-xs text-[#344E4A] mt-1">
+                <p className="text-xs text-[#344E4A] mt-1 truncate">
                   Bookings & buyout queries
                 </p>
               </div>
             </div>
             <div className="pt-4 mt-2 border-t border-[#E4D9C8] flex items-center justify-between text-xs font-bold text-[#A3733E]">
-              <span>Send Email</span>
+              <span>Send Mail</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </div>
           </motion.a>
@@ -202,23 +198,23 @@ export const ContactEnquirySection: React.FC = () => {
             href="https://maps.google.com/?q=Kushalnagar+Coorg+Karnataka"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ y: -5, scale: 1.02 }}
+            whileHover={{ y: -4, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="p-5 rounded-3xl bg-[#FAF6EF] border-2 border-[#E4D9C8] hover:border-[#132422] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer"
+            className="p-5 rounded-3xl bg-[#FAF6EF] border-2 border-[#E4D9C8] hover:border-[#132422] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer col-span-1 sm:col-span-2 md:col-span-1"
           >
             <div className="space-y-3">
               <div className="w-10 h-10 rounded-2xl bg-[#EFE8DC] text-[#132422] flex items-center justify-center group-hover:bg-[#132422] group-hover:text-white transition-colors shadow-inner">
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[11px] font-bold text-[#635546] uppercase tracking-wider block">
-                  Kushalnagar Hub
+                <span className="text-[10px] font-bold text-[#635546] uppercase tracking-wider block">
+                  Sanctuary GPS
                 </span>
-                <h4 className="font-serif text-lg font-bold text-[#132422]">
-                  Resort Location
+                <h4 className="font-serif text-base sm:text-lg font-bold text-[#132422]">
+                  Kushalnagar
                 </h4>
-                <p className="text-xs text-[#344E4A] mt-1 line-clamp-2">
-                  Teppadakandi, Kushalnagar, Kodagu
+                <p className="text-xs text-[#344E4A] mt-1 line-clamp-1">
+                  Teppadakandi, Kodagu
                 </p>
               </div>
             </div>
@@ -240,7 +236,7 @@ export const ContactEnquirySection: React.FC = () => {
                 Reservation Concierge
               </h3>
               <p className="text-xs sm:text-sm text-[#344E4A] leading-relaxed">
-                Whether booking a romantic weekend across our 15 boutique suites or planning a grand celebration on the 500-guest lawn, our dedicated team will assist you personally.
+                Whether booking a relaxing weekend across our 15 boutique suites or planning a grand celebration on the 500-guest lawn, our dedicated team will assist you personally.
               </p>
 
               <div className="space-y-3 pt-2 text-xs text-[#344E4A]">
@@ -268,7 +264,7 @@ export const ContactEnquirySection: React.FC = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Your Name"
-                    className="w-full px-4 py-3 text-xs bg-white rounded-xl border border-[#D5C7B2] text-[#132422] font-medium focus:outline-none focus:border-[#1A96AA]"
+                    className="w-full px-4 py-3 text-sm sm:text-xs bg-white rounded-xl border border-[#D5C7B2] text-[#132422] font-medium focus:outline-none focus:border-[#1A96AA]"
                   />
                 </div>
 
@@ -280,7 +276,7 @@ export const ContactEnquirySection: React.FC = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="name@example.com"
-                    className="w-full px-4 py-3 text-xs bg-white rounded-xl border border-[#D5C7B2] text-[#132422] font-medium focus:outline-none focus:border-[#1A96AA]"
+                    className="w-full px-4 py-3 text-sm sm:text-xs bg-white rounded-xl border border-[#D5C7B2] text-[#132422] font-medium focus:outline-none focus:border-[#1A96AA]"
                   />
                 </div>
               </div>
@@ -294,7 +290,7 @@ export const ContactEnquirySection: React.FC = () => {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+91 74116 95533"
-                    className="w-full px-4 py-3 text-xs bg-white rounded-xl border border-[#D5C7B2] text-[#132422] font-medium focus:outline-none focus:border-[#1A96AA]"
+                    className="w-full px-4 py-3 text-sm sm:text-xs bg-white rounded-xl border border-[#D5C7B2] text-[#132422] font-medium focus:outline-none focus:border-[#1A96AA]"
                   />
                 </div>
 
@@ -303,7 +299,7 @@ export const ContactEnquirySection: React.FC = () => {
                   <select
                     value={formData.guests}
                     onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                    className="w-full px-4 py-3 text-xs bg-white rounded-xl border border-[#D5C7B2] text-[#132422] font-medium focus:outline-none focus:border-[#1A96AA]"
+                    className="w-full px-4 py-3 text-sm sm:text-xs bg-white rounded-xl border border-[#D5C7B2] text-[#132422] font-medium focus:outline-none focus:border-[#1A96AA]"
                   >
                     <option value="2 Guests">2 Guests (Couple / Deluxe)</option>
                     <option value="4-8 Guests">4–8 Guests (Family / Verandah)</option>
@@ -320,7 +316,7 @@ export const ContactEnquirySection: React.FC = () => {
                   type="date"
                   value={formData.date}
                   onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                  className="w-full px-4 py-3 text-xs bg-white rounded-xl border border-[#D5C7B2] text-[#132422] font-medium focus:outline-none focus:border-[#1A96AA]"
+                  className="w-full px-4 py-3 text-sm sm:text-xs bg-white rounded-xl border border-[#D5C7B2] text-[#132422] font-medium focus:outline-none focus:border-[#1A96AA]"
                 />
               </div>
 
@@ -331,7 +327,7 @@ export const ContactEnquirySection: React.FC = () => {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Tell us about your room preferences, food requirements, or event plans..."
-                  className="w-full px-4 py-3 text-xs bg-white rounded-xl border border-[#D5C7B2] text-[#132422] font-medium resize-none focus:outline-none focus:border-[#1A96AA]"
+                  className="w-full px-4 py-3 text-sm sm:text-xs bg-white rounded-xl border border-[#D5C7B2] text-[#132422] font-medium resize-none focus:outline-none focus:border-[#1A96AA]"
                 />
               </div>
 

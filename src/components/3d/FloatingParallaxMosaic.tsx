@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 import { ClayImage } from '../common/ClayImage';
@@ -16,17 +16,27 @@ interface MosaicPhoto {
 export const FloatingParallaxMosaic: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop, { passive: true });
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
   });
 
-  // Tightly calibrated and smooth transform ranges
-  const col1Y = useTransform(scrollYProgress, [0, 1], [40, -80]);
-  const col2Y = useTransform(scrollYProgress, [0, 1], [-60, 50]);
-  const col3Y = useTransform(scrollYProgress, [0, 1], [50, -90]);
-  const col4Y = useTransform(scrollYProgress, [0, 1], [-50, 60]);
+  // Tightly calibrated transforms for desktop
+  const col1Y = useTransform(scrollYProgress, [0, 1], [30, -50]);
+  const col2Y = useTransform(scrollYProgress, [0, 1], [-40, 30]);
+  const col3Y = useTransform(scrollYProgress, [0, 1], [40, -60]);
+  const col4Y = useTransform(scrollYProgress, [0, 1], [-30, 40]);
 
   const column1: MosaicPhoto[] = [
     {
@@ -115,8 +125,7 @@ export const FloatingParallaxMosaic: React.FC = () => {
   const renderCard = (photo: MosaicPhoto) => (
     <div
       key={photo.id}
-      style={{ transform: 'translate3d(0,0,0)', willChange: 'transform' }}
-      className="group relative rounded-3xl overflow-hidden bg-[#FAF6EF] border border-[#E4D9C8] p-3 shadow-[0_12px_28px_rgba(22,41,38,0.08),_inset_0_2px_4px_rgba(255,255,255,0.9)] transition-all duration-300 hover:shadow-[0_24px_50px_rgba(26,150,170,0.18)] hover:border-[#1A96AA]"
+      className="group relative rounded-3xl overflow-hidden bg-[#FAF6EF] border border-[#E4D9C8] p-3 shadow-sm transition-all duration-300 hover:shadow-lg hover:border-[#1A96AA]"
     >
       <div className="relative rounded-2xl overflow-hidden bg-[#E8DFD1]">
         <ClayImage
@@ -154,7 +163,7 @@ export const FloatingParallaxMosaic: React.FC = () => {
   return (
     <section
       ref={containerRef}
-      className="relative w-full py-20 sm:py-28 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none"
+      className="relative w-full py-12 sm:py-16 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none"
     >
       {/* Center Header Banner */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center space-y-3">
@@ -168,42 +177,42 @@ export const FloatingParallaxMosaic: React.FC = () => {
         </h2>
 
         <p className="text-xs sm:text-sm text-[#344E4A] max-w-xl mx-auto leading-relaxed">
-          Scroll down to watch our real resort spaces glide across 3D floating parallax currents. Hover any space to inspect its details.
+          Explore real resort spaces captured across the grounds. Hover any frame to inspect its details.
         </p>
       </div>
 
-      {/* 4-Column Floating Parallax Grid with GPU Promotion */}
+      {/* 4-Column Grid with Safe Desktop-Only Parallax Transforms */}
       <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
           
-          {/* Column 1 (Ascending) */}
+          {/* Column 1 */}
           <motion.div
-            style={{ y: prefersReduced ? 0 : col1Y, willChange: 'transform' }}
+            style={{ y: prefersReduced || !isDesktop ? 0 : col1Y }}
             className="space-y-6"
           >
             {column1.map(renderCard)}
           </motion.div>
 
-          {/* Column 2 (Descending) */}
+          {/* Column 2 */}
           <motion.div
-            style={{ y: prefersReduced ? 0 : col2Y, willChange: 'transform' }}
-            className="space-y-6 pt-0 sm:pt-8 lg:pt-12"
+            style={{ y: prefersReduced || !isDesktop ? 0 : col2Y }}
+            className="space-y-6 pt-0 sm:pt-4 lg:pt-8"
           >
             {column2.map(renderCard)}
           </motion.div>
 
-          {/* Column 3 (Ascending) */}
+          {/* Column 3 */}
           <motion.div
-            style={{ y: prefersReduced ? 0 : col3Y, willChange: 'transform' }}
-            className="space-y-6 pt-0 sm:pt-4 lg:pt-6"
+            style={{ y: prefersReduced || !isDesktop ? 0 : col3Y }}
+            className="space-y-6 pt-0 sm:pt-2 lg:pt-4"
           >
             {column3.map(renderCard)}
           </motion.div>
 
-          {/* Column 4 (Descending) */}
+          {/* Column 4 */}
           <motion.div
-            style={{ y: prefersReduced ? 0 : col4Y, willChange: 'transform' }}
-            className="space-y-6 pt-0 sm:pt-10 lg:pt-16"
+            style={{ y: prefersReduced || !isDesktop ? 0 : col4Y }}
+            className="space-y-6 pt-0 sm:pt-6 lg:pt-12"
           >
             {column4.map(renderCard)}
           </motion.div>

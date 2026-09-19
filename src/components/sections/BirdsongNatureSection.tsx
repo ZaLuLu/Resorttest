@@ -5,7 +5,7 @@ import { CinematicReveal } from '../common/CinematicReveal';
 
 export const BirdsongNatureSection: React.FC = () => {
   return (
-    <section id="birdsong" className="relative w-full py-20 sm:py-28 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none">
+    <section id="birdsong" className="relative w-full py-12 sm:py-16 bg-[#F5EFE6] text-[#132422] overflow-hidden select-none">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Section Header */}

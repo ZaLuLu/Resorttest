@@ -53,6 +53,8 @@ export interface AccommodationOverview {
     imageAlt: string;
     highlights: string[];
     tag: string;
+    startingRate?: string;
+    taxNote?: string;
   }>;
 }
 
@@ -177,10 +179,10 @@ export const resortData: ResortData = {
     elevation: "850m ASL",
   },
   contact: {
-    phone: null,
-    whatsapp: null,
-    email: "reservation@coorgrivernestresort.com",
-    reservationEmail: "reservation@coorgrivernestresort.com",
+    phone: "+91 7411695533",
+    whatsapp: "917411695533",
+    email: "stay@coorglaya.com",
+    reservationEmail: "stay@coorglaya.com",
     address: {
       line1: "Teppadakandi, Siddapura Main Road",
       line2: "Basavanahalli Village, Gudde Hosur Post",
@@ -198,7 +200,9 @@ export const resortData: ResortData = {
       lat: 12.4349915,
       lng: 75.9235081,
     },
-    socials: {},
+    socials: {
+      instagram: "https://www.instagram.com/p/Ddb0dXLBLPa/?stkn=MTd0ZzN2dGZzOTZrdQ==",
+    },
   },
   accommodation: {
     totalRooms: 15,
@@ -222,6 +226,8 @@ export const resortData: ResortData = {
         imageAlt: "Room with white bedding, olive accents, a wardrobe and a dressing mirror at Coorg Laya Resort",
         highlights: ["Wardrobe & Storage", "Dressing Vanity Mirror", "En-suite Bathroom", "Garden Vista"],
         tag: "Verified Room Interior",
+        startingRate: "₹4,500",
+        taxNote: "+ tax / night",
       },
       {
         id: "suite-emerald",
@@ -233,6 +239,8 @@ export const resortData: ResortData = {
         imageAlt: "Room with a green patterned feature wall, wooden ceiling and comfortable bed at Coorg Laya Resort",
         highlights: ["Botanical Feature Wall", "Timber Ceiling Accents", "En-suite Bathroom", "Balcony Vista"],
         tag: "Verified Room Interior",
+        startingRate: "₹5,200",
+        taxNote: "+ tax / night",
       },
       {
         id: "suite-twin",
@@ -244,6 +252,8 @@ export const resortData: ResortData = {
         imageAlt: "Twin bed bedroom interior at Coorg Laya Resort",
         highlights: ["Multiple Beds", "Spacious Floor Plan", "En-suite Bathroom", "Garden Access"],
         tag: "Family Suite",
+        startingRate: "₹6,000",
+        taxNote: "+ tax / night",
       },
       {
         id: "suite-lounge",
@@ -255,6 +265,8 @@ export const resortData: ResortData = {
         imageAlt: "Verandah Lounge Suite with interior seating area and sunny windows",
         highlights: ["Interior Sitting Area", "Private Wardrobe", "En-suite Bathroom", "Morning Sunlight"],
         tag: "Verandah Suite",
+        startingRate: "₹5,600",
+        taxNote: "+ tax / night",
       }
     ]
   },

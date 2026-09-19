@@ -8,7 +8,7 @@ import { Clay3DCard } from '../3d/Clay3DCard';
 
 export const AmenitiesSection: React.FC = () => {
   return (
-    <section id="amenities" className="relative w-full py-20 sm:py-28 bg-[#FAF6EF] text-[#132422] overflow-hidden select-none">
+    <section id="amenities" className="relative w-full py-12 sm:py-16 bg-[#FAF6EF] text-[#132422] overflow-hidden select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
         
         {/* Section Header */}
