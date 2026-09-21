@@ -35,6 +35,8 @@ export const App: React.FC = () => {
       touchMultiplier: 1.5,
     });
 
+    (window as any).__lenis = lenis;
+
     let animationFrameId: number;
 
     function raf(time: number) {
@@ -46,6 +48,7 @@ export const App: React.FC = () => {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      delete (window as any).__lenis;
       lenis.destroy();
     };
   }, []);

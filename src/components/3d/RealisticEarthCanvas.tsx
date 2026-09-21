@@ -42,6 +42,7 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
   const dragVelocityRef = useRef({ x: 0, y: 0 });
   const lastDragPosRef = useRef({ x: 0, y: 0, time: 0 });
   const hasUserRotatedRef = useRef(false);
+  const hasAutoTriggeredRef = useRef(false);
 
   const [, setTexturesLoaded] = useState(false);
 
@@ -301,8 +302,8 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     let pointerMovedDistance = 0;
 
     const handlePointerDown = (e: PointerEvent) => {
-      // Allow drag interaction in space phase (progress < 0.75)
-      if (progressRef.current >= 0.75) return;
+      // Disallow drag if already triggered or past space orbit
+      if (progressRef.current >= 0.45 || hasAutoTriggeredRef.current) return;
       isDraggingRef.current = true;
       pointerMovedDistance = 0;
       dragStartRef.current = {
@@ -360,11 +361,6 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     const handlePointerUp = () => {
       if (!isDraggingRef.current) return;
       isDraggingRef.current = false;
-
-      // If user tapped/clicked without significant drag, and India is in view, trigger descent!
-      if (pointerMovedDistance < 5 && isIndiaFocusedRef.current && onTriggerZoom) {
-        onTriggerZoom();
-      }
     };
 
     const domElement = renderer.domElement;
@@ -469,14 +465,36 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
           pinSpriteRef.current.scale.set(baseScale, baseScale, 1);
         }
 
-        // DETECT INDIAN SUBCONTINENT / COORG ALIGNMENT
+        // Reset auto trigger when user scrolls back to the very top
+        if (p < 0.03) {
+          hasAutoTriggeredRef.current = false;
+          if (mountRef.current && p < 0.45) {
+            mountRef.current.style.pointerEvents = 'auto';
+          }
+        }
+
+        // DETECT INDIAN SUBCONTINENT / COORG ALIGNMENT & AUTO-TRIGGER DESCENT
         // Check if Coorg's coordinate vector is facing forward (+Z towards camera)
         const coorgWorld = coorgPos.clone().applyEuler(earthGroupRef.current.rotation);
-        const isFacingUser = coorgWorld.z > 1.25;
+        const isNearIndia = coorgWorld.z > 1.05;
 
-        if (isFacingUser !== isIndiaFocusedRef.current) {
-          isIndiaFocusedRef.current = isFacingUser;
-          if (onIndiaFocused) onIndiaFocused(isFacingUser);
+        if (isNearIndia !== isIndiaFocusedRef.current) {
+          isIndiaFocusedRef.current = isNearIndia;
+          if (onIndiaFocused) onIndiaFocused(isNearIndia);
+        }
+
+        // AUTOMATIC SCROLL TRIGGER:
+        // No matter how they rotate, if they come near Indian subcontinent, automatically trigger the scroll descent
+        if (isNearIndia && !hasAutoTriggeredRef.current && p < 0.28) {
+          hasAutoTriggeredRef.current = true;
+          isDraggingRef.current = false;
+          dragVelocityRef.current = { x: 0, y: 0 };
+          if (mountRef.current) {
+            mountRef.current.style.pointerEvents = 'none';
+          }
+          if (onTriggerZoom) {
+            onTriggerZoom();
+          }
         }
       }
 

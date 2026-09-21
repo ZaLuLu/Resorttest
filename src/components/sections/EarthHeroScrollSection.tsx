@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ChevronRight, Compass, Volume2, Sparkles, MapPin, ArrowDown, Move3d } from 'lucide-react';
+import { ChevronRight, Compass, Volume2, MapPin, Move3d } from 'lucide-react';
 import { RealisticEarthCanvas } from '../3d/RealisticEarthCanvas';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -44,11 +44,20 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
     if (!containerRef.current) return;
     const isMobile = window.innerWidth < 768;
     const scrollDistance = isMobile ? 1600 : 3000;
-    const targetY = containerRef.current.offsetTop + scrollDistance * 0.82;
-    window.scrollTo({
-      top: targetY,
-      behavior: 'smooth',
-    });
+    const targetY = containerRef.current.offsetTop + scrollDistance * 0.85;
+
+    const lenis = (window as any).__lenis;
+    if (lenis) {
+      lenis.scrollTo(targetY, {
+        duration: 2.8,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    } else {
+      window.scrollTo({
+        top: targetY,
+        behavior: 'smooth',
+      });
+    }
   };
 
   const p = scrollProgress;
@@ -126,51 +135,17 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
           </div>
         </div>
 
-        {/* INTERACTIVE FLOATING GUIDE & INDIA LOCK-ON RADAR (Phase 0 -> 0.45) */}
+        {/* SUBTLE INTERACTION CUE (No manual clicks needed, triggers automatically) */}
         <div
-          className="absolute inset-x-4 sm:inset-x-auto sm:right-10 md:right-14 lg:right-20 bottom-6 sm:bottom-10 z-20 flex flex-col sm:items-end items-center gap-2.5 transition-all duration-300"
+          className="absolute inset-x-4 sm:inset-x-auto sm:right-10 md:right-14 lg:right-20 bottom-6 sm:bottom-10 z-20 pointer-events-none flex items-center gap-2 text-xs text-white/50 tracking-wider uppercase font-medium transition-all duration-200"
           style={{
             opacity: spaceIntroOpacity,
             display: spaceIntroOpacity > 0.01 ? 'flex' : 'none',
           }}
         >
-          {/* India Subcontinent Focus Lock-on Pill */}
-          {isIndiaFocused ? (
-            <button
-              onClick={handleTriggerZoom}
-              className="pointer-events-auto px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[#A3733E]/90 to-[#0F3C28]/90 hover:from-[#A3733E] hover:to-[#165338] backdrop-blur-md border border-[#C7A583]/60 text-white shadow-[0_0_25px_rgba(199,165,131,0.4)] flex items-center gap-2.5 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer animate-pulse"
-            >
-              <Sparkles className="w-4 h-4 text-[#FAF6EF]" />
-              <div className="text-left">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-[#FAF6EF] block leading-tight">
-                  Coorg Located (12.34°N, 75.81°E)
-                </span>
-                <span className="text-xs font-semibold text-white">
-                  Click to Descend into Sanctuary ↓
-                </span>
-              </div>
-            </button>
-          ) : (
-            <div className="pointer-events-none px-3.5 py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[11px] text-white/80 flex items-center gap-2 shadow-lg">
-              <Move3d className="w-3.5 h-3.5 text-[#C7A583]" />
-              <span>Drag globe to revolve · Orbit to India</span>
-            </div>
-          )}
-
-          {/* Quick Action Button & Scroll Hint */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleTriggerZoom}
-              className="pointer-events-auto px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer shadow-md"
-            >
-              <span>Descend to Coorg</span>
-              <ArrowDown className="w-3.5 h-3.5 text-[#C7A583]" />
-            </button>
-            <div className="hidden sm:flex items-center gap-1.5 text-[11px] text-white/60 tracking-wider uppercase font-semibold pl-2">
-              <span>Scroll to zoom</span>
-              <div className="w-6 h-[1px] bg-white/40 animate-pulse" />
-            </div>
-          </div>
+          <Move3d className="w-3.5 h-3.5 text-[#C7A583]" />
+          <span>Rotate globe towards India or scroll to enter</span>
+          <div className="w-6 h-[1px] bg-white/30 animate-pulse ml-1" />
         </div>
 
         {/* PHASE 1 OVERLAY: Clean Regional Destination Arrival Badge */}
