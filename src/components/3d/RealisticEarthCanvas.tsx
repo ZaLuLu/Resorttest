@@ -4,6 +4,8 @@ import * as THREE from 'three';
 interface RealisticEarthCanvasProps {
   progress: number; // 0 (Space orbit) -> 0.45 (Rotate to India) -> 0.8 (Zoom into Coorg) -> 1.0 (Fade into resort)
   onLoaded?: () => void;
+  onIndiaFocused?: (isFocused: boolean) => void;
+  onTriggerZoom?: () => void;
 }
 
 // Coorg, Karnataka, India Coordinates: 12.3375° N, 75.8062° E
@@ -14,6 +16,8 @@ const EARTH_RADIUS = 2.0;
 export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
   progress,
   onLoaded,
+  onIndiaFocused,
+  onTriggerZoom,
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -24,9 +28,22 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
   const cloudsMeshRef = useRef<THREE.Mesh | null>(null);
   const pinSpriteRef = useRef<THREE.Sprite | null>(null);
   const starsRef = useRef<THREE.Points | null>(null);
+  const atmosphereMaterialRef = useRef<THREE.ShaderMaterial | null>(null);
+  const atmosphereMeshRef = useRef<THREE.Mesh | null>(null);
+
   const progressRef = useRef(progress);
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
-  const [texturesLoaded, setTexturesLoaded] = useState(false);
+  const isIndiaFocusedRef = useRef(false);
+
+  // Drag-to-rotate interaction & momentum state
+  const isDraggingRef = useRef(false);
+  const dragStartRef = useRef({ x: 0, y: 0, rotX: 0, rotY: 0 });
+  const manualRotRef = useRef({ x: 0.35, y: -1.2 });
+  const dragVelocityRef = useRef({ x: 0, y: 0 });
+  const lastDragPosRef = useRef({ x: 0, y: 0, time: 0 });
+  const hasUserRotatedRef = useRef(false);
+
+  const [, setTexturesLoaded] = useState(false);
 
   useEffect(() => {
     progressRef.current = progress;
@@ -55,7 +72,6 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     ctx.clearRect(0, 0, 128, 128);
 
     ctx.save();
-    // Drop shadow under the 2D pin
     ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
     ctx.shadowBlur = 6;
     ctx.shadowOffsetY = 3;
@@ -68,7 +84,7 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     ctx.bezierCurveTo(106, 64, 88, 84, 64, 122);
     ctx.closePath();
 
-    ctx.fillStyle = '#EF4444'; // Clean Crimson Red
+    ctx.fillStyle = '#E63946'; // Vibrant Ruby Red
     ctx.fill();
 
     // Crisp white border outline
@@ -79,7 +95,7 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
 
     // White inner center dot
     ctx.beginPath();
-    ctx.arc(64, 44, 15, 0, Math.PI * 2);
+    ctx.arc(64, 44, 14, 0, Math.PI * 2);
     ctx.fillStyle = '#FFFFFF';
     ctx.fill();
 
@@ -94,7 +110,7 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     const width = container.clientWidth || window.innerWidth;
     const height = container.clientHeight || window.innerHeight;
 
-    // 1. Scene & Camera centered on the Earth
+    // 1. Scene & Camera centered on Earth
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
@@ -128,15 +144,15 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     observer.observe(container);
 
     // 3. Natural Sunlight & Deep Space Contrast
-    const ambientLight = new THREE.AmbientLight(0x111111, 0.4);
+    const ambientLight = new THREE.AmbientLight(0x151820, 0.5);
     scene.add(ambientLight);
 
-    const sunLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    const sunLight = new THREE.DirectionalLight(0xfff7ea, 2.3);
     sunLight.position.set(7, 3, 6);
     scene.add(sunLight);
 
     // 4. Multi-Layer Deep Space Starfield
-    const starsCount = 2500;
+    const starsCount = 2400;
     const starsGeo = new THREE.BufferGeometry();
     const starPositions = new Float32Array(starsCount * 3);
     const starColors = new Float32Array(starsCount * 3);
@@ -171,6 +187,8 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
 
     // 5. Earth Parent Group (Centered at 0, 0, 0)
     const earthGroup = new THREE.Group();
+    earthGroup.rotation.x = manualRotRef.current.x;
+    earthGroup.rotation.y = manualRotRef.current.y;
     scene.add(earthGroup);
     earthGroupRef.current = earthGroup;
 
@@ -206,9 +224,13 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     earthGroup.add(earthMesh);
     earthMeshRef.current = earthMesh;
 
-    // 7b. Atmospheric Fresnel Rim Glow Sphere
+    // 7b. Atmospheric Fresnel Rim Glow Sphere with Dynamic Fade
+    // uFade prevents the "blue screen pop-up" when zooming close to the surface
     const atmosphereGeometry = new THREE.SphereGeometry(EARTH_RADIUS * 1.025, 64, 64);
     const atmosphereMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        uFade: { value: 1.0 },
+      },
       vertexShader: `
         varying vec3 vNormal;
         varying vec3 vPosition;
@@ -219,11 +241,12 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
         }
       `,
       fragmentShader: `
+        uniform float uFade;
         varying vec3 vNormal;
         varying vec3 vPosition;
         void main() {
           float intensity = pow(0.68 - dot(vNormal, normalize(-vPosition)), 3.2);
-          gl_FragColor = vec4(0.25, 0.60, 1.0, intensity * 0.88);
+          gl_FragColor = vec4(0.25, 0.60, 1.0, intensity * 0.88 * uFade);
         }
       `,
       blending: THREE.AdditiveBlending,
@@ -233,6 +256,8 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     });
     const atmosphereMesh = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
     earthGroup.add(atmosphereMesh);
+    atmosphereMeshRef.current = atmosphereMesh;
+    atmosphereMaterialRef.current = atmosphereMaterial;
 
     // 8. Natural Cloud Sphere Layer
     const cloudsGeometry = new THREE.SphereGeometry(EARTH_RADIUS + 0.015, 64, 64);
@@ -248,7 +273,7 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     earthGroup.add(cloudsMesh);
     cloudsMeshRef.current = cloudsMesh;
 
-    // 9. CRISP 2D MAP PIN SPRITE & GOLD BEACON
+    // 9. Map Pin Sprite & Coordinates for Coorg
     const coorgPos = latLonToVector3(COORG_LAT, COORG_LON, EARTH_RADIUS + 0.005);
     const pinTexture = create2DPinTexture();
     let pinSprite: THREE.Sprite | null = null;
@@ -268,93 +293,194 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
       pinSpriteRef.current = pinSprite;
     }
 
-    // Target Euler Angles so Coorg points directly at the camera (+Z axis)
+    // Target Euler Angles so Coorg points directly at camera (+Z axis)
     const targetRotY = -((COORG_LON + 90) * (Math.PI / 180));
-    const targetRotX = (COORG_LAT * (Math.PI / 180));
+    const targetRotX = COORG_LAT * (Math.PI / 180);
 
-    // 10. Mouse Move Listener for 3D Perspective Parallax
-    const handleMouseMove = (e: MouseEvent) => {
+    // 10. Pointer Drag & Interaction System (Mouse Drag & Touch Swipe)
+    let pointerMovedDistance = 0;
+
+    const handlePointerDown = (e: PointerEvent) => {
+      // Allow drag interaction in space phase (progress < 0.75)
+      if (progressRef.current >= 0.75) return;
+      isDraggingRef.current = true;
+      pointerMovedDistance = 0;
+      dragStartRef.current = {
+        x: e.clientX,
+        y: e.clientY,
+        rotX: manualRotRef.current.x,
+        rotY: manualRotRef.current.y,
+      };
+      lastDragPosRef.current = {
+        x: e.clientX,
+        y: e.clientY,
+        time: performance.now(),
+      };
+      dragVelocityRef.current = { x: 0, y: 0 };
+    };
+
+    const handlePointerMove = (e: PointerEvent) => {
+      // Subtle parallax when not dragging
       const normX = (e.clientX / window.innerWidth) * 2 - 1;
       const normY = -(e.clientY / window.innerHeight) * 2 + 1;
-      mouseRef.current.targetX = normX * 0.3;
-      mouseRef.current.targetY = normY * 0.3;
-    };
-    window.addEventListener('mousemove', handleMouseMove);
+      mouseRef.current.targetX = normX * 0.25;
+      mouseRef.current.targetY = normY * 0.25;
 
-    // 11. Render Loop
+      if (!isDraggingRef.current) return;
+
+      const deltaX = e.clientX - dragStartRef.current.x;
+      const deltaY = e.clientY - dragStartRef.current.y;
+      pointerMovedDistance += Math.hypot(e.clientX - lastDragPosRef.current.x, e.clientY - lastDragPosRef.current.y);
+
+      // Sensitivity factor
+      const sensitivity = 0.005;
+      manualRotRef.current.y = dragStartRef.current.rotY + deltaX * sensitivity;
+      manualRotRef.current.x = THREE.MathUtils.clamp(
+        dragStartRef.current.rotX + deltaY * sensitivity,
+        -Math.PI / 2.5,
+        Math.PI / 2.5
+      );
+
+      // Measure instantaneous velocity for inertia release
+      const now = performance.now();
+      const dt = Math.max(1, now - lastDragPosRef.current.time);
+      dragVelocityRef.current = {
+        y: ((e.clientX - lastDragPosRef.current.x) / dt) * 16 * sensitivity,
+        x: ((e.clientY - lastDragPosRef.current.y) / dt) * 16 * sensitivity,
+      };
+
+      lastDragPosRef.current = {
+        x: e.clientX,
+        y: e.clientY,
+        time: now,
+      };
+      hasUserRotatedRef.current = true;
+    };
+
+    const handlePointerUp = () => {
+      if (!isDraggingRef.current) return;
+      isDraggingRef.current = false;
+
+      // If user tapped/clicked without significant drag, and India is in view, trigger descent!
+      if (pointerMovedDistance < 5 && isIndiaFocusedRef.current && onTriggerZoom) {
+        onTriggerZoom();
+      }
+    };
+
+    const domElement = renderer.domElement;
+    domElement.addEventListener('pointerdown', handlePointerDown);
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
+    window.addEventListener('pointercancel', handlePointerUp);
+
+    // 11. Render Loop with Inertia & Indian Subcontinent Alignment Check
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const clock = new THREE.Clock();
 
     const render = () => {
       const elapsedTime = clock.getElapsedTime();
       const p = progressRef.current; // 0 to 1
 
-      // Damped mouse parallax
+      // Mouse parallax damping
       mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.05;
       mouseRef.current.y += (mouseRef.current.targetY - mouseRef.current.y) * 0.05;
 
-      // Cloud drift
+      // Cloud slow drift
       if (cloudsMeshRef.current) {
         cloudsMeshRef.current.rotation.y = elapsedTime * 0.008;
       }
 
-      // Starfield subtle rotation & parallax
+      // Starfield subtle cosmic drift
       if (starsRef.current) {
         starsRef.current.rotation.y = elapsedTime * 0.001;
       }
 
-      // SCROLL CHOREOGRAPHY LOGIC
-      if (earthGroupRef.current && cameraRef.current) {
-        // Rotation: Phase 1 (0 -> 0.45)
-        const rotT = Math.min(1, p / 0.45);
-        const smoothRotT = rotT * rotT * (3 - 2 * rotT);
-        
-        // Initial space orientation -> Targeted India/Coorg orientation
-        const startRotY = -1.2;
-        const startRotX = 0.35;
-        
-        earthGroupRef.current.rotation.y = THREE.MathUtils.lerp(startRotY, targetRotY, smoothRotT);
-        earthGroupRef.current.rotation.x = THREE.MathUtils.lerp(startRotX, targetRotX, smoothRotT);
+      // Drag inertia physics (decay momentum when released)
+      if (!isDraggingRef.current) {
+        manualRotRef.current.y += dragVelocityRef.current.y;
+        manualRotRef.current.x = THREE.MathUtils.clamp(
+          manualRotRef.current.x + dragVelocityRef.current.x,
+          -Math.PI / 2.5,
+          Math.PI / 2.5
+        );
+        dragVelocityRef.current.x *= 0.94;
+        dragVelocityRef.current.y *= 0.94;
 
-        // Camera Zoom & Position
+        // If user is idle and hasn't dragged recently, gently spin globe
+        if (!hasUserRotatedRef.current && Math.abs(dragVelocityRef.current.y) < 0.0001) {
+          manualRotRef.current.y += 0.0012;
+        }
+      }
+
+      // ATMOSPHERE FADE-OUT: Eliminate the blue screen pop-up!
+      // Inverted blue Fresnel geometry fades to 0 before camera zooms close to the surface
+      if (atmosphereMaterialRef.current && atmosphereMeshRef.current) {
+        const atmoFade = p < 0.3 ? 1.0 : Math.max(0, 1.0 - (p - 0.3) / 0.25);
+        atmosphereMaterialRef.current.uniforms.uFade.value = atmoFade;
+        atmosphereMeshRef.current.visible = atmoFade > 0.01;
+      }
+
+      // ROTATION & CAMERA SCROLL CHOREOGRAPHY
+      if (earthGroupRef.current && cameraRef.current) {
         if (p < 0.45) {
-          // In space orbit with mouse parallax tilt
+          // Free manual drag-to-rotate mode in space orbit
+          earthGroupRef.current.rotation.y = manualRotRef.current.y;
+          earthGroupRef.current.rotation.x = manualRotRef.current.x;
+
           cameraRef.current.position.set(
             mouseRef.current.x,
             mouseRef.current.y,
             7.2
           );
           earthGroupRef.current.scale.set(1, 1, 1);
-        } else if (p < 0.8) {
-          // Zooming from space directly onto the 2D Pin in Coorg (Exponential ease-out for cinematic crane landing)
-          const zoomT = Math.min(1, Math.max(0, (p - 0.45) / 0.35));
-          const smoothZoom = 1 - Math.pow(2, -10 * zoomT);
-          
-          const camZ = THREE.MathUtils.lerp(7.2, 2.06, smoothZoom);
-          const camX = THREE.MathUtils.lerp(mouseRef.current.x, 0, smoothZoom);
-          const camY = THREE.MathUtils.lerp(mouseRef.current.y, 0, smoothZoom);
-
-          cameraRef.current.position.set(camX, camY, camZ);
-          earthGroupRef.current.scale.set(1, 1, 1);
         } else {
-          // Final cloud dive & dissolve (0.8 -> 1.0)
-          const dissolveT = (p - 0.8) / 0.2; // 0 to 1
-          const zoomScale = 1 + dissolveT * 5.0;
-          earthGroupRef.current.scale.set(zoomScale, zoomScale, zoomScale);
-          cameraRef.current.position.set(0, 0, 2.06 - dissolveT * 0.3);
+          // Scroll lock: smoothly steer from current orientation to Coorg target angles
+          const lockT = Math.min(1, (p - 0.45) / 0.15);
+          const smoothLockT = lockT * lockT * (3 - 2 * lockT);
+
+          earthGroupRef.current.rotation.y = THREE.MathUtils.lerp(manualRotRef.current.y, targetRotY, smoothLockT);
+          earthGroupRef.current.rotation.x = THREE.MathUtils.lerp(manualRotRef.current.x, targetRotX, smoothLockT);
+
+          if (p < 0.8) {
+            // Zooming from space directly onto the 2D Pin in Coorg
+            const zoomT = Math.min(1, Math.max(0, (p - 0.45) / 0.35));
+            const smoothZoom = 1 - Math.pow(2, -10 * zoomT);
+
+            const camZ = THREE.MathUtils.lerp(7.2, 2.06, smoothZoom);
+            const camX = THREE.MathUtils.lerp(mouseRef.current.x, 0, smoothZoom);
+            const camY = THREE.MathUtils.lerp(mouseRef.current.y, 0, smoothZoom);
+
+            cameraRef.current.position.set(camX, camY, camZ);
+            earthGroupRef.current.scale.set(1, 1, 1);
+          } else {
+            // Cloud dive & mist dissolve (0.8 -> 1.0)
+            const dissolveT = (p - 0.8) / 0.2;
+            const zoomScale = 1 + dissolveT * 4.5;
+            earthGroupRef.current.scale.set(zoomScale, zoomScale, zoomScale);
+            cameraRef.current.position.set(0, 0, 2.06 - dissolveT * 0.25);
+          }
         }
 
         // 2D Pin scale & fade transition
         if (pinSpriteRef.current) {
           const pinScaleT = THREE.MathUtils.clamp((p - 0.15) / 0.3, 0, 1);
-          // Scale smoothly down slightly during extreme zoom so it stays sharp and clean
           const zoomScaleMod = p > 0.5 ? Math.max(0.4, 1 - (p - 0.5) * 1.5) : 1.0;
           const baseScale = 0.13 * pinScaleT * zoomScaleMod;
           pinSpriteRef.current.scale.set(baseScale, baseScale, 1);
         }
+
+        // DETECT INDIAN SUBCONTINENT / COORG ALIGNMENT
+        // Check if Coorg's coordinate vector is facing forward (+Z towards camera)
+        const coorgWorld = coorgPos.clone().applyEuler(earthGroupRef.current.rotation);
+        const isFacingUser = coorgWorld.z > 1.25;
+
+        if (isFacingUser !== isIndiaFocusedRef.current) {
+          isIndiaFocusedRef.current = isFacingUser;
+          if (onIndiaFocused) onIndiaFocused(isFacingUser);
+        }
       }
 
-      // Paused when offscreen or completely transitioned into the resort section
+      // Paused when offscreen or completely transitioned into resort section
       if (!isVisible || p >= 0.99) {
         animationFrameId = requestAnimationFrame(render);
         return;
@@ -383,8 +509,12 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     return () => {
       observer.disconnect();
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointercancel', handlePointerUp);
+      domElement.removeEventListener('pointerdown', handlePointerDown);
       cancelAnimationFrame(animationFrameId);
+
       if (rendererRef.current && rendererRef.current.domElement && container.contains(rendererRef.current.domElement)) {
         container.removeChild(rendererRef.current.domElement);
         rendererRef.current.dispose();
@@ -401,14 +531,20 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     };
   }, []);
 
+  const isInteractive = progress < 0.75;
+
   return (
     <div
       ref={mountRef}
-      className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden"
+      className={`absolute inset-0 w-full h-full overflow-hidden select-none ${
+        isInteractive ? 'pointer-events-auto cursor-grab active:cursor-grabbing' : 'pointer-events-none'
+      }`}
       style={{
-        opacity: Math.max(0, 1 - Math.max(0, (progress - 0.82) / 0.18)),
-        transition: 'opacity 0.08s linear',
+        opacity: Math.max(0, 1 - Math.max(0, (progress - 0.78) / 0.22)),
+        transition: 'opacity 0.1s linear',
       }}
     />
   );
 };
+
+export default RealisticEarthCanvas;

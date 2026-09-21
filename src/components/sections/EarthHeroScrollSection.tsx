@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ChevronRight, Compass, Volume2 } from 'lucide-react';
+import { ChevronRight, Compass, Volume2, Sparkles, MapPin, ArrowDown, Move3d } from 'lucide-react';
 import { RealisticEarthCanvas } from '../3d/RealisticEarthCanvas';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,6 +16,7 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isIndiaFocused, setIsIndiaFocused] = useState(false);
 
   useEffect(() => {
     if (!containerRef.current || !pinRef.current) return;
@@ -39,17 +40,28 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
     };
   }, []);
 
+  const handleTriggerZoom = () => {
+    if (!containerRef.current) return;
+    const isMobile = window.innerWidth < 768;
+    const scrollDistance = isMobile ? 1600 : 3000;
+    const targetY = containerRef.current.offsetTop + scrollDistance * 0.82;
+    window.scrollTo({
+      top: targetY,
+      behavior: 'smooth',
+    });
+  };
+
   const p = scrollProgress;
 
   // Phase 0: Space Intro Typography (0 -> 0.35)
-  const spaceIntroOpacity = p < 0.2 ? 1 : Math.max(0, 1 - (p - 0.2) / 0.15);
-  const spaceIntroY = (p / 0.35) * -25;
+  const spaceIntroOpacity = p < 0.22 ? 1 : Math.max(0, 1 - (p - 0.22) / 0.14);
+  const spaceIntroY = (p / 0.35) * -20;
 
-  // Phase 1: Clean Editorial Destination Marker (0.28 -> 0.72)
+  // Phase 1: Regional Approach Telemetry Badge (0.32 -> 0.72)
   let destinationTextOpacity = 0;
-  if (p >= 0.28 && p <= 0.72) {
-    if (p < 0.4) {
-      destinationTextOpacity = (p - 0.28) / 0.12;
+  if (p >= 0.32 && p <= 0.72) {
+    if (p < 0.42) {
+      destinationTextOpacity = (p - 0.32) / 0.1;
     } else if (p > 0.6) {
       destinationTextOpacity = Math.max(0, 1 - (p - 0.6) / 0.12);
     } else {
@@ -57,53 +69,107 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
     }
   }
 
-  // Phase 2: Natural Resort Reveal (0.75 -> 1.0)
-  const resortBgOpacity = p < 0.75 ? 0 : Math.min(1, (p - 0.75) / 0.15);
-  const resortBgScale = 1.08 - Math.max(0, (p - 0.75) / 0.25) * 0.08;
+  // Phase 2: Natural Mist Dissolve to Resort Grounds (0.75 -> 1.0)
+  // Replaces the blue screen flash with a seamless warm golden mist dissolve
+  const resortBgOpacity = p < 0.74 ? 0 : Math.min(1, (p - 0.74) / 0.16);
+  const resortBgScale = 1.06 - Math.max(0, (p - 0.74) / 0.26) * 0.06;
 
-  // Phase 3: LAYA Brand Title & Hero CTAs (0.8 -> 1.0)
+  // Phase 3: Monumental LAYA Branding & Hero CTAs (0.8 -> 1.0)
   const layaBlockOpacity = p < 0.8 ? 0 : Math.min(1, (p - 0.8) / 0.14);
-  const layaBlockScale = 0.95 + Math.min(0.05, ((p - 0.8) / 0.2) * 0.05);
-  const layaBlockY = Math.max(0, (1 - (p - 0.8) / 0.2) * 30);
+  const layaBlockScale = 0.96 + Math.min(0.04, ((p - 0.8) / 0.2) * 0.04);
+  const layaBlockY = Math.max(0, (1 - (p - 0.8) / 0.2) * 24);
 
   return (
-    <div ref={containerRef} className="relative w-full bg-[#000000] select-none touch-pan-y">
+    <div ref={containerRef} className="relative w-full bg-[#050608] select-none touch-pan-y">
       {/* Pinned Viewport Stage */}
       <div
         ref={pinRef}
-        className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-[#000000] text-white touch-pan-y"
+        className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-[#050608] text-white touch-pan-y"
       >
-        {/* 3D Realistic Earth Canvas */}
-        <RealisticEarthCanvas progress={scrollProgress} />
+        {/* 3D Realistic Earth Canvas with Drag-to-Rotate & Inertia */}
+        <RealisticEarthCanvas
+          progress={scrollProgress}
+          onIndiaFocused={setIsIndiaFocused}
+          onTriggerZoom={handleTriggerZoom}
+        />
 
-        {/* PHASE 0 OVERLAY: Elegant Space Intro Typography */}
+        {/* PHASE 0: Space Orbit View - Luxury Brand Headline & Narrative */}
         <div
-          className="absolute left-4 sm:left-12 md:left-16 lg:left-24 top-1/2 -translate-y-1/2 max-w-xs sm:max-w-md lg:max-w-lg z-20 pointer-events-none transition-all duration-150 space-y-3 sm:space-y-4 text-white"
+          className="absolute left-4 sm:left-10 md:left-14 lg:left-20 top-20 sm:top-1/2 sm:-translate-y-1/2 max-w-sm sm:max-w-md lg:max-w-lg z-20 pointer-events-none transition-all duration-200 space-y-3 sm:space-y-4 text-white"
           style={{
             opacity: spaceIntroOpacity,
-            transform: `translateY(calc(-50% + ${spaceIntroY}px))`,
+            transform: `translateY(calc(0% + ${spaceIntroY}px))`,
             display: spaceIntroOpacity > 0.01 ? 'block' : 'none',
           }}
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[11px] sm:text-xs font-semibold tracking-kicker uppercase text-[#FAF6EF]">
-            <Compass className="w-3.5 h-3.5 text-[#A3733E]" />
+          {/* Authentic Location Pill */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-semibold tracking-kicker uppercase text-[#FAF6EF] shadow-lg">
+            <Compass className="w-3.5 h-3.5 text-[#C7A583]" />
             <span>Kushalnagar · Kodagu, Karnataka</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-display font-bold tracking-tight text-white leading-[1.12] heading-balance">
-            A Journey to <br />
-            <span className="font-accent italic font-semibold text-white/95">
-              Riverside Serenity
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-display font-bold tracking-tight text-white leading-[1.1] heading-balance">
+            Where Time Slows to{' '}
+            <span className="font-accent italic font-semibold text-[#FAF6EF] block sm:inline">
+              Nature’s Rhythm
             </span>
-          </h2>
+          </h1>
 
-          <p className="text-xs sm:text-base text-white/90 leading-relaxed font-normal prose-pretty line-clamp-3 sm:line-clamp-none">
-            Scroll to descend through the clouds into our central sanctuary in the Western Ghats.
+          <p className="text-xs sm:text-base text-white/85 leading-relaxed font-normal prose-pretty">
+            A secluded sanctuary along the Kaveri River corridor. 15 private suites wrapped in lush Western Ghats flora, birdsong, and open celebration grounds.
           </p>
 
-          <div className="flex items-center gap-3 pt-2 text-xs tracking-widest text-white/70 uppercase font-semibold">
-            <span>Scroll to Enter</span>
-            <div className="w-8 h-[1px] bg-white/60 animate-pulse" />
+          <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] sm:text-xs font-medium text-[#C7A583]">
+            <span className="px-2.5 py-1 rounded-md bg-black/40 border border-white/10">15 Suites</span>
+            <span className="px-2.5 py-1 rounded-md bg-black/40 border border-white/10">500-Guest River Lawn</span>
+            <span className="px-2.5 py-1 rounded-md bg-black/40 border border-white/10">Kaveri Proximity</span>
+          </div>
+        </div>
+
+        {/* INTERACTIVE FLOATING GUIDE & INDIA LOCK-ON RADAR (Phase 0 -> 0.45) */}
+        <div
+          className="absolute inset-x-4 sm:inset-x-auto sm:right-10 md:right-14 lg:right-20 bottom-6 sm:bottom-10 z-20 flex flex-col sm:items-end items-center gap-2.5 transition-all duration-300"
+          style={{
+            opacity: spaceIntroOpacity,
+            display: spaceIntroOpacity > 0.01 ? 'flex' : 'none',
+          }}
+        >
+          {/* India Subcontinent Focus Lock-on Pill */}
+          {isIndiaFocused ? (
+            <button
+              onClick={handleTriggerZoom}
+              className="pointer-events-auto px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[#A3733E]/90 to-[#0F3C28]/90 hover:from-[#A3733E] hover:to-[#165338] backdrop-blur-md border border-[#C7A583]/60 text-white shadow-[0_0_25px_rgba(199,165,131,0.4)] flex items-center gap-2.5 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer animate-pulse"
+            >
+              <Sparkles className="w-4 h-4 text-[#FAF6EF]" />
+              <div className="text-left">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-[#FAF6EF] block leading-tight">
+                  Coorg Located (12.34°N, 75.81°E)
+                </span>
+                <span className="text-xs font-semibold text-white">
+                  Click to Descend into Sanctuary ↓
+                </span>
+              </div>
+            </button>
+          ) : (
+            <div className="pointer-events-none px-3.5 py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[11px] text-white/80 flex items-center gap-2 shadow-lg">
+              <Move3d className="w-3.5 h-3.5 text-[#C7A583]" />
+              <span>Drag globe to revolve · Orbit to India</span>
+            </div>
+          )}
+
+          {/* Quick Action Button & Scroll Hint */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleTriggerZoom}
+              className="pointer-events-auto px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer shadow-md"
+            >
+              <span>Descend to Coorg</span>
+              <ArrowDown className="w-3.5 h-3.5 text-[#C7A583]" />
+            </button>
+            <div className="hidden sm:flex items-center gap-1.5 text-[11px] text-white/60 tracking-wider uppercase font-semibold pl-2">
+              <span>Scroll to zoom</span>
+              <div className="w-6 h-[1px] bg-white/40 animate-pulse" />
+            </div>
           </div>
         </div>
 
@@ -115,20 +181,24 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
             display: destinationTextOpacity > 0.01 ? 'block' : 'none',
           }}
         >
-          <div className="p-5 sm:p-6 rounded-3xl bg-black/70 backdrop-blur-md border border-white/20 space-y-2 text-white shadow-2xl">
-            <span className="text-[10px] sm:text-[11px] uppercase tracking-kicker text-[#C7A583] font-bold block">
-              Destination Approach
-            </span>
-            <h3 className="text-xl sm:text-3xl font-display font-bold text-white tracking-tight">
+          <div className="p-5 sm:p-6 rounded-3xl bg-black/75 backdrop-blur-xl border border-white/20 space-y-2 text-white shadow-2xl">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-kicker text-[#C7A583] font-bold">
+                Destination Approach
+              </span>
+              <span className="text-[10px] text-white/60 font-mono">12.3375° N, 75.8062° E</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-display font-bold text-white tracking-tight flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-[#E63946]" />
               Kushalnagar, Coorg
             </h3>
-            <p className="text-xs text-white/90 font-normal leading-relaxed pt-1">
-              Gateway to River Kaveri, Tibetan monasteries, and verdant coffee estates.
+            <p className="text-xs text-white/85 font-normal leading-relaxed pt-1">
+              Gateway to River Kaveri, Tibetan monasteries, and verdant coffee estates. Descending to resort grounds.
             </p>
           </div>
         </div>
 
-        {/* PHASE 3 & 4: Natural Resort Backdrop & Monumental LAYA Reveal */}
+        {/* PHASE 2 & 3: Seamless Mist Transition into Resort Grounds */}
         <div
           className="absolute inset-0 z-30 pointer-events-auto overflow-hidden transition-opacity duration-300"
           style={{
@@ -136,6 +206,7 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
             display: resortBgOpacity > 0.01 ? 'block' : 'none',
           }}
         >
+          {/* High-Resolution Authentic Resort Grounds Photography */}
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-out"
             style={{
@@ -144,14 +215,14 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
             }}
           />
 
-          {/* Directional Scrim: Darkens left side for crisp typography contrast */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/65 to-black/15 md:to-transparent pointer-events-none z-10" />
-          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/65 to-transparent pointer-events-none z-10" />
-          <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none z-10" />
+          {/* Warm Morning Mist Scrim (replaces harsh blue screen with soft golden ambient light) */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/65 to-black/25 md:to-transparent pointer-events-none z-10" />
+          <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/70 via-black/30 to-transparent pointer-events-none z-10" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none z-10" />
 
           {/* Clean Editorial Hero Content Layer */}
           <div
-            className="relative h-full w-full flex flex-col justify-between pt-20 sm:pt-28 pb-5 sm:pb-8 px-5 sm:px-12 lg:px-16 text-white z-20 max-w-7xl mx-auto overflow-y-auto sm:overflow-hidden"
+            className="relative h-full w-full flex flex-col justify-between pt-20 sm:pt-28 pb-6 sm:pb-10 px-5 sm:px-12 lg:px-16 text-white z-20 max-w-7xl mx-auto overflow-y-auto sm:overflow-hidden"
             style={{
               opacity: layaBlockOpacity,
               transform: `translateY(${layaBlockY}px) scale(${layaBlockScale})`,
@@ -166,21 +237,21 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
               {/* Eyebrow Pill */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-semibold tracking-kicker uppercase text-[#C7A583]">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Kushalnagar · Coorg</span>
+                <span>Kushalnagar · Coorg, Karnataka</span>
               </div>
 
               {/* Title & Subtitle */}
               <div className="space-y-2">
-                <h1 className="text-5xl sm:text-7xl md:text-8xl font-display font-bold tracking-tight uppercase leading-none text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
-                  LAYA
-                </h1>
+                <h2 className="text-5xl sm:text-7xl md:text-8xl font-display font-bold tracking-tight uppercase leading-none text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
+                  COORG LAYA
+                </h2>
                 <p className="text-lg sm:text-2xl font-accent italic font-semibold text-[#FAF6EF] leading-snug drop-shadow-sm">
-                  Your Eco-Luxury Sanctuary in Coorg
+                  Riverside Stillness, Untouched Nature
                 </p>
               </div>
 
               <p className="text-xs sm:text-sm text-white/90 leading-relaxed max-w-lg font-normal prose-pretty">
-                Immerse in nature’s rhythm along the tranquil Kaveri riverside. Unwind in private suites surrounded by lush Western Ghats flora and birdsong.
+                Immerse in nature’s rhythm along the tranquil Kaveri riverside. Unwind in 15 boutique suites surrounded by lush Western Ghats flora, birdsong, and open starlit lawns.
               </p>
 
               {/* Action Buttons */}
@@ -189,7 +260,7 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
                   onClick={onOpenEnquiry}
                   className="px-6 sm:px-7 py-3 rounded-full bg-[#0F3C28] hover:bg-[#165338] text-white font-semibold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 flex items-center gap-2 border border-[#A3733E]/60 shadow-lg hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  <span>Book / Enquire</span>
+                  <span>Book Stay / Enquire</span>
                   <ChevronRight className="w-4 h-4 text-[#C7A583]" />
                 </button>
 
@@ -203,17 +274,17 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
               </div>
             </div>
 
-            {/* Bottom Highlights Capsules */}
+            {/* Bottom Highlights Capsules - Authentic Resort Specs */}
             <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/15">
               <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-medium text-white/90">
-                  🌿 Riverside Sanctuary
+                <span className="px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-medium text-white/90">
+                  🏡 15 Private Suites (Up to ~45 Guests)
                 </span>
-                <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-medium text-white/90">
+                <span className="px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-medium text-white/90">
+                  🌿 500-Guest Riverfront Lawn
+                </span>
+                <span className="px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-medium text-white/90">
                   🏊 Palm Swimming Pool
-                </span>
-                <span className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-medium text-white/90">
-                  🏡 15 Private Suites
                 </span>
               </div>
               <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-white/85 tracking-widest uppercase">
