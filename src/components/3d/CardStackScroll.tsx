@@ -63,13 +63,13 @@ const StackCard: React.FC<StackCardProps> = ({
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
             />
-            <div className="absolute top-3 left-3 px-3.5 py-1.5 rounded-full bg-[#FAF6EF]/95 backdrop-blur-md border border-[#DFD3C0] text-xs font-bold text-[#116B7B] shadow-sm flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-[#1A96AA]" />
-              <span>0{index + 1} · {suite.category}</span>
+            <div className="absolute top-3 left-3 glass-spec-chip text-[#FAF6EF]">
+              <Sparkles className="w-3.5 h-3.5 text-[#A3733E]" />
+              <span className="tracking-wide uppercase text-[11px] font-bold">0{index + 1} · {suite.category}</span>
             </div>
 
-            <div className="absolute bottom-3 right-3 px-3 py-1.5 rounded-full bg-[#132422]/90 backdrop-blur-md text-white text-xs font-bold">
-              {suite.startingRate} / Night
+            <div className="absolute bottom-3 right-3 glass-spec-chip text-white font-bold text-xs">
+              <span className="text-[#A3733E]">From</span> {suite.startingRate} / Night
             </div>
           </div>
 
@@ -80,10 +80,10 @@ const StackCard: React.FC<StackCardProps> = ({
                 <BedDouble className="w-3.5 h-3.5" />
                 <span>Sanctuary Suite Quarters</span>
               </div>
-              <h3 className="font-serif text-2xl sm:text-3xl font-extrabold text-[#132422]">
+              <h3 className="font-display text-2xl sm:text-3xl font-bold text-[#131E1C]">
                 {suite.name}
               </h3>
-              <p className="text-xs sm:text-sm text-[#344E4A] leading-relaxed mt-1">
+              <p className="text-xs sm:text-sm text-[#314240] leading-relaxed mt-1 font-normal prose-pretty">
                 {suite.description}
               </p>
             </div>
@@ -91,24 +91,24 @@ const StackCard: React.FC<StackCardProps> = ({
             {/* Quick Spec Pills */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1">
               <div className="p-2.5 rounded-2xl bg-[#EFE8DC] border border-[#DFD3C0]">
-                <span className="text-[10px] font-bold text-[#635546] uppercase block">Area</span>
-                <span className="text-xs font-extrabold text-[#132422]">{suite.sqft}</span>
+                <span className="text-[10px] font-semibold text-[#8C5F2E] uppercase block tracking-kicker">Area</span>
+                <span className="text-xs font-bold text-[#131E1C] font-mono">{suite.sqft}</span>
               </div>
               <div className="p-2.5 rounded-2xl bg-[#EFE8DC] border border-[#DFD3C0]">
-                <span className="text-[10px] font-bold text-[#635546] uppercase block">Capacity</span>
-                <span className="text-xs font-extrabold text-[#132422]">{suite.capacity}</span>
+                <span className="text-[10px] font-semibold text-[#8C5F2E] uppercase block tracking-kicker">Capacity</span>
+                <span className="text-xs font-bold text-[#131E1C]">{suite.capacity}</span>
               </div>
               <div className="p-2.5 rounded-2xl bg-[#EFE8DC] border border-[#DFD3C0] col-span-2 sm:col-span-1">
-                <span className="text-[10px] font-bold text-[#635546] uppercase block">Bed</span>
-                <span className="text-xs font-extrabold text-[#132422] truncate block">{suite.bedType.split('+')[0]}</span>
+                <span className="text-[10px] font-semibold text-[#8C5F2E] uppercase block tracking-kicker">Bed</span>
+                <span className="text-xs font-bold text-[#131E1C] truncate block">{suite.bedType.split('+')[0]}</span>
               </div>
             </div>
 
             {/* Highlights Checklist */}
             <div className="space-y-1.5 pt-1">
               {suite.highlights.slice(0, 3).map((hl, hIdx) => (
-                <div key={hIdx} className="flex items-center gap-2 text-xs font-medium text-[#132422]">
-                  <div className="w-4 h-4 rounded-full bg-[#E5F3F5] text-[#116B7B] flex items-center justify-center shrink-0">
+                <div key={hIdx} className="flex items-center gap-2 text-xs font-medium text-[#131E1C]">
+                  <div className="w-4 h-4 rounded-full bg-[#E5F3F5] text-[#137586] flex items-center justify-center shrink-0">
                     <Check className="w-2.5 h-2.5" />
                   </div>
                   <span>{hl}</span>
@@ -120,7 +120,7 @@ const StackCard: React.FC<StackCardProps> = ({
             <div className="pt-2">
               <button
                 onClick={() => onBookNow(suite.id)}
-                className="w-full sm:w-auto px-7 py-3 rounded-2xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-7 py-3 rounded-2xl text-xs sm:text-sm font-bold text-white bg-[#137586] hover:bg-[#105B69] shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Reserve {suite.name}</span>
                 <ArrowUpRight className="w-4 h-4" />

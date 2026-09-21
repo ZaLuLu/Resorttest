@@ -103,11 +103,11 @@ export const RoomsPage: React.FC<RoomsPageProps> = ({ onOpenEnquiry }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <CinematicReveal delay={0.1}>
             <div className="rounded-3xl bg-[#FAF6EF] p-6 sm:p-8 space-y-3 border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-[#E5F3F5] text-[#116B7B] flex items-center justify-center shadow-sm">
+              <div className="w-12 h-12 rounded-2xl bg-[#FAF6EF] border border-[#D5C7B2] text-[#137586] flex items-center justify-center shadow-sm">
                 <BedDouble className="w-6 h-6" />
               </div>
-              <h3 className="font-serif text-xl font-bold text-[#132422]">15 Private Suites</h3>
-              <p className="text-xs sm:text-sm text-[#344E4A] leading-relaxed">
+              <h3 className="font-display text-xl font-bold text-[#132422]">15 Private Suites</h3>
+              <p className="text-sm text-[#2C413E] leading-relaxed prose-pretty">
                 Well-appointed rooms set within tranquil resort grounds, surrounded by fresh Kodagu breezes and bamboo gardens.
               </p>
             </div>
@@ -115,11 +115,11 @@ export const RoomsPage: React.FC<RoomsPageProps> = ({ onOpenEnquiry }) => {
 
           <CinematicReveal delay={0.2}>
             <div className="rounded-3xl bg-[#FAF6EF] p-6 sm:p-8 space-y-3 border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-[#EFE8DC] text-[#A3733E] flex items-center justify-center shadow-sm">
+              <div className="w-12 h-12 rounded-2xl bg-[#FAF6EF] border border-[#D5C7B2] text-[#A3733E] flex items-center justify-center shadow-sm">
                 <Users className="w-6 h-6" />
               </div>
-              <h3 className="font-serif text-xl font-bold text-[#132422]">~45 Overnight Guests</h3>
-              <p className="text-xs sm:text-sm text-[#344E4A] leading-relaxed">
+              <h3 className="font-display text-xl font-bold text-[#132422]">~45 Overnight Guests</h3>
+              <p className="text-sm text-[#2C413E] leading-relaxed prose-pretty">
                 Comfortably accommodates up to approximately 45 overnight guests across families, extended relatives, and retreat groups.
               </p>
             </div>
@@ -127,11 +127,11 @@ export const RoomsPage: React.FC<RoomsPageProps> = ({ onOpenEnquiry }) => {
 
           <CinematicReveal delay={0.3}>
             <div className="rounded-3xl bg-[#FAF6EF] p-6 sm:p-8 space-y-3 border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-[#E5F3F5] text-[#116B7B] flex items-center justify-center shadow-sm">
+              <div className="w-12 h-12 rounded-2xl bg-[#FAF6EF] border border-[#D5C7B2] text-[#137586] flex items-center justify-center shadow-sm">
                 <Trees className="w-6 h-6" />
               </div>
-              <h3 className="font-serif text-xl font-bold text-[#132422]">Garden Vistas</h3>
-              <p className="text-xs sm:text-sm text-[#344E4A] leading-relaxed">
+              <h3 className="font-display text-xl font-bold text-[#132422]">Garden Vistas</h3>
+              <p className="text-sm text-[#2C413E] leading-relaxed prose-pretty">
                 Every room opens up to peaceful morning atmospheres where birdsong and pure mountain air start each day.
               </p>
             </div>
@@ -199,14 +199,14 @@ export const RoomsPage: React.FC<RoomsPageProps> = ({ onOpenEnquiry }) => {
       {/* Side-by-Side Suite Comparison Matrix with Sticky Column */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <CinematicReveal className="space-y-3 max-w-xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#BCE2E7] bg-[#E5F3F5] px-4 py-1.5 text-xs font-bold text-[#116B7B] shadow-sm">
-            <ShieldCheck className="w-4 h-4 text-[#1A96AA]" />
-            <span>Specifications & Comparison</span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+            <ShieldCheck className="w-4 h-4 text-[#A3733E]" />
+            <span className="tracking-wide uppercase">Specifications & Comparison</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#132422] font-serif">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#132422] font-display heading-balance leading-tight">
             Side-by-Side Suite Comparison
           </h2>
-          <p className="text-xs sm:text-sm text-[#344E4A]">
+          <p className="text-sm text-[#2C413E] font-normal leading-relaxed prose-pretty">
             Compare dimensions, occupancy limits, bed configurations, and verified amenities across all four suite categories.
           </p>
         </CinematicReveal>
@@ -219,10 +219,10 @@ export const RoomsPage: React.FC<RoomsPageProps> = ({ onOpenEnquiry }) => {
                   <th className="sticky left-0 z-10 bg-[#EFE8DC] p-4 sm:p-5 text-xs font-bold uppercase tracking-wider text-[#132422] shadow-[2px_0_5px_rgba(0,0,0,0.04)]">
                     Feature
                   </th>
-                  <th className="p-4 sm:p-5 text-xs font-bold uppercase tracking-wider text-[#116B7B]">Calm Olive</th>
-                  <th className="p-4 sm:p-5 text-xs font-bold uppercase tracking-wider text-[#116B7B]">Emerald Accent</th>
-                  <th className="p-4 sm:p-5 text-xs font-bold uppercase tracking-wider text-[#116B7B]">Family Haven</th>
-                  <th className="p-4 sm:p-5 text-xs font-bold uppercase tracking-wider text-[#116B7B]">Verandah Lounge</th>
+                  <th className="p-4 sm:p-5 text-xs font-bold uppercase tracking-wider text-[#137586]">Calm Olive</th>
+                  <th className="p-4 sm:p-5 text-xs font-bold uppercase tracking-wider text-[#137586]">Emerald Accent</th>
+                  <th className="p-4 sm:p-5 text-xs font-bold uppercase tracking-wider text-[#137586]">Family Haven</th>
+                  <th className="p-4 sm:p-5 text-xs font-bold uppercase tracking-wider text-[#137586]">Verandah Lounge</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#E4D9C8] text-xs sm:text-sm">
@@ -231,10 +231,10 @@ export const RoomsPage: React.FC<RoomsPageProps> = ({ onOpenEnquiry }) => {
                     <td className="sticky left-0 z-10 bg-[#FAF6EF] p-4 sm:p-5 font-bold text-[#132422] shadow-[2px_0_5px_rgba(0,0,0,0.04)]">
                       {row.feature}
                     </td>
-                    <td className="p-4 sm:p-5 text-[#344E4A]">{row.olive}</td>
-                    <td className="p-4 sm:p-5 text-[#344E4A]">{row.emerald}</td>
-                    <td className="p-4 sm:p-5 text-[#344E4A]">{row.family}</td>
-                    <td className="p-4 sm:p-5 text-[#344E4A]">{row.verandah}</td>
+                    <td className="p-4 sm:p-5 text-[#2C413E]">{row.olive}</td>
+                    <td className="p-4 sm:p-5 text-[#2C413E]">{row.emerald}</td>
+                    <td className="p-4 sm:p-5 text-[#2C413E]">{row.family}</td>
+                    <td className="p-4 sm:p-5 text-[#2C413E]">{row.verandah}</td>
                   </tr>
                 ))}
               </tbody>
@@ -248,9 +248,9 @@ export const RoomsPage: React.FC<RoomsPageProps> = ({ onOpenEnquiry }) => {
         <CinematicReveal className="text-center space-y-3">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
             <Sparkles className="w-4 h-4 text-[#A3733E]" />
-            <span>Stay Policies & Inquiries</span>
+            <span className="tracking-wide uppercase">Stay Policies & Inquiries</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#132422] font-serif">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#132422] font-display heading-balance leading-tight">
             Frequently Asked Stay Questions
           </h2>
         </CinematicReveal>
@@ -261,17 +261,17 @@ export const RoomsPage: React.FC<RoomsPageProps> = ({ onOpenEnquiry }) => {
               <div className="rounded-2xl bg-[#FAF6EF] border border-[#E4D9C8] overflow-hidden shadow-sm">
                 <button
                   onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full p-4 sm:p-5 text-left font-serif font-bold text-sm sm:text-base text-[#132422] flex items-center justify-between hover:bg-[#F5EFE6] transition-colors cursor-pointer"
+                  className="w-full p-4 sm:p-5 text-left font-display font-bold text-base text-[#132422] flex items-center justify-between hover:bg-[#F5EFE6] transition-colors cursor-pointer"
                 >
                   <span>{faq.q}</span>
                   {openFaq === idx ? (
-                    <ChevronUp className="w-5 h-5 text-[#116B7B] shrink-0" />
+                    <ChevronUp className="w-5 h-5 text-[#137586] shrink-0" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-[#635546] shrink-0" />
+                    <ChevronDown className="w-5 h-5 text-[#A3733E] shrink-0" />
                   )}
                 </button>
                 {openFaq === idx && (
-                  <div className="px-4 sm:px-5 pb-5 text-xs sm:text-sm text-[#344E4A] leading-relaxed border-t border-[#E4D9C8]/60 pt-3">
+                  <div className="px-4 sm:px-5 pb-5 text-sm text-[#2C413E] leading-relaxed border-t border-[#E4D9C8]/60 pt-3 prose-pretty">
                     {faq.a}
                   </div>
                 )}

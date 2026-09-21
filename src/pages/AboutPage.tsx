@@ -79,16 +79,16 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenEnquiry }) => {
             <CinematicReveal className="space-y-3">
               <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
                 <Coffee className="w-4 h-4 text-[#A3733E]" />
-                <span>The Story of Laya</span>
+                <span className="tracking-wide uppercase">The Story of Laya</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#132422] font-serif leading-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#132422] font-display leading-tight heading-balance">
                 Born from a love for Kodagu's slow mountain rhythm.
               </h2>
-              <p className="text-sm sm:text-base text-[#344E4A] leading-relaxed">
-                In Sanskrit, <em>"Laya"</em> signifies rhythm, harmony, and stillness. Coorg Laya Resort was founded with a singular purpose: to create a sanctuary where city fatigue dissolves into the peaceful melody of morning birdsong, rustling bamboo, and tropical water.
+              <p className="text-sm sm:text-base text-[#2C413E] font-normal leading-relaxed prose-pretty">
+                In Sanskrit, <span className="font-accent italic font-semibold text-[#137586] text-lg">"Laya"</span> (लय) signifies rhythm, harmony, and stillness. Coorg Laya Resort was founded with a singular purpose: to create a sanctuary where city fatigue dissolves into the peaceful melody of morning birdsong, rustling bamboo, and tropical water.
               </p>
-              <p className="text-sm text-[#344E4A] leading-relaxed">
-                Instead of over-building, we deliberately limited our accommodations to strictly <strong>15 private guest suites (~45 overnight guests)</strong> across expansive open lawns. This ensures that every resident guest experiences genuine exclusivity, open space, and attentive care.
+              <p className="text-sm sm:text-base text-[#2C413E] font-normal leading-relaxed prose-pretty">
+                Instead of over-building, we deliberately limited our accommodations to strictly <strong className="font-bold text-[#132422]">15 private guest suites (~45 overnight guests)</strong> across expansive open lawns. This ensures that every resident guest experiences genuine exclusivity, open space, and attentive care.
               </p>
             </CinematicReveal>
           </div>
@@ -116,11 +116,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenEnquiry }) => {
       {/* Sanctuary Values Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <CinematicReveal className="space-y-3 max-w-xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#BCE2E7] bg-[#E5F3F5] px-4 py-1.5 text-xs font-bold text-[#116B7B] shadow-sm">
-            <ShieldCheck className="w-4 h-4 text-[#1A96AA]" />
-            <span>Guiding Principles</span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+            <ShieldCheck className="w-4 h-4 text-[#A3733E]" />
+            <span className="tracking-wide uppercase">Guiding Principles</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#132422] font-display heading-balance leading-tight">
             Our Sanctuary Commitments
           </h2>
         </CinematicReveal>
@@ -131,19 +131,19 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenEnquiry }) => {
             return (
               <CinematicReveal key={idx} delay={idx * 0.1}>
                 <Clay3DCard
-                  variant={idx % 2 === 0 ? 'white' : 'water'}
+                  variant={idx % 2 === 0 ? 'white' : 'sand'}
                   maxTilt={8}
                   glareOpacity={0.2}
                   className="p-6 h-full flex flex-col justify-between"
                 >
                   <div className="space-y-3">
-                    <div className="w-10 h-10 rounded-2xl bg-[#E5F3F5] text-[#116B7B] flex items-center justify-center shadow-sm">
+                    <div className="w-10 h-10 rounded-2xl bg-[#FAF6EF] border border-[#D5C7B2] text-[#137586] flex items-center justify-center shadow-sm">
                       <IconComp className="w-5 h-5" />
                     </div>
-                    <h3 className="font-serif text-lg font-bold text-[#132422]">
+                    <h3 className="font-display text-lg font-bold text-[#132422]">
                       {val.title}
                     </h3>
-                    <p className="text-xs text-[#344E4A] leading-relaxed">
+                    <p className="text-xs text-[#2C413E] font-normal leading-relaxed prose-pretty">
                       {val.desc}
                     </p>
                   </div>
@@ -159,9 +159,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenEnquiry }) => {
         <CinematicReveal className="space-y-3 max-w-xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
             <Sparkles className="w-4 h-4 text-[#A3733E]" />
-            <span>Our Journey</span>
+            <span className="tracking-wide uppercase">Our Journey</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#132422] font-display heading-balance leading-tight">
             The Making of Coorg Laya
           </h2>
         </CinematicReveal>
@@ -170,13 +170,13 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenEnquiry }) => {
           {milestones.map((m, idx) => (
             <CinematicReveal key={idx} delay={idx * 0.12}>
               <div className="rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] p-6 space-y-3 shadow-sm h-full">
-                <span className="text-xs font-bold text-[#116B7B] uppercase tracking-wider block">
+                <span className="text-xs font-bold text-[#137586] uppercase tracking-wider block">
                   {m.year}
                 </span>
-                <h3 className="font-serif text-xl font-bold text-[#132422]">
+                <h3 className="font-display text-xl font-bold text-[#132422]">
                   {m.title}
                 </h3>
-                <p className="text-xs text-[#344E4A] leading-relaxed">
+                <p className="text-xs text-[#2C413E] font-normal leading-relaxed prose-pretty">
                   {m.desc}
                 </p>
               </div>

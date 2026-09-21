@@ -10,6 +10,18 @@ interface ActivitiesSectionProps {
 
 export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnquiry }) => {
   const [activeIdx, setActiveIdx] = useState<number>(0);
+  const mobileActivitiesTrackRef = React.useRef<HTMLDivElement>(null);
+
+  const scrollToActivity = (idx: number) => {
+    setActiveIdx(idx);
+    if (mobileActivitiesTrackRef.current) {
+      const cardWidth = mobileActivitiesTrackRef.current.offsetWidth * 0.84;
+      mobileActivitiesTrackRef.current.scrollTo({
+        left: idx * (cardWidth + 16),
+        behavior: 'smooth',
+      });
+    }
+  };
 
   const activities = [
     {
@@ -73,21 +85,21 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E4D9C8] pb-8">
           <CinematicReveal className="space-y-3 max-w-xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-semibold tracking-kicker uppercase text-[#A3733E] shadow-sm">
               <Compass className="w-4 h-4 text-[#A3733E]" />
               <span>Sanctuary Experiences</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#132422] font-serif leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#131E1C] font-display leading-tight heading-balance">
               Curated Kodagu activities for everyone.
             </h2>
-            <p className="text-sm text-[#344E4A] font-medium leading-relaxed">
+            <p className="text-sm text-[#314240] font-normal leading-relaxed prose-pretty">
               Hover or click any panel to expand its details, energy level, and daily timing.
             </p>
           </CinematicReveal>
 
           <CinematicReveal delay={0.15} direction="left">
-            <span className="text-xs font-bold text-[#116B7B] px-4 py-2 rounded-full bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm inline-flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-[#1A96AA] animate-pulse" />
+            <span className="text-xs font-semibold text-[#137586] px-4 py-2 rounded-full bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm inline-flex items-center gap-1.5 font-mono">
+              <Sparkles className="w-3.5 h-3.5 text-[#137586]" />
               <span>4 Interactive Experience Panels</span>
             </span>
           </CinematicReveal>
@@ -141,24 +153,24 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
                       </div>
 
                       {/* Photo Banner with Clay Frame */}
-                      <div className="relative h-[200px] rounded-2xl overflow-hidden bg-[#E8DFD1] shadow-sm group/img">
+                      <div className="relative h-[250px] rounded-2xl overflow-hidden bg-[#E8DFD1] shadow-sm group/img">
                         <ClayImage
                           src={act.image}
                           alt={act.title}
                           aspectRatio="16:10"
                           clayVariant="water"
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-108"
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-106"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#132422]/70 via-transparent to-transparent pointer-events-none" />
-                        <div className="absolute bottom-3 left-3 right-3 z-10 text-white">
-                          <h3 className="font-serif text-xl sm:text-2xl font-extrabold">
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#131E1C]/85 via-[#131E1C]/20 to-transparent pointer-events-none" />
+                        <div className="absolute bottom-3.5 left-4 right-4 z-10 text-white">
+                          <h3 className="font-display text-xl sm:text-2xl font-bold tracking-tight heading-balance text-white">
                             {act.title}
                           </h3>
                         </div>
                       </div>
 
                       {/* Description & Inclusions */}
-                      <p className="text-xs sm:text-sm text-[#344E4A] leading-relaxed font-medium">
+                      <p className="text-xs sm:text-sm text-[#314240] leading-relaxed font-normal prose-pretty">
                         {act.description}
                       </p>
 
@@ -166,9 +178,9 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
                         {act.highlights.map((hl, hIdx) => (
                           <span
                             key={hIdx}
-                            className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#162926] bg-[#EFE8DC] px-2.5 py-1 rounded-full border border-[#DFD3C0]"
+                            className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#131E1C] bg-[#EFE8DC] px-2.5 py-1 rounded-full border border-[#DFD3C0]"
                           >
-                            <CheckCircle2 className="w-3 h-3 text-[#116B7B]" />
+                            <CheckCircle2 className="w-3 h-3 text-[#137586]" />
                             {hl}
                           </span>
                         ))}
@@ -180,7 +192,7 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
                       <div className="flex items-center gap-3">
                         <div className="flex items-center gap-1.5">
                           <Zap className="w-4 h-4 text-[#A3733E]" />
-                          <span className="text-xs font-bold text-[#132422]">{act.energy}</span>
+                          <span className="text-xs font-semibold text-[#131E1C]">{act.energy}</span>
                         </div>
                         {/* Energy Bar */}
                         <div className="w-20 h-2 rounded-full bg-[#E8DFD1] overflow-hidden hidden sm:block">
@@ -188,7 +200,7 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
                             initial={{ width: 0 }}
                             animate={{ width: `${act.energyLevel}%` }}
                             transition={{ duration: 0.6, ease: 'easeOut' }}
-                            className="h-full bg-gradient-to-r from-[#1A96AA] to-[#A3733E] rounded-full"
+                            className="h-full bg-[#137586] rounded-full"
                           />
                         </div>
                       </div>
@@ -231,67 +243,125 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({ onOpenEnqu
           })}
         </div>
 
-        {/* Mobile & Tablet Vertical Accordion */}
+        {/* MOBILE VIEW: Smooth Horizontal Snap Deck with Experience Tabs */}
         <div className="flex lg:hidden flex-col gap-4">
-          {activities.map((act, idx) => {
-            const isExpanded = activeIdx === idx;
-            return (
-              <div
+          {/* Quick Experience Selector Tabs */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+            {activities.map((act, idx) => (
+              <button
                 key={act.id}
-                onClick={() => setActiveIdx(idx)}
-                className={`rounded-3xl border overflow-hidden transition-all duration-300 ${
-                  isExpanded
-                    ? 'bg-[#FAF6EF] border-[#1A96AA] p-5 shadow-lg'
-                    : 'bg-[#EFE8DC] border-[#DFD3C0] p-4'
+                onClick={() => scrollToActivity(idx)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer flex-shrink-0 ${
+                  activeIdx === idx
+                    ? 'bg-[#137586] text-white shadow-sm'
+                    : 'bg-[#FAF6EF] text-[#344E4A] border border-[#E4D9C8]'
                 }`}
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-7 h-7 rounded-full bg-[#132422] text-white text-xs font-bold font-mono flex items-center justify-center">
-                      {act.index}
+                <span className="font-mono text-[10px] mr-1 opacity-70">{act.index}</span>
+                <span>{act.badge}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile Snap Track */}
+          <div
+            ref={mobileActivitiesTrackRef}
+            className="snap-touch-track no-scrollbar gap-4 px-1 py-1"
+            onScroll={(e) => {
+              const target = e.currentTarget;
+              const scrollLeft = target.scrollLeft;
+              const itemWidth = target.offsetWidth * 0.84;
+              const index = Math.round(scrollLeft / (itemWidth + 16));
+              if (index !== activeIdx && index >= 0 && index < activities.length) {
+                setActiveIdx(index);
+              }
+            }}
+          >
+            {activities.map((act) => (
+              <div
+                key={act.id}
+                className="snap-touch-item w-[84vw] max-w-[340px] rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] p-4 shadow-md flex flex-col justify-between"
+              >
+                <div className="space-y-3">
+                  {/* Header info */}
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xl font-extrabold text-[#A3733E]/40">
+                      № {act.index}
                     </span>
-                    <h4 className="font-serif text-base font-bold text-[#132422]">
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#E5F3F5] text-[#116B7B] text-[10px] font-bold border border-[#BCE2E7]">
+                      {act.badge}
+                    </span>
+                  </div>
+
+                  {/* Image */}
+                  <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-[#E8DFD1]">
+                    <img
+                      src={act.image}
+                      alt={act.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute bottom-2.5 left-2.5 px-2.5 py-1 rounded-full bg-black/65 backdrop-blur-sm text-[10px] font-bold text-white flex items-center gap-1.5">
+                      <Clock className="w-3 h-3 text-[#A3733E]" />
+                      <span>{act.timeSlot}</span>
+                    </div>
+                  </div>
+
+                  {/* Title & Description */}
+                  <div>
+                    <h4 className="font-serif text-base font-bold text-[#131E1C]">
                       {act.title}
                     </h4>
-                  </div>
-                  <span className="text-xs text-[#116B7B] font-bold">
-                    {isExpanded ? 'Active' : 'View'}
-                  </span>
-                </div>
-
-                {isExpanded && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    className="mt-4 space-y-3 pt-3 border-t border-[#E4D9C8]"
-                  >
-                    <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-[#E8DFD1]">
-                      <ClayImage
-                        src={act.image}
-                        alt={act.title}
-                        aspectRatio="16:10"
-                        clayVariant="water"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <p className="text-xs text-[#344E4A] leading-relaxed font-medium">
+                    <p className="text-xs text-[#344E4A] leading-relaxed mt-1 line-clamp-2">
                       {act.description}
                     </p>
-                    <motion.button
-                      whileTap={{ scale: 0.97 }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (onOpenEnquiry) onOpenEnquiry();
-                      }}
-                      className="w-full py-3 rounded-xl text-xs font-bold text-white bg-[#1A96AA] text-center cursor-pointer shadow-md"
-                    >
-                      Plan This Activity
-                    </motion.button>
-                  </motion.div>
-                )}
+                  </div>
+
+                  {/* Energy Meter */}
+                  <div className="flex items-center justify-between pt-2 border-t border-[#E4D9C8]">
+                    <div className="flex items-center gap-1.5 text-xs font-semibold text-[#131E1C]">
+                      <Zap className="w-3.5 h-3.5 text-[#A3733E]" />
+                      <span>{act.energy}</span>
+                    </div>
+                    <div className="w-20 h-1.5 rounded-full bg-[#E8DFD1] overflow-hidden">
+                      <div
+                        className="h-full bg-[#137586] rounded-full"
+                        style={{ width: `${act.energyLevel}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action button */}
+                <div className="pt-4">
+                  <button
+                    onClick={() => {
+                      if (onOpenEnquiry) onOpenEnquiry();
+                    }}
+                    className="w-full py-2.5 rounded-full bg-[#137586] hover:bg-[#105B69] text-white text-xs font-bold tracking-wider uppercase transition-colors shadow-sm flex items-center justify-center gap-1.5 cursor-pointer active:scale-98"
+                  >
+                    <span>Plan This Activity</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
-            );
-          })}
+            ))}
+          </div>
+
+          {/* Pagination Dots */}
+          <div className="flex items-center justify-center gap-1.5 pt-1">
+            {activities.map((_, dotIdx) => (
+              <button
+                key={dotIdx}
+                onClick={() => scrollToActivity(dotIdx)}
+                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  activeIdx === dotIdx ? 'w-6 bg-[#137586]' : 'w-1.5 bg-[#D5C7B2]'
+                }`}
+                aria-label={`Go to activity ${dotIdx + 1}`}
+              />
+            ))}
+          </div>
         </div>
 
       </div>

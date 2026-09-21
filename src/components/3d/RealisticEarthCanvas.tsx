@@ -102,18 +102,30 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     camera.position.set(0, 0, 7.2);
     cameraRef.current = camera;
 
-    // 2. WebGL Renderer with ACES Filmic Tone Mapping
+    // 2. WebGL Renderer with ACES Filmic Tone Mapping (capped at 1.35 DPR for smooth performance on old laptops & mobile)
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
       powerPreference: 'high-performance',
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.35));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.0;
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
+
+    // Viewport Intersection Observer to pause rendering when offscreen
+    let isVisible = true;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
+        });
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(container);
 
     // 3. Natural Sunlight & Deep Space Contrast
     const ambientLight = new THREE.AmbientLight(0x111111, 0.4);
@@ -173,8 +185,9 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     const normalTexture = textureLoader.load('/textures/earth/earth_normal.jpg');
     const specularTexture = textureLoader.load('/textures/earth/earth_specular.jpg');
     const cloudsTexture = textureLoader.load('/textures/earth/earth_clouds.png');
+    const lightsTexture = textureLoader.load('/textures/earth/earth_lights.jpg');
 
-    // 7. Natural Satellite Earth Mesh (Clean colors, true blue oceans & mountains)
+    // 7. Natural Satellite Earth Mesh with Night Lights Emissive
     const earthGeometry = new THREE.SphereGeometry(EARTH_RADIUS, 64, 64);
     const earthMaterial = new THREE.MeshStandardMaterial({
       map: dayTexture,
@@ -183,12 +196,43 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
       roughnessMap: specularTexture,
       roughness: 0.65,
       metalness: 0.05,
+      emissiveMap: lightsTexture,
+      emissive: new THREE.Color(0xffd479),
+      emissiveIntensity: 0.45,
       color: 0xffffff,
     });
 
     const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
     earthGroup.add(earthMesh);
     earthMeshRef.current = earthMesh;
+
+    // 7b. Atmospheric Fresnel Rim Glow Sphere
+    const atmosphereGeometry = new THREE.SphereGeometry(EARTH_RADIUS * 1.025, 64, 64);
+    const atmosphereMaterial = new THREE.ShaderMaterial({
+      vertexShader: `
+        varying vec3 vNormal;
+        varying vec3 vPosition;
+        void main() {
+          vNormal = normalize(normalMatrix * normal);
+          vPosition = (modelViewMatrix * vec4(position, 1.0)).xyz;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        varying vec3 vNormal;
+        varying vec3 vPosition;
+        void main() {
+          float intensity = pow(0.68 - dot(vNormal, normalize(-vPosition)), 3.2);
+          gl_FragColor = vec4(0.25, 0.60, 1.0, intensity * 0.88);
+        }
+      `,
+      blending: THREE.AdditiveBlending,
+      side: THREE.BackSide,
+      transparent: true,
+      depthWrite: false,
+    });
+    const atmosphereMesh = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+    earthGroup.add(atmosphereMesh);
 
     // 8. Natural Cloud Sphere Layer
     const cloudsGeometry = new THREE.SphereGeometry(EARTH_RADIUS + 0.015, 64, 64);
@@ -204,7 +248,7 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     earthGroup.add(cloudsMesh);
     cloudsMeshRef.current = cloudsMesh;
 
-    // 9. CRISP 2D MAP PIN SPRITE (Always flat to camera, tip exactly at Coorg)
+    // 9. CRISP 2D MAP PIN SPRITE & GOLD BEACON
     const coorgPos = latLonToVector3(COORG_LAT, COORG_LON, EARTH_RADIUS + 0.005);
     const pinTexture = create2DPinTexture();
     let pinSprite: THREE.Sprite | null = null;
@@ -217,7 +261,6 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
         depthWrite: false,
       });
       pinSprite = new THREE.Sprite(pinMaterial);
-      // Anchor sprite at the bottom tip of the pin: (center X: 0.5, center Y: 0.0)
       pinSprite.center.set(0.5, 0.0);
       pinSprite.position.copy(coorgPos);
       pinSprite.scale.set(0.13, 0.13, 1);
@@ -283,9 +326,9 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
           );
           earthGroupRef.current.scale.set(1, 1, 1);
         } else if (p < 0.8) {
-          // Zooming from space directly onto the 2D Pin in Coorg
-          const zoomT = (p - 0.45) / 0.35; // 0 to 1
-          const smoothZoom = Math.pow(zoomT, 1.8);
+          // Zooming from space directly onto the 2D Pin in Coorg (Exponential ease-out for cinematic crane landing)
+          const zoomT = Math.min(1, Math.max(0, (p - 0.45) / 0.35));
+          const smoothZoom = 1 - Math.pow(2, -10 * zoomT);
           
           const camZ = THREE.MathUtils.lerp(7.2, 2.06, smoothZoom);
           const camX = THREE.MathUtils.lerp(mouseRef.current.x, 0, smoothZoom);
@@ -311,6 +354,12 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
         }
       }
 
+      // Paused when offscreen or completely transitioned into the resort section
+      if (!isVisible || p >= 0.99) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
+
       renderer.render(scene, camera);
       animationFrameId = requestAnimationFrame(render);
     };
@@ -326,12 +375,13 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
       cameraRef.current.aspect = newWidth / newHeight;
       cameraRef.current.updateProjectionMatrix();
       rendererRef.current.setSize(newWidth, newHeight);
-      rendererRef.current.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      rendererRef.current.setPixelRatio(Math.min(window.devicePixelRatio, 1.35));
     };
 
     window.addEventListener('resize', handleResize);
 
     return () => {
+      observer.disconnect();
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
@@ -343,6 +393,8 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
       starsMat.dispose();
       earthGeometry.dispose();
       earthMaterial.dispose();
+      atmosphereGeometry.dispose();
+      atmosphereMaterial.dispose();
       cloudsGeometry.dispose();
       cloudsMaterial.dispose();
       if (pinTexture) pinTexture.dispose();

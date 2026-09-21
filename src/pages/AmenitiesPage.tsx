@@ -98,12 +98,12 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({ onOpenEnquiry }) =
         <CinematicReveal className="space-y-3 max-w-xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
             <Clock className="w-4 h-4 text-[#A3733E]" />
-            <span>Curated Daily Rhythm</span>
+            <span className="tracking-wide uppercase">Curated Daily Rhythm</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif leading-tight">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#132422] font-display leading-tight heading-balance">
             A Day of Unhurried Delights
           </h2>
-          <p className="text-sm text-[#344E4A] leading-relaxed">
+          <p className="text-sm text-[#2C413E] font-normal leading-relaxed prose-pretty">
             Follow the natural rhythm of the sun and mountain breezes across Coorg Laya's dedicated recreation zones.
           </p>
         </CinematicReveal>
@@ -122,15 +122,15 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({ onOpenEnquiry }) =
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="px-3 py-1 rounded-full text-[11px] font-bold text-[#116B7B] bg-[#E5F3F5] border border-[#BCE2E7]">
+                      <span className="px-3 py-1 rounded-full text-[11px] font-bold text-[#137586] bg-[#FAF6EF] border border-[#D5C7B2]">
                         {item.time}
                       </span>
-                      <div className="w-9 h-9 rounded-full bg-[#FAF6EF] border border-[#E4D9C8] flex items-center justify-center text-[#1A96AA]">
+                      <div className="w-9 h-9 rounded-full bg-[#FAF6EF] border border-[#E4D9C8] flex items-center justify-center text-[#137586]">
                         <IconComp className="w-4 h-4" />
                       </div>
                     </div>
 
-                    <h3 className="font-serif text-lg font-bold text-[#132422] pt-1">
+                    <h3 className="font-display text-lg font-bold text-[#132422] pt-1">
                       {item.title}
                     </h3>
 
@@ -138,7 +138,7 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({ onOpenEnquiry }) =
                       📍 {item.location}
                     </span>
 
-                    <p className="text-xs text-[#344E4A] leading-relaxed">
+                    <p className="text-xs text-[#2C413E] font-normal leading-relaxed prose-pretty">
                       {item.description}
                     </p>
                   </div>
@@ -154,14 +154,14 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({ onOpenEnquiry }) =
         <CinematicReveal>
           <div className="rounded-3xl bg-[#EFE8DC] border border-[#DFD3C0] p-8 sm:p-12 space-y-8 shadow-sm">
             <div className="max-w-xl space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#116B7B]">
-                <ShieldCheck className="w-4 h-4 text-[#1A96AA]" />
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#137586]">
+                <ShieldCheck className="w-4 h-4 text-[#137586]" />
                 <span>Quality & Maintenance Guarantee</span>
               </div>
-              <h3 className="font-serif text-2xl sm:text-3xl font-extrabold text-[#132422]">
+              <h3 className="font-display text-2xl sm:text-3xl font-bold text-[#132422] heading-balance">
                 Maintained to the Highest Standards
               </h3>
-              <p className="text-xs sm:text-sm text-[#344E4A]">
+              <p className="text-sm text-[#2C413E] font-normal prose-pretty">
                 We ensure that all our outdoor amenities are safe, hygienic, and ready for guests at all times.
               </p>
             </div>
@@ -170,10 +170,10 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({ onOpenEnquiry }) =
               {safetyStandards.map((std, idx) => (
                 <div key={idx} className="p-5 rounded-2xl bg-[#FAF6EF] border border-[#E4D9C8] space-y-2 shadow-sm">
                   <div className="flex items-center gap-2 text-xs font-bold text-[#132422]">
-                    <CheckCircle2 className="w-4 h-4 text-[#1A96AA]" />
+                    <CheckCircle2 className="w-4 h-4 text-[#137586]" />
                     <span>{std.title}</span>
                   </div>
-                  <p className="text-xs text-[#344E4A] leading-relaxed">
+                  <p className="text-xs text-[#2C413E] font-normal leading-relaxed prose-pretty">
                     {std.desc}
                   </p>
                 </div>
@@ -186,17 +186,17 @@ export const AmenitiesPage: React.FC<AmenitiesPageProps> = ({ onOpenEnquiry }) =
       {/* Call to Action Banner */}
       <div className="max-w-4xl mx-auto px-4">
         <CinematicReveal>
-          <div className="rounded-4xl bg-gradient-to-r from-[#1A96AA] to-[#116B7B] p-8 sm:p-12 text-center text-white space-y-5 shadow-xl">
-            <h3 className="font-serif text-2xl sm:text-4xl font-extrabold">
+          <div className="rounded-3xl bg-[#0F3C28] p-8 sm:p-12 text-center text-white space-y-5 shadow-xl">
+            <h3 className="font-display text-2xl sm:text-4xl font-bold heading-balance">
               Uncomplicated Joy in Nature
             </h3>
-            <p className="max-w-xl mx-auto text-xs sm:text-sm text-white/90 leading-relaxed">
+            <p className="max-w-xl mx-auto text-sm text-[#EAE2D7] font-normal leading-relaxed prose-pretty">
               All recreational amenities — palm swimming pool, kids jumping trampoline, bamboo badminton court, volleyball lawn, and raised garden terraces — are dedicated exclusively to our resident guests.
             </p>
             <div className="pt-2">
               <button
                 onClick={onOpenEnquiry}
-                className="px-8 py-4 rounded-2xl text-xs sm:text-sm font-bold text-[#132422] bg-[#FAF6EF] hover:bg-white shadow-lg transition-all inline-flex items-center gap-2"
+                className="px-8 py-4 rounded-full text-xs sm:text-sm font-bold tracking-wide uppercase text-white bg-[#137586] hover:bg-[#0F5E6C] shadow-lg transition-all hover:scale-105 active:scale-95 inline-flex items-center gap-2 cursor-pointer"
               >
                 <span>Check Availability for Your Dates</span>
                 <ArrowUpRight className="w-4 h-4" />

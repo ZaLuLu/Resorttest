@@ -49,11 +49,34 @@ export default {
           700: '#314240',
           800: '#1E2C2A',
           900: '#131E1C',
-        }
+        },
+        // Forest & Plantation Canopy
+        forest: {
+          800: '#165338',
+          900: '#0F3C28',
+          950: '#0B2C1E',
+        },
+        // Antique Muted Brass & Gold Accents
+        brass: {
+          400: '#C7A583',
+          500: '#A3733E',
+          600: '#8C5F2E',
+          700: '#734B29',
+        },
       },
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', 'Outfit', 'system-ui', 'sans-serif'],
-        display: ['Outfit', '"Plus Jakarta Sans"', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', '"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['"Playfair Display"', 'Georgia', 'serif'],
+        accent: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+      },
+      letterSpacing: {
+        tight: '-0.02em',
+        snug: '-0.01em',
+        editorial: '0.03em',
+        luxury: '0.12em',
+        kicker: '0.22em',
+        'wide-display': '0.32em',
       },
       borderRadius: {
         '2xl': '1.25rem',

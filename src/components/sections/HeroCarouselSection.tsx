@@ -67,7 +67,7 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 6500);
+    }, 8000);
     return () => clearInterval(timer);
   }, [heroSlides.length]);
 
@@ -106,10 +106,10 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
           initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FAF6EF]/95 border border-[#E4D9C8] text-xs font-bold text-[#845A2C] shadow-[0_4px_14px_rgba(0,0,0,0.08)] backdrop-blur-md z-10 mb-2"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FAF6EF]/95 border border-[#E4D9C8] text-xs font-semibold text-[#8C5F2E] shadow-[0_4px_14px_rgba(0,0,0,0.08)] backdrop-blur-md z-10 mb-2"
         >
-          <Compass className="w-3.5 h-3.5 text-[#1A96AA]" />
-          <span className="tracking-wide">12.4542° N · 75.9602° E · 850m ASL · Kodagu</span>
+          <Compass className="w-3.5 h-3.5 text-[#137586]" />
+          <span className="font-mono tracking-wide text-xs">12.4542° N · 75.9602° E · 850m ASL · Kodagu</span>
         </motion.div>
 
         {/* Authentic Center Brand Display */}
@@ -141,11 +141,7 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.25, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              fontFamily: "'Italiana', 'Cormorant Garamond', serif",
-              letterSpacing: '0.04em',
-            }}
-            className="text-8xl sm:text-9xl md:text-[10.5rem] lg:text-[12rem] font-normal leading-none text-[#132422] drop-shadow-[0_8px_20px_rgba(0,0,0,0.1)] lowercase tracking-normal"
+            className="text-8xl sm:text-9xl md:text-[10.5rem] lg:text-[12rem] font-display font-bold leading-none text-[#131E1C] drop-shadow-[0_8px_20px_rgba(0,0,0,0.08)] lowercase tracking-normal"
           >
             laya
           </motion.h1>
@@ -155,7 +151,7 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
             initial={{ opacity: 0, letterSpacing: '0.3em' }}
             animate={{ opacity: 1, letterSpacing: '0.55em' }}
             transition={{ delay: 0.35, duration: 0.8 }}
-            className="text-xs sm:text-sm font-semibold uppercase text-[#A3733E] font-serif block -mt-1 sm:-mt-2 pl-2"
+            className="text-xs sm:text-sm font-semibold uppercase text-[#A3733E] font-body block -mt-1 sm:-mt-2 pl-2"
           >
             RESORT
           </motion.span>
@@ -167,7 +163,7 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
             transition={{ delay: 0.45, duration: 0.8 }}
             className="space-y-2 mt-4 max-w-lg mx-auto"
           >
-            <p className="font-serif italic text-base sm:text-lg md:text-xl text-[#344E4A] font-medium">
+            <p className="font-accent italic text-base sm:text-lg md:text-xl text-[#165338] font-semibold">
               "Where the River Flows & Birds Gather"
             </p>
 
@@ -191,7 +187,7 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
               COORG
             </span>
 
-            <p className="text-xs sm:text-sm font-semibold text-[#132422] tracking-wide pt-1">
+            <p className="text-xs sm:text-sm font-semibold text-[#131E1C] tracking-wide pt-1">
               15 Private Suites · 500-Guest Celebration Lawn · Palm Pool
             </p>
           </motion.div>
@@ -205,13 +201,13 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
           transition={{ delay: 0.7, duration: 0.8 }}
           className="flex flex-col items-center gap-2 cursor-pointer group z-10 mt-6"
         >
-          <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-[#845A2C]/85 group-hover:text-[#116B7B] transition-colors">
+          <span className="text-[11px] uppercase tracking-kicker font-bold text-[#8C5F2E] group-hover:text-[#137586] transition-colors">
             Explore Sanctuary Spaces
           </span>
           <motion.div
             animate={{ y: [0, 5, 0] }}
             transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
-            className="w-8 h-8 rounded-full bg-[#FAF6EF] border border-[#E4D9C8] flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.12)] text-[#1A96AA] group-hover:bg-[#E5F3F5] transition-colors"
+            className="w-8 h-8 rounded-full bg-[#FAF6EF] border border-[#E4D9C8] flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.12)] text-[#137586] group-hover:bg-[#E5F3F5] transition-colors"
           >
             <ChevronDown className="w-4 h-4" />
           </motion.div>
@@ -227,29 +223,38 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
       >
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E5F3F5] text-[#116B7B] text-xs font-bold border border-[#BCE2E7] shadow-[0_4px_10px_rgba(0,0,0,0.06)] mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-[#1A96AA]" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E5F3F5] text-[#137586] text-xs font-semibold tracking-kicker uppercase border border-[#BCE2E7] shadow-sm mb-3">
+            <Sparkles className="w-3.5 h-3.5 text-[#137586]" />
             <span>Curated Estate Living</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#132422] font-serif leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#131E1C] font-display leading-tight heading-balance">
             Discover the Coorg Laya Experience
           </h2>
-          <p className="text-sm sm:text-base text-[#344E4A] leading-relaxed mt-2.5">
+          <p className="text-sm sm:text-base text-[#314240] leading-relaxed mt-2.5 prose-pretty font-normal">
             An intimate botanical haven where luxury architecture meets unfiltered Western Ghats nature.
           </p>
         </div>
 
         {/* Main 3D Luxury Showcase Carousel Frame */}
-        <div className="relative w-full rounded-3xl sm:rounded-4xl bg-[#FAF6EF] border border-[#E4D9C8] p-6 sm:p-8 md:p-10 lg:p-12 shadow-[0_25px_60px_rgba(0,0,0,0.18),_inset_0_2px_4px_rgba(255,255,255,0.9)] overflow-hidden">
+        <div className="relative w-full rounded-3xl sm:rounded-4xl bg-[#FAF6EF] border border-[#E4D9C8] p-6 sm:p-8 md:p-10 lg:p-12 shadow-[0_25px_60px_rgba(0,0,0,0.14),_inset_0_2px_4px_rgba(255,255,255,0.9)] overflow-hidden">
+          {/* Synced 8s Progress Bar */}
+          <motion.div
+            key={currentSlide}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 8, ease: 'linear' }}
+            className="absolute top-0 left-0 right-0 h-1 bg-[#137586] origin-left z-30"
+          />
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
             
             {/* Left Column: Slide Narrative & Booking Actions */}
             <div className="lg:col-span-6 space-y-5 text-left z-10">
               
               {/* Location Tag */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#BCE2E7] bg-[#E5F3F5] px-3.5 py-1.5 text-xs font-bold text-[#116B7B] shadow-[0_4px_10px_rgba(0,0,0,0.08)]">
-                <Compass className="w-3.5 h-3.5 text-[#1A96AA]" />
-                <span>Kushalnagar · Kodagu · 850m ASL</span>
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#BCE2E7] bg-[#E5F3F5] px-3.5 py-1.5 text-xs font-semibold text-[#137586] shadow-sm">
+                <Compass className="w-3.5 h-3.5 text-[#137586]" />
+                <span className="font-mono text-xs">Kushalnagar · Kodagu · 850m ASL</span>
               </div>
 
               {/* Dynamic Slide Title */}
@@ -257,16 +262,16 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentSlide}
-                    initial={{ opacity: 0, y: 16, filter: 'blur(8px)' }}
-                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                    exit={{ opacity: 0, y: -16, filter: 'blur(8px)' }}
-                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -16 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                     className="space-y-3"
                   >
-                    <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] font-extrabold text-[#132422] font-serif leading-[1.18] tracking-tight">
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] font-bold text-[#131E1C] font-display leading-[1.15] tracking-tight heading-balance">
                       {heroSlides[currentSlide].title}
                     </h3>
-                    <p className="text-xs sm:text-sm md:text-base text-[#344E4A] leading-relaxed font-medium">
+                    <p className="text-xs sm:text-sm md:text-base text-[#314240] leading-relaxed font-normal prose-pretty">
                       {heroSlides[currentSlide].subtitle}
                     </p>
                   </motion.div>
@@ -277,7 +282,7 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <MagneticButton
                   onClick={onOpenEnquiry}
-                  className="px-6 py-3.5 rounded-2xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-[0_10px_25px_rgba(0,0,0,0.25)] flex items-center gap-2 cursor-pointer"
+                  className="px-6 py-3.5 rounded-2xl text-xs sm:text-sm font-bold text-white bg-[#137586] hover:bg-[#105B69] shadow-[0_8px_20px_rgba(19,117,134,0.35)] flex items-center gap-2 cursor-pointer transition-colors"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Reserve Your Stay</span>
@@ -286,7 +291,7 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
 
                 <Link
                   to="/rooms"
-                  className="px-5 py-3.5 rounded-2xl text-xs sm:text-sm font-bold text-[#132422] bg-[#EFE8DC] hover:bg-[#E4D9C8] border border-[#DFD3C0] shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors"
+                  className="px-5 py-3.5 rounded-2xl text-xs sm:text-sm font-semibold text-[#131E1C] bg-[#EFE8DC] hover:bg-[#E4D9C8] border border-[#DFD3C0] shadow-sm transition-colors"
                 >
                   Explore 15 Suites
                 </Link>
@@ -296,7 +301,7 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
               <div className="flex items-center gap-3.5 pt-3 border-t border-[#E4D9C8]">
                 <button
                   onClick={prevSlide}
-                  className="w-10 h-10 rounded-full bg-[#FAF6EF] text-[#132422] border border-[#E4D9C8] shadow-[0_4px_10px_rgba(0,0,0,0.1)] flex items-center justify-center hover:bg-[#1A96AA] hover:text-white hover:border-[#1A96AA] transition-all cursor-pointer"
+                  className="w-10 h-10 rounded-full bg-[#FAF6EF] text-[#131E1C] border border-[#E4D9C8] shadow-sm flex items-center justify-center hover:bg-[#137586] hover:text-white hover:border-[#137586] transition-all cursor-pointer"
                   aria-label="Previous Hero Slide"
                 >
                   <ChevronLeft className="w-4 h-4" />
@@ -307,10 +312,10 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
                     <button
                       key={slide.id}
                       onClick={() => setCurrentSlide(idx)}
-                      className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                      className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                         currentSlide === idx
-                          ? 'w-8 bg-[#1A96AA] shadow-[0_2px_8px_rgba(0,0,0,0.25)]'
-                          : 'w-2.5 bg-[#D5C7B2] hover:bg-[#A3733E]'
+                          ? 'w-8 bg-[#137586] shadow-[0_2px_8px_rgba(19,117,134,0.3)]'
+                          : 'w-2 bg-[#D5C7B2] hover:bg-[#A3733E]'
                       }`}
                       aria-label={`Go to slide ${idx + 1}`}
                     />
@@ -319,13 +324,13 @@ export const HeroCarouselSection: React.FC<HeroCarouselSectionProps> = ({ onOpen
 
                 <button
                   onClick={nextSlide}
-                  className="w-10 h-10 rounded-full bg-[#FAF6EF] text-[#132422] border border-[#E4D9C8] shadow-[0_4px_10px_rgba(0,0,0,0.1)] flex items-center justify-center hover:bg-[#1A96AA] hover:text-white hover:border-[#1A96AA] transition-all cursor-pointer"
+                  className="w-10 h-10 rounded-full bg-[#FAF6EF] text-[#131E1C] border border-[#E4D9C8] shadow-sm flex items-center justify-center hover:bg-[#137586] hover:text-white hover:border-[#137586] transition-all cursor-pointer"
                   aria-label="Next Hero Slide"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
 
-                <span className="text-xs font-bold text-[#116B7B] ml-2 font-mono">
+                <span className="text-xs font-semibold text-[#137586] ml-2 font-mono">
                   0{currentSlide + 1} / 0{heroSlides.length}
                 </span>
               </div>

@@ -32,28 +32,28 @@ export const EventsSection: React.FC<EventsSectionProps> = ({ onOpenEnquiry }) =
             
             {/* Left Details */}
             <div className="lg:col-span-6 space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-semibold tracking-kicker uppercase text-[#A3733E] shadow-sm">
                 <Users className="size-4 text-[#A3733E]" />
                 <span>Grand Open-Air Celebrations</span>
               </div>
 
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#132422] leading-[1.14]">
+              <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#131E1C] leading-[1.14] heading-balance">
                 Host weddings, milestones, and family reunions for up to 500 guests.
               </h2>
 
-              <p className="text-sm sm:text-base text-[#344E4A] font-medium leading-relaxed">
+              <p className="text-sm sm:text-base text-[#314240] font-normal leading-relaxed prose-pretty">
                 Expansive manicured green lawns bordered by tall palms and tropical foliage. Ideal for wedding mandap setups, banquet dining, corporate retreats, and full resort private buyouts.
               </p>
 
               {/* 2 Clay Stat Metric Cards */}
               <div className="grid grid-cols-2 gap-4 pt-2">
                 <div className="p-4 rounded-2xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm">
-                  <span className="font-serif text-2xl sm:text-3xl font-extrabold text-[#116B7B] block">500</span>
-                  <span className="text-xs font-semibold text-[#635546]">Lawn Guest Capacity</span>
+                  <span className="font-display text-2xl sm:text-3xl font-bold text-[#137586] block">500</span>
+                  <span className="text-xs font-semibold text-[#586E6B]">Lawn Guest Capacity</span>
                 </div>
                 <div className="p-4 rounded-2xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm">
-                  <span className="font-serif text-2xl sm:text-3xl font-extrabold text-[#A3733E] block">15</span>
-                  <span className="text-xs font-semibold text-[#635546]">Full Buyout Suites</span>
+                  <span className="font-display text-2xl sm:text-3xl font-bold text-[#A3733E] block">15</span>
+                  <span className="text-xs font-semibold text-[#586E6B]">Full Buyout Suites</span>
                 </div>
               </div>
 
@@ -63,7 +63,7 @@ export const EventsSection: React.FC<EventsSectionProps> = ({ onOpenEnquiry }) =
                   whileTap={{ scale: 0.97 }}
                   transition={springTransition}
                   onClick={onOpenEnquiry}
-                  className="clay-btn-water text-xs sm:text-sm font-bold shadow-md cursor-pointer"
+                  className="px-6 py-3.5 rounded-full bg-[#137586] hover:bg-[#105B69] text-white font-bold text-xs sm:text-sm tracking-wider uppercase transition-colors shadow-md flex items-center gap-2 cursor-pointer"
                 >
                   <span>Request Event & Wedding Dates</span>
                   <ArrowUpRight className="size-4" />

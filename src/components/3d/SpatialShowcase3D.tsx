@@ -161,10 +161,10 @@ export const SpatialShowcase3D: React.FC<SpatialShowcase3DProps> = ({
 
                   {/* Bottom Captions */}
                   <div className="absolute bottom-5 left-5 right-5 z-10 text-white">
-                    <span className="text-[11px] uppercase tracking-widest font-bold text-[#A3733E] block mb-1">
+                    <span className="text-[11px] uppercase tracking-wider font-semibold text-[#C7A583] block mb-1 font-mono">
                       {item.tag}
                     </span>
-                    <h4 className="text-xl font-extrabold text-white font-serif leading-tight">
+                    <h4 className="text-xl font-bold text-white font-display leading-tight">
                       {item.title}
                     </h4>
                   </div>

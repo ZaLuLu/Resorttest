@@ -31,14 +31,14 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
       </div>
 
       <div className="flex flex-col text-left">
-        <span className={`font-serif ${compact ? 'text-sm' : 'text-base sm:text-lg'} font-bold tracking-tight leading-tight ${
+        <span className={`font-display ${compact ? 'text-sm' : 'text-base sm:text-lg'} font-bold tracking-tight leading-tight ${
           isLight ? 'text-white' : 'text-[#162926]'
         }`}>
           Coorg Laya
         </span>
         {!compact && (
-          <span className={`text-[0.62rem] uppercase tracking-[0.2em] font-semibold ${
-            isLight ? 'text-white/70' : 'text-[#1A96AA]'
+          <span className={`text-[0.62rem] uppercase tracking-[0.25em] font-bold ${
+            isLight ? 'text-[#FAF7F2]/80' : 'text-[#A3733E]'
           }`}>
             Resort & Nature Lawn
           </span>

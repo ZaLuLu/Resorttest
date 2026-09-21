@@ -11,13 +11,13 @@ export const NotFoundPage: React.FC = () => {
         </div>
 
         <div className="space-y-2">
-          <span className="clay-pill px-3 py-1 text-xs font-bold text-water-700 bg-water-50">
+          <span className="px-3.5 py-1 text-xs font-bold text-[#A3733E] bg-[#FAF6EF] border border-[#D5C7B2] rounded-full uppercase tracking-wider">
             Error 404
           </span>
-          <h1 className="font-display text-2xl sm:text-3xl font-extrabold text-riverbed-900 pt-2">
+          <h1 className="font-display text-2xl sm:text-3xl font-bold text-[#132422] pt-2">
             Path Not Found
           </h1>
-          <p className="text-xs sm:text-sm text-riverbed-600 font-medium leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#2C413E] font-normal leading-relaxed prose-pretty">
             The page you are looking for may have wandered off into the misty bamboo groves. Return home to continue exploring.
           </p>
         </div>
@@ -25,7 +25,7 @@ export const NotFoundPage: React.FC = () => {
         <div className="pt-2">
           <Link
             to="/"
-            className="clay-btn-water text-xs sm:text-sm font-bold inline-flex items-center gap-2 shadow-clay-btn-water"
+            className="px-7 py-3 rounded-full text-xs font-bold tracking-wide uppercase text-white bg-[#137586] hover:bg-[#0F5E6C] shadow-md transition-all hover:scale-105 active:scale-95 inline-flex items-center gap-2 cursor-pointer"
           >
             <ArrowLeft className="size-4" />
             <span>Return to Sanctuary</span>

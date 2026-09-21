@@ -20,13 +20,14 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
   useEffect(() => {
     if (!containerRef.current || !pinRef.current) return;
 
+    const isMobile = window.innerWidth < 768;
     const trigger = ScrollTrigger.create({
       trigger: containerRef.current,
       start: 'top top',
-      end: '+=3000',
+      end: isMobile ? '+=1600' : '+=3000',
       pin: pinRef.current,
       pinSpacing: true,
-      scrub: 0.5,
+      scrub: isMobile ? 0.8 : 1.2,
       anticipatePin: 1,
       onUpdate: (self) => {
         setScrollProgress(self.progress);
@@ -66,11 +67,11 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
   const layaBlockY = Math.max(0, (1 - (p - 0.8) / 0.2) * 30);
 
   return (
-    <div ref={containerRef} className="relative w-full bg-[#000000] select-none">
+    <div ref={containerRef} className="relative w-full bg-[#000000] select-none touch-pan-y">
       {/* Pinned Viewport Stage */}
       <div
         ref={pinRef}
-        className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-[#000000] text-white"
+        className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-[#000000] text-white touch-pan-y"
       >
         {/* 3D Realistic Earth Canvas */}
         <RealisticEarthCanvas progress={scrollProgress} />
@@ -84,25 +85,25 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
             display: spaceIntroOpacity > 0.01 ? 'block' : 'none',
           }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-semibold tracking-wider uppercase text-white/90">
-            <Compass className="w-3.5 h-3.5 text-[#D4AF37]" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[11px] sm:text-xs font-semibold tracking-kicker uppercase text-[#FAF6EF]">
+            <Compass className="w-3.5 h-3.5 text-[#A3733E]" />
             <span>Kushalnagar · Kodagu, Karnataka</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-serif tracking-tight text-white leading-[1.15]">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-display font-bold tracking-tight text-white leading-[1.12] heading-balance">
             A Journey to <br />
-            <span className="italic font-light text-white/95">
+            <span className="font-accent italic font-semibold text-white/95">
               Riverside Serenity
             </span>
           </h2>
 
-          <p className="text-xs sm:text-base text-white/80 leading-relaxed font-light line-clamp-3 sm:line-clamp-none">
+          <p className="text-xs sm:text-base text-white/90 leading-relaxed font-normal prose-pretty line-clamp-3 sm:line-clamp-none">
             Scroll to descend through the clouds into our central sanctuary in the Western Ghats.
           </p>
 
-          <div className="flex items-center gap-3 pt-2 text-xs tracking-widest text-white/60 uppercase font-medium">
+          <div className="flex items-center gap-3 pt-2 text-xs tracking-widest text-white/70 uppercase font-semibold">
             <span>Scroll to Enter</span>
-            <div className="w-8 h-[1px] bg-white/50 animate-pulse" />
+            <div className="w-8 h-[1px] bg-white/60 animate-pulse" />
           </div>
         </div>
 
@@ -114,14 +115,14 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
             display: destinationTextOpacity > 0.01 ? 'block' : 'none',
           }}
         >
-          <div className="p-5 sm:p-6 rounded-3xl bg-black/60 backdrop-blur-md border border-white/20 space-y-2 text-white shadow-2xl">
-            <span className="text-[10px] sm:text-[11px] uppercase tracking-widest text-[#D4AF37] font-bold block">
+          <div className="p-5 sm:p-6 rounded-3xl bg-black/70 backdrop-blur-md border border-white/20 space-y-2 text-white shadow-2xl">
+            <span className="text-[10px] sm:text-[11px] uppercase tracking-kicker text-[#C7A583] font-bold block">
               Destination Approach
             </span>
-            <h3 className="text-xl sm:text-3xl font-serif font-bold text-white tracking-tight">
+            <h3 className="text-xl sm:text-3xl font-display font-bold text-white tracking-tight">
               Kushalnagar, Coorg
             </h3>
-            <p className="text-xs text-white/80 leading-relaxed pt-1">
+            <p className="text-xs text-white/90 font-normal leading-relaxed pt-1">
               Gateway to River Kaveri, Tibetan monasteries, and verdant coffee estates.
             </p>
           </div>
@@ -143,9 +144,9 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
             }}
           />
 
-          {/* Directional Scrim: Darkens left side for crisp typography contrast, keeping the white cottage bright & unobstructed on the right */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/10 md:to-transparent pointer-events-none z-10" />
-          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/60 to-transparent pointer-events-none z-10" />
+          {/* Directional Scrim: Darkens left side for crisp typography contrast */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/65 to-black/15 md:to-transparent pointer-events-none z-10" />
+          <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/65 to-transparent pointer-events-none z-10" />
           <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none z-10" />
 
           {/* Clean Editorial Hero Content Layer */}
@@ -157,28 +158,28 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
               transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
             }}
           >
-            {/* Top spacer to ensure clean separation below the navbar */}
+            {/* Top spacer */}
             <div className="h-2 sm:h-4" />
 
             {/* Left-Aligned Hero Editorial Block */}
             <div className="my-auto max-w-xl lg:max-w-2xl text-left space-y-4 sm:space-y-5">
               {/* Eyebrow Pill */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-[#E5C158]">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-semibold tracking-kicker uppercase text-[#C7A583]">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 <span>Kushalnagar · Coorg</span>
               </div>
 
               {/* Title & Subtitle */}
               <div className="space-y-2">
-                <h1 className="text-5xl sm:text-7xl md:text-8xl font-serif font-extrabold tracking-tight uppercase leading-none text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
+                <h1 className="text-5xl sm:text-7xl md:text-8xl font-display font-bold tracking-tight uppercase leading-none text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
                   LAYA
                 </h1>
-                <p className="text-lg sm:text-2xl font-serif italic text-white/95 leading-snug drop-shadow-sm font-light">
+                <p className="text-lg sm:text-2xl font-accent italic font-semibold text-[#FAF6EF] leading-snug drop-shadow-sm">
                   Your Eco-Luxury Sanctuary in Coorg
                 </p>
               </div>
 
-              <p className="text-xs sm:text-sm text-white/80 leading-relaxed max-w-lg font-light">
+              <p className="text-xs sm:text-sm text-white/90 leading-relaxed max-w-lg font-normal prose-pretty">
                 Immerse in nature’s rhythm along the tranquil Kaveri riverside. Unwind in private suites surrounded by lush Western Ghats flora and birdsong.
               </p>
 
@@ -186,17 +187,17 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
               <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1">
                 <button
                   onClick={onOpenEnquiry}
-                  className="px-6 sm:px-7 py-3 rounded-full bg-[#132422] hover:bg-[#1E3633] text-white font-bold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 flex items-center gap-2 border border-[#D4AF37]/60 shadow-lg hover:scale-105 active:scale-95 cursor-pointer"
+                  className="px-6 sm:px-7 py-3 rounded-full bg-[#0F3C28] hover:bg-[#165338] text-white font-semibold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 flex items-center gap-2 border border-[#A3733E]/60 shadow-lg hover:scale-105 active:scale-95 cursor-pointer"
                 >
                   <span>Book / Enquire</span>
-                  <ChevronRight className="w-4 h-4 text-[#D4AF37]" />
+                  <ChevronRight className="w-4 h-4 text-[#C7A583]" />
                 </button>
 
                 <a
                   href="#birdsong"
                   className="px-5 sm:px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/25 text-white font-medium text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 flex items-center gap-2 hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  <Volume2 className="w-4 h-4 text-[#E5C158]" />
+                  <Volume2 className="w-4 h-4 text-[#C7A583]" />
                   <span>Birdsong Audio</span>
                 </a>
               </div>

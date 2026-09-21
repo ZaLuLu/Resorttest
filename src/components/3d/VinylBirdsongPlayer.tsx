@@ -264,24 +264,24 @@ export const VinylBirdsongPlayer: React.FC = () => {
               <Feather className="w-3.5 h-3.5" />
               <span>Authentic Sanctuary Recording</span>
             </div>
-            <h4 className="font-serif text-2xl sm:text-3xl font-bold text-[#132422]">
+            <h4 className="font-display text-2xl sm:text-3xl font-bold text-[#131E1C]">
               Morning Birdsong & Forest Breeze
             </h4>
-            <p className="text-xs sm:text-sm text-[#344E4A] leading-relaxed mt-1.5">
+            <p className="text-xs sm:text-sm text-[#314240] leading-relaxed mt-1.5 font-normal prose-pretty">
               Original acoustic nature recording captured under the morning bamboo and silver oak canopy of Coorg Laya Resort in Kushalnagar.
             </p>
           </div>
 
           {/* Native Species In This Track */}
           <div>
-            <span className="text-[11px] font-bold text-[#A3733E] uppercase tracking-wider block mb-2">
+            <span className="text-[11px] font-semibold text-[#8C5F2E] uppercase tracking-kicker block mb-2">
               Identified Native Species:
             </span>
             <div className="flex flex-wrap gap-2">
               {['Malabar Whistling Thrush', 'Red-whiskered Bulbul', 'Oriental White-eye', 'White-throated Kingfisher'].map((bird, bIdx) => (
                 <span
                   key={bIdx}
-                  className="text-xs font-bold text-[#162926] bg-[#EFE8DC] px-3 py-1 rounded-full border border-[#DFD3C0]"
+                  className="text-xs font-semibold text-[#131E1C] bg-[#EFE8DC] px-3 py-1 rounded-full border border-[#DFD3C0]"
                 >
                   🐦 {bird}
                 </span>
@@ -293,7 +293,7 @@ export const VinylBirdsongPlayer: React.FC = () => {
           <div className="space-y-1.5 pt-2">
             <div className="flex items-center justify-between text-xs font-mono font-semibold text-[#635546]">
               <span>{formatTime(currentTime)}</span>
-              <span className="text-[11px] font-sans font-bold text-[#116B7B] uppercase tracking-wider">
+              <span className="text-[11px] font-sans font-semibold text-[#137586] uppercase tracking-wider">
                 {isPlaying ? 'Playing Live Track' : 'Paused'}
               </span>
               <span>{formatTime(duration)}</span>
@@ -306,7 +306,7 @@ export const VinylBirdsongPlayer: React.FC = () => {
               step="0.5"
               value={currentTime}
               onChange={handleSeek}
-              className="w-full h-2 rounded-lg bg-[#DFD3C0] accent-[#1A96AA] cursor-pointer"
+              className="w-full h-2 rounded-lg bg-[#DFD3C0] accent-[#137586] cursor-pointer"
             />
           </div>
 
@@ -315,7 +315,7 @@ export const VinylBirdsongPlayer: React.FC = () => {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setIsMuted((prev) => !prev)}
-                className="text-[#132422] hover:text-[#1A96AA] transition-colors cursor-pointer"
+                className="text-[#131E1C] hover:text-[#137586] transition-colors cursor-pointer"
                 aria-label={isMuted ? 'Unmute' : 'Mute'}
               >
                 {isMuted ? <VolumeX className="w-5 h-5 text-red-500" /> : <Volume2 className="w-5 h-5" />}
@@ -331,7 +331,7 @@ export const VinylBirdsongPlayer: React.FC = () => {
                   setVolume(parseFloat(e.target.value));
                   if (isMuted) setIsMuted(false);
                 }}
-                className="w-24 sm:w-32 h-1.5 rounded-lg bg-[#DFD3C0] accent-[#1A96AA] cursor-pointer"
+                className="w-24 sm:w-32 h-1.5 rounded-lg bg-[#DFD3C0] accent-[#137586] cursor-pointer"
               />
             </div>
 
@@ -339,8 +339,8 @@ export const VinylBirdsongPlayer: React.FC = () => {
               onClick={togglePlay}
               className={`px-6 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-sm cursor-pointer ${
                 isPlaying
-                  ? 'bg-[#132422] text-white hover:bg-black'
-                  : 'bg-gradient-to-r from-[#1A96AA] to-[#116B7B] text-white hover:from-[#158092] hover:to-[#0D5764]'
+                  ? 'bg-[#131E1C] text-white hover:bg-black'
+                  : 'bg-[#137586] text-white hover:bg-[#105B69]'
               }`}
             >
               {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}

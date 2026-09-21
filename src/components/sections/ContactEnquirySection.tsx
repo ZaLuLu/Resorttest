@@ -56,16 +56,16 @@ export const ContactEnquirySection: React.FC = () => {
         
         {/* Section Title Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-semibold tracking-kicker uppercase text-[#A3733E] shadow-sm">
             <Compass className="w-4 h-4 text-[#A3733E]" />
             <span>Direct Concierge Channels</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#132422] font-serif leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#131E1C] font-display leading-tight heading-balance">
             Connect with Coorg Laya Resort
           </h2>
 
-          <p className="text-sm sm:text-base text-[#344E4A] font-medium leading-relaxed">
+          <p className="text-sm sm:text-base text-[#314240] font-normal leading-relaxed prose-pretty">
             Reach our on-site team directly via WhatsApp, Instagram, direct call, or submit an unhurried reservation enquiry below.
           </p>
         </div>
@@ -87,13 +87,13 @@ export const ContactEnquirySection: React.FC = () => {
                 <MessageSquare className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-bold text-[#128C7E] uppercase tracking-wider block">
+                <span className="text-[10px] font-semibold text-[#128C7E] uppercase tracking-kicker block">
                   Instant Chat
                 </span>
-                <h4 className="font-serif text-base sm:text-lg font-bold text-[#132422]">
+                <h4 className="font-display text-base sm:text-lg font-bold text-[#131E1C]">
                   WhatsApp
                 </h4>
-                <p className="text-xs text-[#344E4A] mt-1 font-mono">
+                <p className="text-xs text-[#586E6B] mt-1 font-mono font-medium">
                   {PHONE_DISPLAY}
                 </p>
               </div>
@@ -109,56 +109,56 @@ export const ContactEnquirySection: React.FC = () => {
             href={`tel:${PHONE_DISPLAY}`}
             whileHover={{ y: -4, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="p-5 rounded-3xl bg-[#FAF6EF] border-2 border-[#E4D9C8] hover:border-[#1A96AA] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer"
+            className="p-5 rounded-3xl bg-[#FAF6EF] border-2 border-[#E4D9C8] hover:border-[#137586] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer"
           >
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-[#E5F3F5] text-[#116B7B] flex items-center justify-center group-hover:bg-[#1A96AA] group-hover:text-white transition-colors shadow-inner">
+              <div className="w-10 h-10 rounded-2xl bg-[#E5F3F5] text-[#137586] flex items-center justify-center group-hover:bg-[#137586] group-hover:text-white transition-colors shadow-inner">
                 <Phone className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-bold text-[#116B7B] uppercase tracking-wider block">
+                <span className="text-[10px] font-semibold text-[#137586] uppercase tracking-kicker block">
                   Direct Line
                 </span>
-                <h4 className="font-serif text-base sm:text-lg font-bold text-[#132422]">
-                  Voice Call
+                <h4 className="font-display text-base sm:text-lg font-bold text-[#131E1C]">
+                  Direct Reception
                 </h4>
-                <p className="text-xs text-[#344E4A] mt-1 font-mono">
+                <p className="text-xs text-[#586E6B] mt-1 font-mono font-medium">
                   {PHONE_DISPLAY}
                 </p>
               </div>
             </div>
-            <div className="pt-4 mt-2 border-t border-[#E4D9C8] flex items-center justify-between text-xs font-bold text-[#116B7B]">
+            <div className="pt-4 mt-2 border-t border-[#E4D9C8] flex items-center justify-between text-xs font-bold text-[#137586]">
               <span>Call Reception</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </div>
           </motion.a>
 
-          {/* 3. Instagram Social Card */}
+          {/* 3. Instagram Social Card (Refined Resort Branding - No Rainbow Gradient) */}
           <motion.a
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ y: -4, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="p-5 rounded-3xl bg-[#FAF6EF] border-2 border-[#E1306C]/30 hover:border-[#E1306C] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer"
+            className="p-5 rounded-3xl bg-[#FAF6EF] border-2 border-[#E4D9C8] hover:border-[#137586] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer"
           >
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#F58529]/20 via-[#DD2A7B]/20 to-[#8134AF]/20 text-[#DD2A7B] flex items-center justify-center group-hover:bg-gradient-to-tr group-hover:from-[#F58529] group-hover:via-[#DD2A7B] group-hover:to-[#8134AF] group-hover:text-white transition-colors shadow-inner">
+              <div className="w-10 h-10 rounded-2xl bg-[#F5EFEB] text-[#137586] flex items-center justify-center group-hover:bg-[#137586] group-hover:text-white transition-colors shadow-inner">
                 <Instagram className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-bold text-[#DD2A7B] uppercase tracking-wider block">
+                <span className="text-[10px] font-semibold text-[#8C5F2E] uppercase tracking-kicker block">
                   Stories & Reels
                 </span>
-                <h4 className="font-serif text-base sm:text-lg font-bold text-[#132422]">
+                <h4 className="font-display text-base sm:text-lg font-bold text-[#131E1C]">
                   Instagram
                 </h4>
-                <p className="text-xs text-[#344E4A] mt-1 font-medium">
-                  Watch Stories
+                <p className="text-xs text-[#586E6B] mt-1 font-medium">
+                  @coorglayaresort
                 </p>
               </div>
             </div>
-            <div className="pt-4 mt-2 border-t border-[#E4D9C8] flex items-center justify-between text-xs font-bold text-[#DD2A7B]">
+            <div className="pt-4 mt-2 border-t border-[#E4D9C8] flex items-center justify-between text-xs font-bold text-[#137586]">
               <span>Open Feed</span>
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </div>
@@ -176,13 +176,13 @@ export const ContactEnquirySection: React.FC = () => {
                 <Mail className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-bold text-[#A3733E] uppercase tracking-wider block">
+                <span className="text-[10px] font-semibold text-[#8C5F2E] uppercase tracking-kicker block">
                   Email Desk
                 </span>
-                <h4 className="font-serif text-base sm:text-lg font-bold text-[#132422]">
+                <h4 className="font-display text-base sm:text-lg font-bold text-[#131E1C]">
                   stay@coorglaya.com
                 </h4>
-                <p className="text-xs text-[#344E4A] mt-1 truncate">
+                <p className="text-xs text-[#586E6B] mt-1 truncate">
                   Bookings & buyout queries
                 </p>
               </div>
@@ -200,20 +200,20 @@ export const ContactEnquirySection: React.FC = () => {
             rel="noopener noreferrer"
             whileHover={{ y: -4, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="p-5 rounded-3xl bg-[#FAF6EF] border-2 border-[#E4D9C8] hover:border-[#132422] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer col-span-1 sm:col-span-2 md:col-span-1"
+            className="p-5 rounded-3xl bg-[#FAF6EF] border-2 border-[#E4D9C8] hover:border-[#131E1C] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer col-span-1 sm:col-span-2 md:col-span-1"
           >
             <div className="space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-[#EFE8DC] text-[#132422] flex items-center justify-center group-hover:bg-[#132422] group-hover:text-white transition-colors shadow-inner">
+              <div className="w-10 h-10 rounded-2xl bg-[#EFE8DC] text-[#131E1C] flex items-center justify-center group-hover:bg-[#131E1C] group-hover:text-white transition-colors shadow-inner">
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-bold text-[#635546] uppercase tracking-wider block">
+                <span className="text-[10px] font-semibold text-[#586E6B] uppercase tracking-kicker block">
                   Sanctuary GPS
                 </span>
-                <h4 className="font-serif text-base sm:text-lg font-bold text-[#132422]">
+                <h4 className="font-display text-base sm:text-lg font-bold text-[#131E1C]">
                   Kushalnagar
                 </h4>
-                <p className="text-xs text-[#344E4A] mt-1 line-clamp-1">
+                <p className="text-xs text-[#586E6B] mt-1 line-clamp-1">
                   Teppadakandi, Kodagu
                 </p>
               </div>

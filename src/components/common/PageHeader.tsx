@@ -51,7 +51,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="font-serif text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[#132422]"
+          className="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#132422] heading-balance leading-tight"
         >
           {title}
         </motion.h1>
@@ -61,7 +61,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mx-auto max-w-2xl text-sm sm:text-base leading-relaxed text-[#344E4A] font-medium"
+          className="mx-auto max-w-2xl text-sm sm:text-base leading-relaxed text-[#2C413E] font-normal prose-pretty"
         >
           {description}
         </motion.p>
@@ -76,7 +76,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           >
             <button
               onClick={onActionClick}
-              className="clay-btn-water text-xs sm:text-sm font-bold shadow-md cursor-pointer"
+              className="px-7 py-3 rounded-full text-xs sm:text-sm font-bold tracking-wide uppercase text-white bg-[#137586] hover:bg-[#0F5E6C] shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer"
             >
               {actionText}
             </button>

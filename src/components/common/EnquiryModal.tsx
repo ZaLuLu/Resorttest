@@ -116,27 +116,27 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
 
             {/* Title Header */}
             <div className="space-y-1.5 mb-6">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#BCE2E7] bg-[#E5F3F5] px-3.5 py-1 text-xs font-bold text-[#116B7B]">
-                <Waves className="size-3.5 text-[#1A96AA]" />
-                <span>Direct Reservation Desk</span>
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-3.5 py-1 text-xs font-bold text-[#A3733E]">
+                <Waves className="size-3.5 text-[#137586]" />
+                <span className="tracking-wide uppercase">Direct Reservation Desk</span>
               </div>
-              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#132422]">
+              <h3 className="font-display text-2xl sm:text-3xl font-bold text-[#132422] heading-balance">
                 Plan Your Stay or Event
               </h3>
-              <p className="text-xs sm:text-sm text-[#344E4A] font-medium">
+              <p className="text-xs sm:text-sm text-[#2C413E] font-normal prose-pretty">
                 Connect directly with our host team in Kushalnagar, Kodagu.
               </p>
             </div>
 
             {status === 'sent' ? (
               <div className="rounded-3xl bg-white border border-[#E4D9C8] p-6 sm:p-8 text-center space-y-4 shadow-sm">
-                <div className="size-14 rounded-full bg-emerald-600 text-white flex items-center justify-center mx-auto shadow-md">
+                <div className="size-14 rounded-full bg-[#0F3C28] text-white flex items-center justify-center mx-auto shadow-md">
                   <CheckCircle2 className="size-8" />
                 </div>
-                <h4 className="font-serif text-xl sm:text-2xl font-bold text-[#132422]">
+                <h4 className="font-display text-xl sm:text-2xl font-bold text-[#132422]">
                   Enquiry Dispatched
                 </h4>
-                <p className="text-xs sm:text-sm text-[#344E4A] font-medium max-w-md mx-auto leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#2C413E] font-normal max-w-md mx-auto leading-relaxed prose-pretty">
                   Your reservation request was formatted for our concierge team. Choose an instant channel below to confirm:
                 </p>
                 
@@ -323,7 +323,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
                 <button
                   type="submit"
                   disabled={status === 'submitting'}
-                  className="w-full clay-btn-water text-xs sm:text-sm font-bold shadow-md cursor-pointer !py-3.5"
+                  className="w-full py-3.5 rounded-full text-xs sm:text-sm font-bold tracking-wide uppercase text-white bg-[#137586] hover:bg-[#0F5E6C] shadow-md transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer flex items-center justify-center gap-2"
                 >
                   <Send className="size-4" />
                   <span>{status === 'submitting' ? 'Preparing Enquiry...' : 'Send Reservation Enquiry'}</span>

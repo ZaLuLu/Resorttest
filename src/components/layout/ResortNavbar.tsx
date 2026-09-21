@@ -17,21 +17,33 @@ export const ResortNavbar: React.FC<ResortNavbarProps> = ({ onOpenEnquiry }) => 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const isHomepage = location.pathname === '/';
-  const [showNavbar, setShowNavbar] = useState(true);
+  const [showNavbar, setShowNavbar] = useState(!isHomepage);
 
   useEffect(() => {
+    // Reset initial visibility based on route
+    if (isHomepage) {
+      setShowNavbar(window.scrollY >= 2200);
+    } else {
+      setShowNavbar(true);
+    }
+
     let lastScrollY = window.scrollY;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setIsScrolled(currentScrollY > 20);
 
-      // On homepage: keep visible during hero exploration (up to 2800px); beyond hero, hide on scroll down, reveal on scroll up
-      if (isHomepage && currentScrollY > 2800) {
-        if (currentScrollY > lastScrollY && currentScrollY - lastScrollY > 10) {
+      // On homepage: hide until Earth zoom completes (~2200px)
+      if (isHomepage) {
+        if (currentScrollY < 2200) {
           setShowNavbar(false);
-        } else if (lastScrollY - currentScrollY > 10) {
-          setShowNavbar(true);
+        } else {
+          // After zoom into resort completes: hide on scroll down, reveal on scroll up
+          if (currentScrollY > lastScrollY && currentScrollY - lastScrollY > 10) {
+            setShowNavbar(false);
+          } else if (lastScrollY - currentScrollY > 10) {
+            setShowNavbar(true);
+          }
         }
       } else {
         setShowNavbar(true);

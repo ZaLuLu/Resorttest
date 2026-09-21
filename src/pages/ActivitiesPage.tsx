@@ -122,12 +122,12 @@ export const ActivitiesPage: React.FC<ActivitiesPageProps> = ({ onOpenEnquiry })
         <CinematicReveal className="space-y-3 max-w-xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
             <Compass className="w-4 h-4 text-[#A3733E]" />
-            <span>Curated Stay Flow</span>
+            <span className="tracking-wide uppercase">Curated Stay Flow</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif leading-tight">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#132422] font-display leading-tight heading-balance">
             How Will You Spend Your Days?
           </h2>
-          <p className="text-sm text-[#344E4A] leading-relaxed">
+          <p className="text-sm text-[#2C413E] font-normal leading-relaxed prose-pretty">
             Choose a curated pace that fits your stay or weave together your own custom sanctuary rhythm.
           </p>
         </CinematicReveal>
@@ -138,22 +138,22 @@ export const ActivitiesPage: React.FC<ActivitiesPageProps> = ({ onOpenEnquiry })
               <div className="rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] p-6 sm:p-8 flex flex-col justify-between h-full shadow-sm hover:shadow-md transition-all">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#E5F3F5] text-[#116B7B] border border-[#BCE2E7]">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#FAF6EF] text-[#137586] border border-[#D5C7B2]">
                       {itin.badge}
                     </span>
                   </div>
 
-                  <h3 className="font-serif text-xl font-bold text-[#132422]">
+                  <h3 className="font-display text-xl font-bold text-[#132422]">
                     {itin.title}
                   </h3>
-                  <p className="text-xs text-[#A3733E] font-semibold">
+                  <p className="text-xs text-[#A3733E] font-bold tracking-wide">
                     {itin.tagline}
                   </p>
 
                   <ul className="space-y-2.5 pt-2 border-t border-[#E4D9C8]/60">
                     {itin.steps.map((step, sIdx) => (
-                      <li key={sIdx} className="text-xs text-[#344E4A] flex items-start gap-2">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#1A96AA] shrink-0 mt-0.5" />
+                      <li key={sIdx} className="text-xs text-[#2C413E] font-normal flex items-start gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#137586] shrink-0 mt-0.5" />
                         <span>{step}</span>
                       </li>
                     ))}
@@ -162,12 +162,12 @@ export const ActivitiesPage: React.FC<ActivitiesPageProps> = ({ onOpenEnquiry })
 
                 <div className="pt-6 mt-6 border-t border-[#E4D9C8]/60 flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] text-[#635546] font-bold uppercase block">Ideal For</span>
+                    <span className="text-[10px] text-[#A3733E] font-bold uppercase tracking-wider block">Ideal For</span>
                     <span className="text-xs font-bold text-[#132422]">{itin.idealFor}</span>
                   </div>
                   <button
                     onClick={onOpenEnquiry}
-                    className="p-2.5 rounded-xl bg-[#EFE8DC] hover:bg-[#E4D9C8] text-[#132422] transition-colors"
+                    className="p-2.5 rounded-xl bg-[#EFE8DC] hover:bg-[#E4D9C8] text-[#132422] transition-colors cursor-pointer"
                     title="Plan this itinerary"
                   >
                     <ArrowUpRight className="w-4 h-4" />
@@ -182,14 +182,14 @@ export const ActivitiesPage: React.FC<ActivitiesPageProps> = ({ onOpenEnquiry })
       {/* Complete Activities Bento Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <CinematicReveal className="space-y-3 max-w-xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#BCE2E7] bg-[#E5F3F5] px-4 py-1.5 text-xs font-bold text-[#116B7B] shadow-sm">
-            <Activity className="w-4 h-4 text-[#1A96AA]" />
-            <span>Complete Directory</span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+            <Activity className="w-4 h-4 text-[#A3733E]" />
+            <span className="tracking-wide uppercase">Complete Directory</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#132422] font-display heading-balance leading-tight">
             All On-Site Recreation
           </h2>
-          <p className="text-sm text-[#344E4A]">
+          <p className="text-sm text-[#2C413E] font-normal leading-relaxed prose-pretty">
             Everything you need for active sports or deep relaxation during your stay at Coorg Laya.
           </p>
         </CinematicReveal>
@@ -211,9 +211,9 @@ export const ActivitiesPage: React.FC<ActivitiesPageProps> = ({ onOpenEnquiry })
                   </div>
 
                   <div className="space-y-1">
-                    <span className="text-[11px] font-bold text-[#116B7B]">{act.timing}</span>
-                    <h4 className="font-serif text-base font-bold text-[#132422]">{act.name}</h4>
-                    <p className="text-xs text-[#344E4A] leading-relaxed">{act.desc}</p>
+                    <span className="text-[11px] font-bold text-[#137586]">{act.timing}</span>
+                    <h4 className="font-display text-base font-bold text-[#132422]">{act.name}</h4>
+                    <p className="text-xs text-[#2C413E] font-normal leading-relaxed prose-pretty">{act.desc}</p>
                   </div>
                 </div>
 
@@ -221,7 +221,7 @@ export const ActivitiesPage: React.FC<ActivitiesPageProps> = ({ onOpenEnquiry })
                   <span className="text-[11px] font-bold text-[#A3733E]">Included with Stay</span>
                   <button
                     onClick={onOpenEnquiry}
-                    className="text-xs font-bold text-[#116B7B] hover:underline flex items-center gap-1"
+                    className="text-xs font-bold text-[#137586] hover:underline flex items-center gap-1 cursor-pointer"
                   >
                     <span>Reserve</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />

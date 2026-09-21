@@ -112,12 +112,12 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onOpenEnquiry }) => {
         <CinematicReveal className="space-y-3 max-w-2xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
             <Sparkles className="w-4 h-4 text-[#A3733E]" />
-            <span>Venue Infrastructure</span>
+            <span className="tracking-wide uppercase">Venue Infrastructure</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif leading-tight">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#132422] font-display leading-tight heading-balance">
             Built for Flawless Grand Occasions
           </h2>
-          <p className="text-sm text-[#344E4A] leading-relaxed">
+          <p className="text-sm text-[#2C413E] font-normal leading-relaxed prose-pretty">
             Our expansive outdoor venue in Kushalnagar combines scenic Western Ghats natural beauty with robust electrical, catering, and guest accommodation facilities.
           </p>
         </CinematicReveal>
@@ -128,13 +128,13 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onOpenEnquiry }) => {
             return (
               <CinematicReveal key={idx} delay={idx * 0.08}>
                 <div className="p-6 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] space-y-3 shadow-sm hover:shadow-md transition-all h-full">
-                  <div className="w-10 h-10 rounded-2xl bg-[#E5F3F5] text-[#116B7B] flex items-center justify-center shadow-sm">
+                  <div className="w-10 h-10 rounded-2xl bg-[#FAF6EF] border border-[#D5C7B2] text-[#137586] flex items-center justify-center shadow-sm">
                     <IconComp className="w-5 h-5" />
                   </div>
-                  <h3 className="font-serif text-lg font-bold text-[#132422]">
+                  <h3 className="font-display text-lg font-bold text-[#132422]">
                     {spec.title}
                   </h3>
-                  <p className="text-xs text-[#344E4A] leading-relaxed">
+                  <p className="text-xs text-[#2C413E] font-normal leading-relaxed prose-pretty">
                     {spec.desc}
                   </p>
                 </div>
@@ -147,11 +147,11 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onOpenEnquiry }) => {
       {/* Event Packages Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <CinematicReveal className="space-y-3 max-w-xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#BCE2E7] bg-[#E5F3F5] px-4 py-1.5 text-xs font-bold text-[#116B7B] shadow-sm">
-            <Calendar className="w-4 h-4 text-[#1A96AA]" />
-            <span>Curated Formats</span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+            <Calendar className="w-4 h-4 text-[#A3733E]" />
+            <span className="tracking-wide uppercase">Curated Formats</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#132422] font-display heading-balance leading-tight">
             Celebration Packages
           </h2>
         </CinematicReveal>
@@ -167,7 +167,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onOpenEnquiry }) => {
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-white text-[#116B7B] border border-[#BCE2E7] shadow-sm">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-white text-[#137586] border border-[#D5C7B2] shadow-sm">
                       {pkg.badge}
                     </span>
                     <span className="text-xs font-bold text-[#A3733E]">
@@ -175,17 +175,17 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onOpenEnquiry }) => {
                     </span>
                   </div>
 
-                  <h3 className="font-serif text-2xl font-bold text-[#132422]">
+                  <h3 className="font-display text-2xl font-bold text-[#132422]">
                     {pkg.name}
                   </h3>
-                  <p className="text-xs text-[#635546] font-medium">
+                  <p className="text-xs text-[#A3733E] font-bold tracking-wide">
                     {pkg.tagline}
                   </p>
 
                   <ul className="space-y-2.5 pt-3 border-t border-[#E4D9C8]">
                     {pkg.features.map((feat, fIdx) => (
-                      <li key={fIdx} className="text-xs text-[#344E4A] flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-[#1A96AA] shrink-0" />
+                      <li key={fIdx} className="text-xs text-[#2C413E] font-normal flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-[#137586] shrink-0" />
                         <span>{feat}</span>
                       </li>
                     ))}
@@ -195,7 +195,7 @@ export const EventsPage: React.FC<EventsPageProps> = ({ onOpenEnquiry }) => {
                 <div className="pt-6 mt-6 border-t border-[#E4D9C8]">
                   <button
                     onClick={onOpenEnquiry}
-                    className="w-full py-3 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-md transition-all flex items-center justify-center gap-2"
+                    className="w-full py-3.5 rounded-full text-xs font-bold tracking-wide uppercase text-white bg-[#137586] hover:bg-[#0F5E6C] shadow-md transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Check Date Availability</span>
                     <ArrowUpRight className="w-4 h-4" />

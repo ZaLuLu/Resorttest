@@ -86,12 +86,12 @@ export const ContactPage: React.FC = () => {
             <CinematicReveal className="space-y-3">
               <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
                 <Sparkles className="w-4 h-4 text-[#A3733E]" />
-                <span>Direct Concierge</span>
+                <span className="tracking-wide uppercase">Direct Concierge</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#132422] font-display leading-tight heading-balance">
                 Get in Touch Instantly
               </h2>
-              <p className="text-sm text-[#344E4A] leading-relaxed">
+              <p className="text-sm text-[#2C413E] font-normal leading-relaxed prose-pretty">
                 Whether you have questions about our 15 private suites, catering for the 500-guest lawn, or local Kushalnagar sightseeing cabs, we are always here.
               </p>
             </CinematicReveal>
@@ -102,15 +102,15 @@ export const ContactPage: React.FC = () => {
                   href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi Coorg Laya Team, I would like to enquire about booking suites at your resort.')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group"
+                  className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group cursor-pointer"
                 >
                   <div className="w-12 h-12 rounded-2xl bg-[#E8F8EE] text-[#1E7E34] flex items-center justify-center shadow-sm">
                     <MessageSquare className="w-6 h-6 text-[#25D366]" />
                   </div>
                   <div className="flex-1">
                     <span className="text-[11px] font-bold uppercase text-[#1E7E34]">Fastest Response</span>
-                    <h4 className="font-serif text-base font-bold text-[#132422]">WhatsApp Reservation Desk</h4>
-                    <p className="text-xs text-[#344E4A]">{PHONE_DISPLAY} (9 AM – 9 PM)</p>
+                    <h4 className="font-display text-base font-bold text-[#132422]">WhatsApp Reservation Desk</h4>
+                    <p className="text-xs text-[#2C413E] font-medium">{PHONE_DISPLAY} (9 AM – 9 PM)</p>
                   </div>
                   <ArrowRight className="w-4 h-4 text-[#1E7E34] group-hover:translate-x-1 transition-transform" />
                 </a>
@@ -119,15 +119,15 @@ export const ContactPage: React.FC = () => {
               <CinematicReveal delay={0.15}>
                 <a
                   href={`tel:${PHONE_DISPLAY}`}
-                  className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group"
+                  className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group cursor-pointer"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-[#EFE8DC] text-[#A3733E] flex items-center justify-center shadow-sm">
+                  <div className="w-12 h-12 rounded-2xl bg-[#FAF6EF] border border-[#D5C7B2] text-[#A3733E] flex items-center justify-center shadow-sm">
                     <Phone className="w-6 h-6" />
                   </div>
                   <div className="flex-1">
                     <span className="text-[11px] font-bold uppercase text-[#A3733E]">Direct Voice Call</span>
-                    <h4 className="font-serif text-base font-bold text-[#132422]">Resort Phone Line</h4>
-                    <p className="text-xs text-[#344E4A]">{PHONE_DISPLAY}</p>
+                    <h4 className="font-display text-base font-bold text-[#132422]">Resort Phone Line</h4>
+                    <p className="text-xs text-[#2C413E] font-medium">{PHONE_DISPLAY}</p>
                   </div>
                   <ArrowRight className="w-4 h-4 text-[#A3733E] group-hover:translate-x-1 transition-transform" />
                 </a>
@@ -138,34 +138,34 @@ export const ContactPage: React.FC = () => {
                   href={INSTAGRAM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group"
+                  className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group cursor-pointer"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#F58529]/20 via-[#DD2A7B]/20 to-[#8134AF]/20 text-[#DD2A7B] flex items-center justify-center shadow-sm">
+                  <div className="w-12 h-12 rounded-2xl bg-[#FAF6EF] border border-[#D5C7B2] text-[#A3733E] flex items-center justify-center shadow-sm">
                     <Instagram className="w-6 h-6" />
                   </div>
                   <div className="flex-1">
-                    <span className="text-[11px] font-bold uppercase text-[#DD2A7B]">Stories & Reels</span>
-                    <h4 className="font-serif text-base font-bold text-[#132422]">Instagram Profile</h4>
-                    <p className="text-xs text-[#344E4A]">Follow our daily retreat moments</p>
+                    <span className="text-[11px] font-bold uppercase text-[#A3733E]">Stories & Reels</span>
+                    <h4 className="font-display text-base font-bold text-[#132422]">Instagram Profile</h4>
+                    <p className="text-xs text-[#2C413E] font-medium">Follow our daily retreat moments</p>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-[#DD2A7B] group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 text-[#A3733E] group-hover:translate-x-1 transition-transform" />
                 </a>
               </CinematicReveal>
 
               <CinematicReveal delay={0.2}>
                 <a
                   href="mailto:stay@coorglaya.com"
-                  className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group"
+                  className="p-5 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] shadow-sm hover:shadow-md transition-all flex items-center gap-4 group cursor-pointer"
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-[#E5F3F5] text-[#116B7B] flex items-center justify-center shadow-sm">
+                  <div className="w-12 h-12 rounded-2xl bg-[#FAF6EF] border border-[#D5C7B2] text-[#137586] flex items-center justify-center shadow-sm">
                     <Mail className="w-6 h-6" />
                   </div>
                   <div className="flex-1">
-                    <span className="text-[11px] font-bold uppercase text-[#116B7B]">Event & Buyout RFPs</span>
-                    <h4 className="font-serif text-base font-bold text-[#132422]">Email Desk</h4>
-                    <p className="text-xs text-[#344E4A]">stay@coorglaya.com</p>
+                    <span className="text-[11px] font-bold uppercase text-[#137586]">Event & Buyout RFPs</span>
+                    <h4 className="font-display text-base font-bold text-[#132422]">Email Desk</h4>
+                    <p className="text-xs text-[#2C413E] font-medium">stay@coorglaya.com</p>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-[#116B7B] group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 text-[#137586] group-hover:translate-x-1 transition-transform" />
                 </a>
               </CinematicReveal>
             </div>
@@ -273,7 +273,7 @@ export const ContactPage: React.FC = () => {
 
                   <button
                     type="submit"
-                    className="w-full py-4 rounded-2xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-[0_8px_24px_rgba(26,150,170,0.35)] transition-all flex items-center justify-center gap-2"
+                    className="w-full py-4 rounded-full text-xs sm:text-sm font-bold tracking-wide uppercase text-white bg-[#137586] hover:bg-[#0F5E6C] shadow-md transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <Send className="w-4 h-4" />
                     <span>Send Reservation Request</span>
@@ -289,14 +289,14 @@ export const ContactPage: React.FC = () => {
       {/* Getting Here Driving Guide */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <CinematicReveal className="space-y-3 max-w-xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#BCE2E7] bg-[#E5F3F5] px-4 py-1.5 text-xs font-bold text-[#116B7B] shadow-sm">
-            <Car className="w-4 h-4 text-[#1A96AA]" />
-            <span>Travel & Accessibility</span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+            <Car className="w-4 h-4 text-[#A3733E]" />
+            <span className="tracking-wide uppercase">Travel & Accessibility</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#132422] font-display heading-balance leading-tight">
             Getting to Coorg Laya Resort
           </h2>
-          <p className="text-sm text-[#344E4A]">
+          <p className="text-sm text-[#2C413E] font-normal leading-relaxed prose-pretty">
             Kushalnagar, Kodagu District, Karnataka · 850m Altitude above sea level.
           </p>
         </CinematicReveal>
@@ -306,23 +306,23 @@ export const ContactPage: React.FC = () => {
             <CinematicReveal key={idx} delay={idx * 0.1}>
               <div className="p-6 rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] space-y-3 shadow-sm h-full flex flex-col justify-between">
                 <div className="space-y-2">
-                  <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#E5F3F5] text-[#116B7B] border border-[#BCE2E7] inline-block">
+                  <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#FAF6EF] text-[#137586] border border-[#D5C7B2] inline-block">
                     {rt.dist}
                   </span>
-                  <h3 className="font-serif text-lg font-bold text-[#132422]">
+                  <h3 className="font-display text-lg font-bold text-[#132422]">
                     {rt.from}
                   </h3>
-                  <p className="text-xs font-mono text-[#A3733E] font-medium">
+                  <p className="text-xs font-mono text-[#A3733E] font-bold">
                     {rt.route}
                   </p>
-                  <p className="text-xs text-[#344E4A] leading-relaxed pt-1">
+                  <p className="text-xs text-[#2C413E] font-normal leading-relaxed prose-pretty pt-1">
                     {rt.highlights}
                   </p>
                 </div>
 
                 <div className="pt-4 border-t border-[#E4D9C8]/60 flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#116B7B]">GPS Navigation Ready</span>
-                  <Navigation className="w-4 h-4 text-[#1A96AA]" />
+                  <span className="text-xs font-bold text-[#137586]">GPS Navigation Ready</span>
+                  <Navigation className="w-4 h-4 text-[#137586]" />
                 </div>
               </div>
             </CinematicReveal>

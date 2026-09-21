@@ -124,16 +124,13 @@ export const CalligraphyIntroScreen: React.FC<CalligraphyIntroScreenProps> = ({
             {/* Massive Bold Animated Letterform Display */}
             <div className="relative overflow-hidden py-2 px-4">
               <motion.div
-                initial={{ y: 100, opacity: 0 }}
+                initial={{ y: 80, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
                 className="flex items-center justify-center"
               >
                 <h1
-                  style={{
-                    fontFamily: "'Italiana', 'Cormorant Garamond', serif",
-                  }}
-                  className="text-8xl sm:text-[11rem] md:text-[14rem] lg:text-[18rem] font-normal leading-none tracking-[0.08em] sm:tracking-[0.15em] text-transparent bg-clip-text bg-gradient-to-b from-[#FAF6EF] via-[#F0E6D2] to-[#A3733E] drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] select-none uppercase"
+                  className="text-8xl sm:text-[11rem] md:text-[14rem] lg:text-[18rem] font-display font-bold leading-none tracking-[0.12em] sm:tracking-[0.18em] text-transparent bg-clip-text bg-gradient-to-b from-[#FFFFFF] via-[#FAF6EF] to-[#C7A583] drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] select-none uppercase"
                 >
                   LAYA
                 </h1>
@@ -144,7 +141,7 @@ export const CalligraphyIntroScreen: React.FC<CalligraphyIntroScreenProps> = ({
                 initial={{ opacity: 0, letterSpacing: '0.2em' }}
                 animate={{ opacity: 1, letterSpacing: '0.65em' }}
                 transition={{ delay: 0.6, duration: 0.9, ease: 'easeOut' }}
-                className="text-xs sm:text-base md:text-lg font-serif uppercase text-[#E2BA84] font-semibold text-center mt-1 sm:mt-2 pl-3 drop-shadow-md"
+                className="text-xs sm:text-base md:text-lg font-body uppercase text-[#C7A583] font-semibold text-center mt-1 sm:mt-2 pl-3 drop-shadow-md"
               >
                 RESORT · COORG
               </motion.div>
@@ -157,13 +154,13 @@ export const CalligraphyIntroScreen: React.FC<CalligraphyIntroScreenProps> = ({
               transition={{ delay: 0.8, duration: 0.8 }}
               className="space-y-3 mt-4 sm:mt-6 max-w-xl mx-auto"
             >
-              <p className="font-serif italic text-lg sm:text-2xl md:text-3xl text-[#FAF6EF]/90 font-light tracking-wide">
+              <p className="font-accent italic text-lg sm:text-2xl md:text-3xl text-[#FAF6EF] font-semibold tracking-wide">
                 "Where the River Flows & Birds Gather"
               </p>
 
               <div className="flex items-center justify-center gap-3 pt-1">
                 <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#1A96AA]" />
-                <span className="text-[11px] font-mono uppercase tracking-[0.3em] text-[#74B4C0]">
+                <span className="text-[11px] font-mono font-semibold uppercase tracking-[0.3em] text-[#AEE2E8]">
                   15 SUITES · PALM POOL · 500-GUEST LAWN
                 </span>
                 <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#1A96AA]" />

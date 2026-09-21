@@ -95,8 +95,7 @@ export const Diorama3DParallax: React.FC<Diorama3DParallaxProps> = ({
           transition={{ type: 'spring', stiffness: 200, damping: 22 }}
           className="absolute inset-0 w-full h-full pointer-events-none"
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0F1E1B]/85 via-[#0F1E1B]/20 to-black/15" />
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#1A96AA]/20 via-transparent to-[#E2BA84]/15" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0F3C28]/85 via-[#0F3C28]/20 to-transparent" />
         </motion.div>
 
         {/* Floating Sunbeam Light Motes Particles */}
@@ -140,31 +139,31 @@ export const Diorama3DParallax: React.FC<Diorama3DParallaxProps> = ({
           <div
             className="absolute inset-0 transition-opacity duration-300"
             style={{
-              opacity: isHovered ? 0.65 : 0.25,
-              background: `radial-gradient(circle 320px at ${(coords.x + 0.5) * 100}% ${(coords.y + 0.5) * 100}%, rgba(255,255,255,0.45) 0%, rgba(226,186,132,0.2) 35%, transparent 70%)`,
+              opacity: isHovered ? 0.5 : 0.18,
+              background: `radial-gradient(circle 320px at ${(coords.x + 0.5) * 100}% ${(coords.y + 0.5) * 100}%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.05) 40%, transparent 70%)`,
             }}
           />
         </motion.div>
 
         {/* Top Floating Badge */}
-        <div className="absolute top-4 left-4 z-30 px-3.5 py-1.5 rounded-full bg-[#132422]/85 backdrop-blur-md border border-white/20 text-[#FAF6EF] text-xs font-semibold flex items-center gap-1.5 shadow-md">
-          <Sparkles className="w-3.5 h-3.5 text-[#1A96AA] animate-pulse" />
+        <div className="absolute top-4 left-4 z-30 px-3.5 py-1.5 rounded-full bg-[#0F3C28]/90 backdrop-blur-md border border-white/20 text-[#FAF6EF] text-xs font-semibold flex items-center gap-1.5 shadow-md">
+          <Sparkles className="w-3.5 h-3.5 text-[#1A96AA]" />
           <span>{badge}</span>
         </div>
 
         {/* Top Right Live Indicator */}
-        <div className="absolute top-4 right-4 z-30 px-2.5 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-[11px] font-medium flex items-center gap-1.5 shadow-sm">
-          <span className="w-2 h-2 rounded-full bg-[#38D39F] animate-ping" />
+        <div className="absolute top-4 right-4 z-30 px-2.5 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/20 text-white text-[11px] font-semibold flex items-center gap-1.5 shadow-sm">
+          <span className="w-2 h-2 rounded-full bg-[#1A96AA] animate-pulse" />
           <span>Live 3D Parallax</span>
         </div>
 
         {/* Bottom Captions & Spatial Typography */}
         <div className="absolute bottom-4 left-4 right-4 z-30 text-white">
-          <span className="text-[11px] uppercase tracking-widest font-bold text-[#E2BA84] flex items-center gap-1 mb-0.5">
-            <Compass className="w-3 h-3" />
+          <span className="text-[11px] uppercase tracking-wider font-semibold text-[#C7A583] flex items-center gap-1 mb-0.5 font-mono">
+            <Compass className="w-3 h-3 text-[#1A96AA]" />
             {subtitle}
           </span>
-          <h4 className="font-serif text-xl sm:text-2xl font-bold text-white leading-tight">
+          <h4 className="font-display text-xl sm:text-2xl font-bold text-white leading-tight">
             {title}
           </h4>
         </div>

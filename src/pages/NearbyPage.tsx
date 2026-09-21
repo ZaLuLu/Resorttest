@@ -136,12 +136,12 @@ export const NearbyPage: React.FC<NearbyPageProps> = ({ onOpenEnquiry }) => {
         <CinematicReveal className="space-y-3 max-w-xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
             <Compass className="w-4 h-4 text-[#A3733E]" />
-            <span>Curated Sightseeing</span>
+            <span className="tracking-wide uppercase">Curated Sightseeing</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif leading-tight">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#132422] font-display leading-tight heading-balance">
             Top Attractions Around Coorg Laya
           </h2>
-          <p className="text-sm text-[#344E4A] leading-relaxed">
+          <p className="text-sm text-[#2C413E] font-normal leading-relaxed prose-pretty">
             Verified travel times, distances, and optimal visiting windows directly from our resort reception.
           </p>
         </CinematicReveal>
@@ -149,7 +149,7 @@ export const NearbyPage: React.FC<NearbyPageProps> = ({ onOpenEnquiry }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {allDestinations.map((dest, idx) => (
             <CinematicReveal key={idx} delay={idx * 0.08}>
-              <div className="rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] overflow-hidden shadow-sm hover:shadow-md hover:border-[#1A96AA]/40 transition-all h-full flex flex-col justify-between group">
+              <div className="rounded-3xl bg-[#FAF6EF] border border-[#E4D9C8] overflow-hidden shadow-sm hover:shadow-md hover:border-[#137586]/40 transition-all h-full flex flex-col justify-between group">
                 <div className="relative h-44 overflow-hidden bg-[#EFE8DC]">
                   <img
                     src={dest.image}
@@ -159,15 +159,15 @@ export const NearbyPage: React.FC<NearbyPageProps> = ({ onOpenEnquiry }) => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   <div className="absolute top-3 left-3">
-                    <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#FAF6EF]/90 backdrop-blur-md text-[#116B7B] border border-[#BCE2E7] shadow-sm">
+                    <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-[#FAF6EF]/95 backdrop-blur-md text-[#137586] border border-[#D5C7B2] shadow-sm">
                       {dest.dist} · {dest.time}
                     </span>
                   </div>
                   <div className="absolute bottom-3 left-3 right-3 text-white">
-                    <span className="text-[11px] font-semibold text-[#FFD285] block uppercase tracking-wider">
+                    <span className="text-[11px] font-bold text-[#FAF7F2] block uppercase tracking-wider">
                       {dest.type}
                     </span>
-                    <h3 className="font-serif text-lg font-bold text-white drop-shadow-sm line-clamp-1">
+                    <h3 className="font-display text-lg font-bold text-white drop-shadow-sm line-clamp-1">
                       {dest.name}
                     </h3>
                   </div>
@@ -175,11 +175,11 @@ export const NearbyPage: React.FC<NearbyPageProps> = ({ onOpenEnquiry }) => {
 
                 <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
                   <div className="space-y-2">
-                    <div className="flex items-center gap-1.5 text-xs text-[#635546] font-medium">
+                    <div className="flex items-center gap-1.5 text-xs text-[#2C413E] font-medium">
                       <Clock className="w-3.5 h-3.5 text-[#A3733E]" />
                       <span>Best Hours: {dest.bestTime}</span>
                     </div>
-                    <p className="text-xs text-[#344E4A] leading-relaxed">
+                    <p className="text-xs text-[#2C413E] font-normal leading-relaxed prose-pretty">
                       {dest.highlight}
                     </p>
                   </div>
@@ -189,7 +189,7 @@ export const NearbyPage: React.FC<NearbyPageProps> = ({ onOpenEnquiry }) => {
                       href={`https://www.google.com/maps/search/?api=1&query=${dest.mapQuery}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full py-2.5 px-3 rounded-xl bg-[#E5F3F5] hover:bg-[#D2EDF2] text-[#116B7B] font-bold text-xs transition-colors flex items-center justify-center gap-1.5 border border-[#BCE2E7]"
+                      className="w-full py-2.5 px-3 rounded-full bg-[#FAF6EF] hover:bg-[#EFE8DC] text-[#137586] font-bold text-xs transition-colors flex items-center justify-center gap-1.5 border border-[#D5C7B2]"
                     >
                       <Navigation className="w-3.5 h-3.5" />
                       <span>Open in Google Maps</span>
@@ -205,11 +205,11 @@ export const NearbyPage: React.FC<NearbyPageProps> = ({ onOpenEnquiry }) => {
       {/* Curated Road Trip Circuits */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <CinematicReveal className="space-y-3 max-w-xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#BCE2E7] bg-[#E5F3F5] px-4 py-1.5 text-xs font-bold text-[#116B7B] shadow-sm">
-            <Car className="w-4 h-4 text-[#1A96AA]" />
-            <span>Recommended Road Trips</span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D5C7B2] bg-[#FAF6EF] px-4 py-1.5 text-xs font-bold text-[#A3733E] shadow-sm">
+            <Car className="w-4 h-4 text-[#A3733E]" />
+            <span className="tracking-wide uppercase">Recommended Road Trips</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#132422] font-serif">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#132422] font-display heading-balance leading-tight">
             Day-Trip Itineraries from Coorg Laya
           </h2>
         </CinematicReveal>
@@ -225,7 +225,7 @@ export const NearbyPage: React.FC<NearbyPageProps> = ({ onOpenEnquiry }) => {
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-white text-[#116B7B] border border-[#BCE2E7] shadow-sm">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-white text-[#137586] border border-[#D5C7B2] shadow-sm">
                       {trip.badge}
                     </span>
                     <span className="text-xs font-bold text-[#A3733E]">
@@ -233,17 +233,17 @@ export const NearbyPage: React.FC<NearbyPageProps> = ({ onOpenEnquiry }) => {
                     </span>
                   </div>
 
-                  <h3 className="font-serif text-2xl font-bold text-[#132422]">
+                  <h3 className="font-display text-2xl font-bold text-[#132422]">
                     {trip.title}
                   </h3>
-                  <p className="text-xs text-[#344E4A] leading-relaxed">
+                  <p className="text-xs text-[#2C413E] font-normal leading-relaxed prose-pretty">
                     {trip.description}
                   </p>
 
                   <ul className="space-y-2 pt-3 border-t border-[#E4D9C8]">
                     {trip.stops.map((stop, sIdx) => (
                       <li key={sIdx} className="text-xs text-[#132422] font-medium flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#1A96AA] shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#137586] shrink-0" />
                         <span>{stop}</span>
                       </li>
                     ))}
@@ -253,7 +253,7 @@ export const NearbyPage: React.FC<NearbyPageProps> = ({ onOpenEnquiry }) => {
                 <div className="pt-6 mt-6 border-t border-[#E4D9C8]">
                   <button
                     onClick={onOpenEnquiry}
-                    className="w-full py-3 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#1A96AA] to-[#116B7B] hover:from-[#158092] hover:to-[#0D5764] shadow-md transition-all flex items-center justify-center gap-2"
+                    className="w-full py-3.5 rounded-full text-xs font-bold tracking-wide uppercase text-white bg-[#137586] hover:bg-[#0F5E6C] shadow-md transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Enquire with Resort Concierge</span>
                     <ArrowRight className="w-4 h-4" />

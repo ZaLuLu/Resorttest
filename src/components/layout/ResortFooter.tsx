@@ -24,9 +24,9 @@ export const ResortFooter: React.FC = () => {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 rounded-full bg-white border border-[#E4D9C8] hover:border-[#E1306C] text-[#DD2A7B] text-xs font-bold flex items-center gap-2 shadow-sm hover:scale-105 transition-all"
+              className="px-4 py-2 rounded-full bg-white border border-[#E4D9C8] hover:border-[#A3733E] text-[#132422] hover:text-[#A3733E] text-xs font-bold flex items-center gap-2 shadow-sm hover:scale-105 transition-all"
             >
-              <Instagram className="w-4 h-4" />
+              <Instagram className="w-4 h-4 text-[#A3733E]" />
               <span>Instagram</span>
             </a>
 
@@ -50,73 +50,73 @@ export const ResortFooter: React.FC = () => {
           </div>
         </div>
 
-        {/* 4-Column Clay Footprint */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-xs text-[#344E4A]">
+        {/* 4-Column Footprint */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-xs text-[#2C413E]">
           <div className="space-y-3">
-            <h4 className="font-serif text-sm font-bold text-[#132422]">Coorg Laya Resort</h4>
-            <p className="leading-relaxed text-[#635546] font-medium">
+            <h4 className="font-display text-base font-bold text-[#132422]">Coorg Laya Resort</h4>
+            <p className="leading-relaxed text-[#2C413E] font-normal prose-pretty">
               15 private living suites and a 500-guest scenic celebration lawn nestled among misty hills and fresh waterways in Kushalnagar, Kodagu.
             </p>
-            <div className="pt-2 text-xs font-mono font-bold text-[#116B7B]">
+            <div className="pt-2 text-xs font-mono font-bold text-[#137586]">
               Direct Desk: +91 7411695533
             </div>
           </div>
 
           <div className="space-y-3">
-            <h4 className="font-serif text-sm font-bold text-[#132422]">Leisure & Water</h4>
+            <h4 className="font-display text-base font-bold text-[#132422]">Leisure & Water</h4>
             <ul className="space-y-2 font-medium">
               <li className="flex items-center gap-2">
-                <span className="size-2 rounded-full bg-[#1A96AA]" />
-                <span>Palm-Framed Swimming Pool</span>
+                <span className="size-2 rounded-full bg-[#137586]" />
+                <span className="text-[#2C413E]">Palm-Framed Swimming Pool</span>
               </li>
               <li className="flex items-center gap-2">
-                <span className="size-2 rounded-full bg-[#1A96AA]" />
-                <span>Kids Trampoline & Lawn Area</span>
+                <span className="size-2 rounded-full bg-[#137586]" />
+                <span className="text-[#2C413E]">Kids Trampoline & Lawn Area</span>
               </li>
               <li className="flex items-center gap-2">
-                <span className="size-2 rounded-full bg-[#1A96AA]" />
-                <span>Lawn Badminton & Volleyball</span>
+                <span className="size-2 rounded-full bg-[#137586]" />
+                <span className="text-[#2C413E]">Lawn Badminton & Volleyball</span>
               </li>
               <li className="flex items-center gap-2">
-                <span className="size-2 rounded-full bg-[#1A96AA]" />
-                <span>Garden Terraces & Stargazing</span>
+                <span className="size-2 rounded-full bg-[#137586]" />
+                <span className="text-[#2C413E]">Garden Terraces & Stargazing</span>
               </li>
             </ul>
           </div>
 
           <div className="space-y-3">
-            <h4 className="font-serif text-sm font-bold text-[#132422]">Celebrations</h4>
+            <h4 className="font-display text-base font-bold text-[#132422]">Celebrations</h4>
             <ul className="space-y-2 font-medium">
               <li className="flex items-center gap-2">
                 <span className="size-2 rounded-full bg-[#A3733E]" />
-                <span>Open-Air Weddings (500 Guests)</span>
+                <span className="text-[#2C413E]">Open-Air Weddings (500 Guests)</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="size-2 rounded-full bg-[#A3733E]" />
-                <span>Milestone Birthdays & Reunions</span>
+                <span className="text-[#2C413E]">Milestone Birthdays & Reunions</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="size-2 rounded-full bg-[#A3733E]" />
-                <span>Corporate Nature Offsites</span>
+                <span className="text-[#2C413E]">Corporate Nature Offsites</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="size-2 rounded-full bg-[#A3733E]" />
-                <span>Family Weekend Getaways</span>
+                <span className="text-[#2C413E]">Family Weekend Getaways</span>
               </li>
             </ul>
           </div>
 
           <div className="space-y-3">
-            <h4 className="font-serif text-sm font-bold text-[#132422]">Sanctuary Address</h4>
-            <p className="leading-relaxed text-[#635546] font-medium">
+            <h4 className="font-display text-base font-bold text-[#132422]">Sanctuary Address</h4>
+            <p className="leading-relaxed text-[#2C413E] font-normal prose-pretty">
               Teppadakandi, Siddapura Main Road, Basavanahalli Village, Gudde Hosur Post, Kushalnagar - 571234, Kodagu, Karnataka.
             </p>
             <div className="pt-1 flex flex-wrap gap-3">
-              <Link to="/privacy" className="text-[#116B7B] hover:underline font-semibold">
+              <Link to="/privacy" className="text-[#137586] hover:underline font-bold">
                 Privacy Policy
               </Link>
               <span>·</span>
-              <Link to="/terms" className="text-[#116B7B] hover:underline font-semibold">
+              <Link to="/terms" className="text-[#137586] hover:underline font-bold">
                 Terms & Policies
               </Link>
             </div>
@@ -124,9 +124,9 @@ export const ResortFooter: React.FC = () => {
         </div>
 
         {/* Bottom copyright */}
-        <div className="pt-8 border-t border-[#E4D9C8] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#635546]">
+        <div className="pt-8 border-t border-[#E4D9C8] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#2C413E]">
           <span>© {new Date().getFullYear()} Coorg Laya Resort. All Rights Reserved.</span>
-          <span className="text-[#116B7B] font-semibold">Unhurried Days Under the Coorg Sun.</span>
+          <span className="text-[#137586] font-bold tracking-wide">Unhurried Days Under the Coorg Sun.</span>
         </div>
       </div>
     </footer>

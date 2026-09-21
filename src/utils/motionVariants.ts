@@ -3,24 +3,29 @@ import { Variants, Transition } from 'framer-motion';
 // Standard Brand Transitions
 export const springTransition: Transition = {
   type: 'spring',
-  stiffness: 120,
-  damping: 16,
+  stiffness: 180,
+  damping: 24,
 };
 
 export const snappySpring: Transition = {
   type: 'spring',
-  stiffness: 260,
-  damping: 20,
+  stiffness: 280,
+  damping: 22,
 };
 
 export const slowSpringTransition: Transition = {
   type: 'spring',
-  stiffness: 60,
-  damping: 18,
+  stiffness: 70,
+  damping: 20,
 };
 
 export const silkTransition: Transition = {
   duration: 0.8,
+  ease: [0.16, 1, 0.3, 1],
+};
+
+export const cinematicTransition: Transition = {
+  duration: 0.9,
   ease: [0.16, 1, 0.3, 1],
 };
 
@@ -39,24 +44,22 @@ export const fadeIn: Variants = {
 };
 
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 35, rotateX: 6 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
-    rotateX: 0,
     transition: {
       duration: 0.75,
-      ease: [0.22, 1, 0.36, 1],
+      ease: [0.16, 1, 0.3, 1],
     },
   },
 };
 
 export const fadeDown: Variants = {
-  hidden: { opacity: 0, y: -25, rotateX: -6 },
+  hidden: { opacity: 0, y: -20 },
   visible: {
     opacity: 1,
     y: 0,
-    rotateX: 0,
     transition: silkTransition,
   },
 };
@@ -135,6 +138,29 @@ export const cardPop: Variants = {
     scale: 1,
     y: 0,
     transition: springTransition,
+  },
+};
+
+export const cinematicImageReveal: Variants = {
+  hidden: { opacity: 0, scale: 1.06 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.9,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
+export const imageZoomHover: Variants = {
+  rest: { scale: 1 },
+  hover: {
+    scale: 1.05,
+    transition: {
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
+    },
   },
 };
 

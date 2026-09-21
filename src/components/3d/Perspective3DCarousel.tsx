@@ -172,11 +172,11 @@ export const Perspective3DCarousel: React.FC<Perspective3DCarouselProps> = ({
 
                   {/* Active Card Zoom Overlay */}
                   {isCenter && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-riverbed-900/60 via-transparent to-transparent flex items-end justify-between p-4 text-white">
-                      <span className="text-xs font-bold drop-shadow-md">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F3C28]/85 via-transparent to-transparent flex items-end justify-between p-4 text-white">
+                      <span className="text-xs font-display font-bold drop-shadow-md">
                         {item.title}
                       </span>
-                      <span className="size-8 rounded-full bg-white/90 text-riverbed-900 flex items-center justify-center shadow-md">
+                      <span className="size-8 rounded-full bg-white/95 text-[#0F3C28] flex items-center justify-center shadow-md">
                         <Maximize2 className="size-3.5" />
                       </span>
                     </div>
@@ -185,10 +185,10 @@ export const Perspective3DCarousel: React.FC<Perspective3DCarouselProps> = ({
 
                 {/* Card Title Bar */}
                 <div className="pt-2 px-1 flex items-center justify-between">
-                  <span className="text-xs font-bold text-riverbed-900 truncate">
+                  <span className="text-xs font-display font-bold text-[#131E1C] truncate">
                     {item.title}
                   </span>
-                  <span className="clay-pill px-2 py-0.5 text-[0.62rem] font-bold text-water-700 bg-water-50">
+                  <span className="clay-pill px-2 py-0.5 text-[0.62rem] font-semibold text-[#137586] bg-water-50">
                     {item.category}
                   </span>
                 </div>
