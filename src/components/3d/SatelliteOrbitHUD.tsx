@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown, Radio, Crosshair } from 'lucide-react';
+import { ArrowDown, Radio } from 'lucide-react';
 
 interface SatelliteOrbitHUDProps {
   progress: number;
@@ -55,7 +55,7 @@ export const SatelliteOrbitHUD: React.FC<SatelliteOrbitHUDProps> = ({
           </div>
           <div className="text-emerald-200/90 text-[10px] sm:text-[11px] flex items-center gap-2 font-mono">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-            <span>OPTICAL FEED: 4K MULTISPECTRAL</span>
+            <span>OPTICAL FEED: 4K NASA BLUE MARBLE</span>
           </div>
         </div>
 
@@ -74,20 +74,23 @@ export const SatelliteOrbitHUD: React.FC<SatelliteOrbitHUDProps> = ({
         </div>
       </div>
 
-      {/* 3. CENTER TARGETING RETICLE OVER GLOBE */}
+      {/* 3. CENTER TARGETING RETICLE OVER PIN */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div
-          className="relative rounded-full border border-emerald-400/40 shadow-[0_0_15px_rgba(52,211,153,0.2)] flex items-center justify-center transition-all duration-300"
+          className="relative rounded-full border border-emerald-400/50 shadow-[0_0_15px_rgba(52,211,153,0.25)] flex items-center justify-center transition-all duration-300"
           style={{
-            width: p < 0.45 ? '180px' : p < 0.75 ? '120px' : '70px',
-            height: p < 0.45 ? '180px' : p < 0.75 ? '120px' : '70px',
+            width: p < 0.45 ? '160px' : p < 0.75 ? '90px' : '50px',
+            height: p < 0.45 ? '160px' : p < 0.75 ? '90px' : '50px',
           }}
         >
-          <Crosshair className="w-6 h-6 text-emerald-400/90 animate-pulse" />
-          <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-[1.5px] bg-amber-300" />
-          <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-[1.5px] bg-amber-300" />
-          <div className="absolute -left-1.5 top-1/2 -translate-y-1/2 h-3 w-[1.5px] bg-amber-300" />
-          <div className="absolute -right-1.5 top-1/2 -translate-y-1/2 h-3 w-[1.5px] bg-amber-300" />
+          {/* Subtle open micro-ring at target center */}
+          <div className="w-2.5 h-2.5 rounded-full border border-emerald-300/60 bg-emerald-400/10 shadow-[0_0_8px_rgba(52,211,153,0.4)]" />
+
+          {/* Precision Aerospace Cardinal Amber Ticks */}
+          <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-[1.5px] bg-amber-300 shadow-[0_0_6px_rgba(252,211,77,0.8)]" />
+          <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-[1.5px] bg-amber-300 shadow-[0_0_6px_rgba(252,211,77,0.8)]" />
+          <div className="absolute -left-1.5 top-1/2 -translate-y-1/2 h-3 w-[1.5px] bg-amber-300 shadow-[0_0_6px_rgba(252,211,77,0.8)]" />
+          <div className="absolute -right-1.5 top-1/2 -translate-y-1/2 h-3 w-[1.5px] bg-amber-300 shadow-[0_0_6px_rgba(252,211,77,0.8)]" />
         </div>
       </div>
 

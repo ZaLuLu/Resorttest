@@ -26,8 +26,6 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
   const starsRef = useRef<THREE.Points | null>(null);
   const atmosphereMaterialRef = useRef<THREE.ShaderMaterial | null>(null);
   const atmosphereMeshRef = useRef<THREE.Mesh | null>(null);
-  const highResPatchMeshRef = useRef<THREE.Mesh | null>(null);
-  const highResPatchMaterialRef = useRef<THREE.MeshStandardMaterial | null>(null);
 
   const progressRef = useRef(progress);
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
@@ -50,41 +48,86 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     return new THREE.Vector3(x, y, z);
   };
 
-  // Generate crisp 2D Vector Map Pin Texture (Teardrop shape with sharp tip at bottom)
-  const create2DPinTexture = () => {
+  // Generate sleek, handcrafted luxury pin texture (Champagne Gold / Radiant Pearl)
+  const createLuxuryPinTexture = () => {
     const canvas = document.createElement('canvas');
-    canvas.width = 128;
-    canvas.height = 128;
+    canvas.width = 256;
+    canvas.height = 256;
     const ctx = canvas.getContext('2d');
     if (!ctx) return null;
 
-    ctx.clearRect(0, 0, 128, 128);
+    ctx.clearRect(0, 0, 256, 256);
 
+    // 1. Soft Ground Contact Shadow at Pin Tip (centered at x=128, y=244)
+    ctx.save();
+    const shadowGrad = ctx.createRadialGradient(128, 244, 2, 128, 244, 28);
+    shadowGrad.addColorStop(0.0, 'rgba(0, 0, 0, 0.70)');
+    shadowGrad.addColorStop(0.4, 'rgba(0, 0, 0, 0.35)');
+    shadowGrad.addColorStop(1.0, 'rgba(0, 0, 0, 0.0)');
+    ctx.fillStyle = shadowGrad;
+    ctx.beginPath();
+    ctx.ellipse(128, 244, 26, 7, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // 2. Slender Luxury Pin Silhouette
+    // Tip at (128, 240), head centered at (128, 88) with radius 46
     ctx.save();
     ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
-    ctx.shadowBlur = 6;
-    ctx.shadowOffsetY = 3;
+    ctx.shadowBlur = 12;
+    ctx.shadowOffsetY = 6;
 
-    // Classic 2D Teardrop Pin Path with tip at bottom (64, 122)
     ctx.beginPath();
-    ctx.moveTo(64, 122);
-    ctx.bezierCurveTo(40, 84, 22, 64, 22, 44);
-    ctx.arc(64, 44, 42, Math.PI, 0, false);
-    ctx.bezierCurveTo(106, 64, 88, 84, 64, 122);
+    ctx.moveTo(128, 240); // Needle tip anchored to coordinate
+    // Left curve up to circular head
+    ctx.bezierCurveTo(96, 172, 82, 128, 82, 88);
+    // Upper head arc
+    ctx.arc(128, 88, 46, Math.PI, 0, false);
+    // Right curve back down to needle tip
+    ctx.bezierCurveTo(174, 128, 160, 172, 128, 240);
     ctx.closePath();
 
-    ctx.fillStyle = '#E63946'; // Vibrant Ruby Red
+    // Rich Champagne Gold Metallic Gradient
+    const goldGrad = ctx.createLinearGradient(82, 42, 174, 240);
+    goldGrad.addColorStop(0.0, '#FFF5E4'); // Radiant specular peak
+    goldGrad.addColorStop(0.25, '#E8C896'); // Lustrous champagne gold
+    goldGrad.addColorStop(0.65, '#C7A583'); // Signature Laya resort gold
+    goldGrad.addColorStop(1.0, '#8B6F47'); // Burnished bronze needle tip
+    ctx.fillStyle = goldGrad;
     ctx.fill();
 
-    // Crisp white border outline
+    // Ultra-crisp hairline specular edge
     ctx.strokeStyle = '#FFFFFF';
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 3.5;
     ctx.stroke();
     ctx.restore();
 
-    // White inner center dot
+    // 3. Luxurious Concentric Pearl Core
+    // Outer bronze bezel
     ctx.beginPath();
-    ctx.arc(64, 44, 14, 0, Math.PI * 2);
+    ctx.arc(128, 88, 21, 0, Math.PI * 2);
+    ctx.fillStyle = '#654C2B';
+    ctx.fill();
+
+    // Inner gold rim
+    ctx.beginPath();
+    ctx.arc(128, 88, 18, 0, Math.PI * 2);
+    ctx.fillStyle = '#E5C48E';
+    ctx.fill();
+
+    // Radiant pearl center
+    const pearlGrad = ctx.createRadialGradient(125, 84, 1, 128, 88, 14);
+    pearlGrad.addColorStop(0.0, '#FFFFFF');
+    pearlGrad.addColorStop(0.7, '#F7EFE6');
+    pearlGrad.addColorStop(1.0, '#D6C0A6');
+    ctx.beginPath();
+    ctx.arc(128, 88, 14, 0, Math.PI * 2);
+    ctx.fillStyle = pearlGrad;
+    ctx.fill();
+
+    // Micro specular highlight
+    ctx.beginPath();
+    ctx.arc(124, 83, 3.5, 0, Math.PI * 2);
     ctx.fillStyle = '#FFFFFF';
     ctx.fill();
 
@@ -133,7 +176,7 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     observer.observe(container);
 
     // 3. Natural Sunlight & Deep Space Contrast
-    const ambientLight = new THREE.AmbientLight(0x151820, 0.5);
+    const ambientLight = new THREE.AmbientLight(0x151820, 0.55);
     scene.add(ambientLight);
 
     const sunLight = new THREE.DirectionalLight(0xfff7ea, 2.3);
@@ -179,7 +222,7 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     scene.add(earthGroup);
     earthGroupRef.current = earthGroup;
 
-    // 6. NASA Textures Loader
+    // 6. NASA Master 4K Textures Loader
     const loadingManager = new THREE.LoadingManager(() => {
       setTexturesLoaded(true);
       if (onLoaded) onLoaded();
@@ -188,7 +231,8 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
 
     const maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
 
-    const dayTexture = textureLoader.load('/textures/earth/earth_day.jpg');
+    // High-Resolution 4K NASA Blue Marble Equirectangular Texture
+    const dayTexture = textureLoader.load('/textures/earth/earth_day_4k.webp');
     dayTexture.anisotropy = maxAnisotropy;
     dayTexture.minFilter = THREE.LinearMipmapLinearFilter;
     dayTexture.magFilter = THREE.LinearFilter;
@@ -225,71 +269,7 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     earthGroup.add(earthMesh);
     earthMeshRef.current = earthMesh;
 
-    // 7b. High-Resolution Regional Satellite Patch (Southern India, Western Ghats & Coorg)
-    // Spherically curved mesh matching Earth curvature that fades in dynamically as the camera zooms into India
-    const highResTexture = textureLoader.load('/textures/earth/coorg_satellite_highres.jpg');
-    highResTexture.anisotropy = maxAnisotropy;
-    highResTexture.minFilter = THREE.LinearMipmapLinearFilter;
-    highResTexture.magFilter = THREE.LinearFilter;
-    highResTexture.generateMipmaps = true;
-
-    // Ultra-soft exponential radial feather mask to ensure zero visible seams or hard circle edges
-    const featherCanvas = document.createElement('canvas');
-    featherCanvas.width = 512;
-    featherCanvas.height = 512;
-    const fCtx = featherCanvas.getContext('2d');
-    if (fCtx) {
-      const grad = fCtx.createRadialGradient(256, 256, 20, 256, 256, 255);
-      grad.addColorStop(0.0, 'rgba(255, 255, 255, 1.0)');
-      grad.addColorStop(0.35, 'rgba(255, 255, 255, 0.85)');
-      grad.addColorStop(0.65, 'rgba(255, 255, 255, 0.40)');
-      grad.addColorStop(0.88, 'rgba(255, 255, 255, 0.10)');
-      grad.addColorStop(1.0, 'rgba(255, 255, 255, 0.0)');
-      fCtx.fillStyle = grad;
-      fCtx.fillRect(0, 0, 512, 512);
-    }
-    const featherAlphaTexture = new THREE.CanvasTexture(featherCanvas);
-
-    const patchRadius = EARTH_RADIUS + 0.003;
-    const patchWidth = 1.35; // Broad coverage so edges lie outside viewport during low-orbit zoom
-    const patchGeo = new THREE.PlaneGeometry(patchWidth, patchWidth, 36, 36);
-    const posAttr = patchGeo.attributes.position;
-    for (let i = 0; i < posAttr.count; i++) {
-      const x = posAttr.getX(i);
-      const y = posAttr.getY(i);
-      const rSq = x * x + y * y;
-      const z = Math.sqrt(Math.max(0.001, patchRadius * patchRadius - rSq)) - patchRadius;
-      posAttr.setZ(i, z);
-    }
-    posAttr.needsUpdate = true;
-    patchGeo.computeVertexNormals();
-
-    const patchMaterial = new THREE.MeshStandardMaterial({
-      map: highResTexture,
-      alphaMap: featherAlphaTexture,
-      transparent: true,
-      opacity: 0,
-      roughness: 0.65,
-      metalness: 0.05,
-      depthWrite: false,
-    });
-    const patchMesh = new THREE.Mesh(patchGeo, patchMaterial);
-
-    const coorgNormal = latLonToVector3(COORG_LAT, COORG_LON, 1.0).normalize();
-    patchMesh.position.copy(coorgNormal.clone().multiplyScalar(patchRadius));
-
-    // True Geographic North alignment
-    const northPole = new THREE.Vector3(0, 1, 0);
-    const eastVector = new THREE.Vector3().crossVectors(northPole, coorgNormal).normalize();
-    const northVector = new THREE.Vector3().crossVectors(coorgNormal, eastVector).normalize();
-    const rotMatrix = new THREE.Matrix4().makeBasis(eastVector, northVector, coorgNormal);
-    patchMesh.rotation.setFromRotationMatrix(rotMatrix);
-
-    earthGroup.add(patchMesh);
-    highResPatchMeshRef.current = patchMesh;
-    highResPatchMaterialRef.current = patchMaterial;
-
-    // 7c. Atmospheric Fresnel Rim Glow Sphere with Dynamic Fade (Eliminates blue screen flash)
+    // 7b. Atmospheric Fresnel Rim Glow Sphere with Dynamic Fade
     const atmosphereGeometry = new THREE.SphereGeometry(EARTH_RADIUS * 1.025, 64, 64);
     const atmosphereMaterial = new THREE.ShaderMaterial({
       uniforms: {
@@ -337,9 +317,9 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     earthGroup.add(cloudsMesh);
     cloudsMeshRef.current = cloudsMesh;
 
-    // 9. Map Pin Sprite & Coordinates for Coorg
-    const coorgPos = latLonToVector3(COORG_LAT, COORG_LON, EARTH_RADIUS + 0.007);
-    const pinTexture = create2DPinTexture();
+    // 9. Sleek Luxury Map Pin Anchored to Coorg
+    const coorgPos = latLonToVector3(COORG_LAT, COORG_LON, EARTH_RADIUS + 0.003);
+    const pinTexture = createLuxuryPinTexture();
     let pinSprite: THREE.Sprite | null = null;
 
     if (pinTexture) {
@@ -350,9 +330,10 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
         depthWrite: false,
       });
       pinSprite = new THREE.Sprite(pinMaterial);
-      pinSprite.center.set(0.5, 0.0);
+      // Anchor needle tip (y=240 on 256h canvas) precisely to surface coordinates
+      pinSprite.center.set(0.5, (256 - 240) / 256);
       pinSprite.position.copy(coorgPos);
-      pinSprite.scale.set(0.13, 0.13, 1);
+      pinSprite.scale.set(0.040, 0.040, 1);
       earthGroup.add(pinSprite);
       pinSpriteRef.current = pinSprite;
     }
@@ -394,18 +375,11 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
         starsRef.current.rotation.y = elapsedTime * 0.001;
       }
 
-      // ATMOSPHERE FADE-OUT: Eliminates blue screen pop-up completely
+      // Atmospheric glow fade during descent
       if (atmosphereMaterialRef.current && atmosphereMeshRef.current) {
         const atmoFade = p < 0.3 ? 1.0 : Math.max(0, 1.0 - (p - 0.3) / 0.25);
         atmosphereMaterialRef.current.uniforms.uFade.value = atmoFade;
         atmosphereMeshRef.current.visible = atmoFade > 0.01;
-      }
-
-      // HIGH-RESOLUTION TERRAIN BLEND:
-      // Only fades in during low-orbit zoom (p >= 0.52), ensuring ZERO circular magnifying artifact in space view!
-      if (highResPatchMaterialRef.current) {
-        const patchFade = p < 0.52 ? 0 : Math.min(1, (p - 0.52) / 0.20);
-        highResPatchMaterialRef.current.opacity = patchFade;
       }
 
       // PURE CINEMATIC ROTATION & CAMERA CHOREOGRAPHY
@@ -426,7 +400,7 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
           );
           earthGroupRef.current.scale.set(1, 1, 1);
         } else if (p < 0.8) {
-          // Phase 2 (0.45 -> 0.8): Zooming from space directly onto the 2D Pin in Coorg
+          // Phase 2 (0.45 -> 0.8): Zooming from space directly onto the Sleek Pin in Coorg
           const zoomT = Math.min(1, Math.max(0, (p - 0.45) / 0.35));
           const smoothZoom = 1 - Math.pow(2, -10 * zoomT);
 
@@ -437,19 +411,34 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
           cameraRef.current.position.set(camX, camY, camZ);
           earthGroupRef.current.scale.set(1, 1, 1);
         } else {
-          // Phase 3 (0.8 -> 1.0): Cloud dive & mist dissolve into resort grounds
+          // Phase 3 (0.8 -> 1.0): Cloud dive & mountain mist dissolve into resort grounds
           const dissolveT = (p - 0.8) / 0.2;
           const zoomScale = 1 + dissolveT * 4.5;
           earthGroupRef.current.scale.set(zoomScale, zoomScale, zoomScale);
           cameraRef.current.position.set(0, 0, 2.06 - dissolveT * 0.25);
         }
 
-        // 2D Pin scale & fade transition
+        // SLEEK LUXURY PIN DYNAMIC SCALE & FADE
         if (pinSpriteRef.current) {
-          const pinScaleT = THREE.MathUtils.clamp((p - 0.15) / 0.3, 0, 1);
-          const zoomScaleMod = p > 0.5 ? Math.max(0.4, 1 - (p - 0.5) * 1.5) : 1.0;
-          const baseScale = 0.13 * pinScaleT * zoomScaleMod;
-          pinSpriteRef.current.scale.set(baseScale, baseScale, 1);
+          // Fade in as Earth rotates towards India
+          const pinEntrance = THREE.MathUtils.clamp((p - 0.12) / 0.25, 0, 1);
+
+          // As camera approaches from distance 7.2 to 2.06, scale down world units so screen size remains sleek (~42px)
+          let currentScale = 0.040;
+          if (p > 0.45) {
+            const zoomProgress = Math.min(1, (p - 0.45) / 0.33);
+            currentScale = THREE.MathUtils.lerp(0.040, 0.0052, Math.pow(zoomProgress, 0.85));
+          }
+
+          const finalScale = currentScale * pinEntrance;
+          pinSpriteRef.current.scale.set(finalScale, finalScale, 1);
+
+          // Gracefully fade out pin as we pass through the morning mist (p >= 0.72)
+          if (pinSpriteRef.current.material) {
+            const pinFade = p < 0.72 ? 1.0 : Math.max(0, 1.0 - (p - 0.72) / 0.08);
+            pinSpriteRef.current.material.opacity = pinFade * pinEntrance;
+            pinSpriteRef.current.visible = pinFade > 0.01 && pinEntrance > 0.01;
+          }
         }
       }
 
@@ -497,10 +486,6 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
       atmosphereMaterial.dispose();
       cloudsGeometry.dispose();
       cloudsMaterial.dispose();
-      patchGeo.dispose();
-      patchMaterial.dispose();
-      featherAlphaTexture.dispose();
-      highResTexture.dispose();
       if (pinTexture) pinTexture.dispose();
     };
   }, []);
