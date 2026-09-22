@@ -70,6 +70,14 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
     };
   }, []);
 
+  // Automatic background crossfade every 7.5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveBackdrop((prev) => (prev + 1) % resortBackdrops.length);
+    }, 7500);
+    return () => clearInterval(timer);
+  }, [resortBackdrops.length]);
+
   const handleTriggerZoom = () => {
     if (!containerRef.current) return;
     const isMobile = window.innerWidth < 768;
@@ -166,7 +174,7 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
             display: resortBgOpacity > 0.01 ? 'block' : 'none',
           }}
         >
-          {/* Layered Background Imagery with Cinematic Crossfade */}
+          {/* Layered Background Imagery with Automatic Cinematic Crossfade */}
           {resortBackdrops.map((backdrop, idx) => (
             <div
               key={backdrop.id}
@@ -209,7 +217,7 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
                 />
               </div>
 
-              {/* Centered Luxury Estate Action Buttons (Replaces generic glass pills) */}
+              {/* Centered Luxury Estate Action Buttons - Completely Identical Styling */}
               <div className="flex flex-wrap items-center justify-center gap-3.5 sm:gap-5 pt-4 sm:pt-6">
                 {/* Primary CTA: Deep Forest Emerald with Gold Edge & Luminous Sheen */}
                 <button
@@ -221,10 +229,10 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
                   <ArrowUpRight className="w-4 h-4 text-[#D4AF37] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </button>
 
-                {/* Secondary CTA: Brushed Brass Hairline Wireframe & Obsidian Backing */}
+                {/* Secondary CTA: Identical Luxury Styling */}
                 <a
                   href="#birdsong"
-                  className="group relative px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#081210]/85 hover:bg-[#112320] text-[#FAF6EF] font-medium text-xs sm:text-sm tracking-[0.12em] uppercase transition-all duration-300 flex items-center gap-2.5 border border-[#C7A583]/45 shadow-[0_10px_28px_rgba(0,0,0,0.55)] hover:border-[#D4AF37] hover:scale-[1.03] active:scale-[0.98] cursor-pointer"
+                  className="group relative px-7 sm:px-9 py-3.5 sm:py-4 rounded-full bg-gradient-to-b from-[#14422F] to-[#0A261B] hover:from-[#1A543C] hover:to-[#0F3526] text-[#FAF6EF] font-bold text-xs sm:text-sm tracking-[0.15em] uppercase transition-all duration-300 flex items-center gap-3 border border-[#D4AF37]/65 shadow-[0_12px_32px_rgba(0,0,0,0.65),_inset_0_1px_1px_rgba(255,255,255,0.25)] hover:shadow-[0_14px_38px_rgba(212,175,55,0.35)] hover:scale-[1.03] active:scale-[0.98] cursor-pointer"
                 >
                   <Volume2 className="w-4 h-4 text-[#D4AF37] group-hover:scale-110 transition-transform" />
                   <span>Kaveri & Birdsong Audio</span>
@@ -232,41 +240,19 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
               </div>
             </div>
 
-            {/* Bottom Bar: Ambient Photo Switcher & Curated Estate Specs */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-white/10 text-xs text-white/80">
-              
-              {/* Subtle Resort Backdrop Switcher */}
-              <div className="flex items-center gap-1.5 sm:gap-2 bg-black/40 border border-white/10 px-2.5 py-1 rounded-full backdrop-blur-md">
-                <Camera className="w-3.5 h-3.5 text-[#C7A583] ml-1 mr-0.5" />
-                <span className="text-[10px] uppercase font-semibold text-white/60 hidden md:inline">
-                  View Grounds:
-                </span>
-                {resortBackdrops.map((item, idx) => (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveBackdrop(idx)}
-                    className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-all duration-200 cursor-pointer ${
-                      activeBackdrop === idx
-                        ? 'bg-[#D4AF37] text-[#0A1412] font-bold shadow-sm'
-                        : 'text-white/70 hover:text-white hover:bg-white/10'
-                    }`}
-                  >
-                    {item.name}
-                  </button>
-                ))}
-              </div>
-
-              {/* Anchored Estate Specifications */}
+            {/* Bottom Bar: Clean Estate Specs & Scroll Indicator */}
+            <div className="flex items-center justify-between gap-3 pt-4 border-t border-white/10 text-xs text-white/80">
+              {/* Left/Center: Anchored Estate Specifications */}
               <div className="flex items-center gap-2 sm:gap-3 text-[11px] sm:text-xs font-medium text-[#FAF6EF]/90">
-                <span className="hidden sm:inline">🏡 15 Private Suites</span>
-                <span className="hidden sm:inline text-[#D4AF37]">·</span>
+                <span>🏡 15 Private Suites</span>
+                <span className="text-[#D4AF37]">·</span>
                 <span>🌿 500-Guest River Lawn</span>
                 <span className="text-[#D4AF37]">·</span>
                 <span>🏊 Palm Spring Pool</span>
               </div>
 
-              {/* Scroll Indicator */}
-              <div className="hidden lg:flex items-center gap-1.5 text-[11px] font-semibold tracking-widest uppercase text-[#C7A583]">
+              {/* Right: Scroll Indicator */}
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold tracking-widest uppercase text-[#C7A583]">
                 <span>Scroll to Explore</span>
                 <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
               </div>

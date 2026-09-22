@@ -30,7 +30,6 @@ export const LayaHeroLogo: React.FC<LayaHeroLogoProps> = ({
     const taglinePart = svg.querySelector<SVGGElement>('#laya-tagline');
     const dividerPart = svg.querySelector<SVGGElement>('#laya-divider');
     const coorgPart = svg.querySelector<SVGGElement>('#laya-coorg');
-    const goldGleam = containerRef.current?.querySelector('.gold-gleam-overlay');
 
     if (wordPaths.length === 0) return;
 
@@ -52,7 +51,6 @@ export const LayaHeroLogo: React.FC<LayaHeroLogoProps> = ({
     if (dividerPart) gsap.set(dividerPart, { opacity: 0, scaleX: 0, transformOrigin: '50% 50%' });
     if (taglinePart) gsap.set(taglinePart, { opacity: 0, y: 8, filter: 'blur(3px)' });
     if (coorgPart) gsap.set(coorgPart, { opacity: 0, y: 8 });
-    if (goldGleam) gsap.set(goldGleam, { opacity: 0, x: '-100%' });
 
     // Master Fast & Fluid Animation Timeline (Total duration: ~1.4s)
     const tl = gsap.timeline({
@@ -91,22 +89,7 @@ export const LayaHeroLogo: React.FC<LayaHeroLogoProps> = ({
       );
     });
 
-    // 3. Diagonal gold-leaf sheen glint across the letters
-    if (goldGleam) {
-      tl.fromTo(
-        goldGleam,
-        { opacity: 0, x: '-60%' },
-        {
-          opacity: 0.85,
-          x: '160%',
-          duration: 0.85,
-          ease: 'power2.inOut',
-        },
-        '-=0.45'
-      );
-    }
-
-    // 4. Staged aristocratic subtitle reveal
+    // 3. Staged aristocratic subtitle reveal
     if (resortPart) {
       tl.to(
         resortPart,
@@ -165,7 +148,7 @@ export const LayaHeroLogo: React.FC<LayaHeroLogoProps> = ({
     };
   }, [triggerAnimation, accentColor, onAnimationComplete]);
 
-  // Re-trigger subtle gold pulse on hover
+  // Re-trigger subtle gold pulse on hover (contour-shaped, seamless)
   const handleEmblemHover = () => {
     if (!hasDrawn || !svgRef.current) return;
     setIsHovered(true);
@@ -173,7 +156,7 @@ export const LayaHeroLogo: React.FC<LayaHeroLogoProps> = ({
       '#laya-word path',
       { filter: 'drop-shadow(0 0 0px rgba(212,175,55,0))' },
       {
-        filter: 'drop-shadow(0 0 24px rgba(212,175,55,0.85))',
+        filter: 'drop-shadow(0 0 20px rgba(212,175,55,0.7))',
         duration: 0.35,
         yoyo: true,
         repeat: 1,
@@ -186,25 +169,19 @@ export const LayaHeroLogo: React.FC<LayaHeroLogoProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`relative flex flex-col items-center justify-center select-none overflow-hidden ${className}`}
+      className={`relative flex flex-col items-center justify-center select-none ${className}`}
       onMouseEnter={handleEmblemHover}
     >
-      {/* Ambient warm champagne radial shimmer behind emblem */}
+      {/* 100% Seamless Ambient Light Wash (zero box edges, completely feathered to transparent) */}
       <div
-        className="absolute inset-0 -m-16 rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.22)_0%,_rgba(199,165,131,0.1)_45%,_transparent_75%)] pointer-events-none filter blur-3xl transition-opacity duration-500"
-        style={{ opacity: hasDrawn ? (isHovered ? 1 : 0.75) : 0.2 }}
-      />
-
-      {/* Diagonal gold-leaf sheen light sweep */}
-      <div
-        className="gold-gleam-overlay absolute inset-0 w-1/3 bg-gradient-to-r from-transparent via-white/25 to-transparent skew-x-[-25deg] pointer-events-none z-30"
-        style={{ opacity: 0 }}
+        className="absolute -inset-32 rounded-full bg-[radial-gradient(circle_at_center,_rgba(212,175,55,0.16)_0%,_rgba(199,165,131,0.06)_35%,_transparent_70%)] pointer-events-none filter blur-3xl transition-opacity duration-700"
+        style={{ opacity: hasDrawn ? (isHovered ? 0.9 : 0.65) : 0.2 }}
       />
 
       <svg
         ref={svgRef}
         viewBox="145 227 884 892"
-        className="w-full h-auto max-h-[420px] sm:max-h-[480px] md:max-h-[540px] drop-shadow-[0_16px_40px_rgba(0,0,0,0.8)] cursor-pointer"
+        className="w-full h-auto max-h-[420px] sm:max-h-[480px] md:max-h-[540px] drop-shadow-[0_16px_40px_rgba(0,0,0,0.8)] cursor-pointer relative z-10"
         style={{ color }}
         fill="currentColor"
         role="img"
