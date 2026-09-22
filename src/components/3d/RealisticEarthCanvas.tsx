@@ -26,6 +26,8 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
   const starsRef = useRef<THREE.Points | null>(null);
   const atmosphereMaterialRef = useRef<THREE.ShaderMaterial | null>(null);
   const atmosphereMeshRef = useRef<THREE.Mesh | null>(null);
+  const highResPatchMeshRef = useRef<THREE.Mesh | null>(null);
+  const highResPatchMaterialRef = useRef<THREE.MeshStandardMaterial | null>(null);
 
   const progressRef = useRef(progress);
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
@@ -184,11 +186,25 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     });
     const textureLoader = new THREE.TextureLoader(loadingManager);
 
+    const maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
+
     const dayTexture = textureLoader.load('/textures/earth/earth_day.jpg');
+    dayTexture.anisotropy = maxAnisotropy;
+    dayTexture.minFilter = THREE.LinearMipmapLinearFilter;
+    dayTexture.magFilter = THREE.LinearFilter;
+    dayTexture.generateMipmaps = true;
+
     const normalTexture = textureLoader.load('/textures/earth/earth_normal.jpg');
+    normalTexture.anisotropy = maxAnisotropy;
+    normalTexture.minFilter = THREE.LinearMipmapLinearFilter;
+    normalTexture.magFilter = THREE.LinearFilter;
+
     const specularTexture = textureLoader.load('/textures/earth/earth_specular.jpg');
     const cloudsTexture = textureLoader.load('/textures/earth/earth_clouds.png');
+    cloudsTexture.anisotropy = Math.min(4, maxAnisotropy);
+
     const lightsTexture = textureLoader.load('/textures/earth/earth_lights.jpg');
+    lightsTexture.anisotropy = maxAnisotropy;
 
     // 7. Natural Satellite Earth Mesh with Night Lights Emissive
     const earthGeometry = new THREE.SphereGeometry(EARTH_RADIUS, 64, 64);
@@ -209,7 +225,70 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     earthGroup.add(earthMesh);
     earthMeshRef.current = earthMesh;
 
-    // 7b. Atmospheric Fresnel Rim Glow Sphere with Dynamic Fade (Eliminates blue screen flash)
+    // 7b. High-Resolution Regional Satellite Patch (Southern India, Western Ghats & Coorg)
+    // Spherically curved mesh matching Earth curvature that fades in dynamically as the camera zooms into India
+    const highResTexture = textureLoader.load('/textures/earth/coorg_satellite_highres.jpg');
+    highResTexture.anisotropy = maxAnisotropy;
+    highResTexture.minFilter = THREE.LinearMipmapLinearFilter;
+    highResTexture.magFilter = THREE.LinearFilter;
+    highResTexture.generateMipmaps = true;
+
+    // Radial feather alpha mask to blend the high-resolution imagery seamlessly into the globe
+    const featherCanvas = document.createElement('canvas');
+    featherCanvas.width = 512;
+    featherCanvas.height = 512;
+    const fCtx = featherCanvas.getContext('2d');
+    if (fCtx) {
+      const grad = fCtx.createRadialGradient(256, 256, 120, 256, 256, 250);
+      grad.addColorStop(0.0, 'rgba(255, 255, 255, 1.0)');
+      grad.addColorStop(0.7, 'rgba(255, 255, 255, 0.95)');
+      grad.addColorStop(0.9, 'rgba(255, 255, 255, 0.35)');
+      grad.addColorStop(1.0, 'rgba(255, 255, 255, 0.0)');
+      fCtx.fillStyle = grad;
+      fCtx.fillRect(0, 0, 512, 512);
+    }
+    const featherAlphaTexture = new THREE.CanvasTexture(featherCanvas);
+
+    const patchRadius = EARTH_RADIUS + 0.003;
+    const patchWidth = 0.92;
+    const patchGeo = new THREE.PlaneGeometry(patchWidth, patchWidth, 32, 32);
+    const posAttr = patchGeo.attributes.position;
+    for (let i = 0; i < posAttr.count; i++) {
+      const x = posAttr.getX(i);
+      const y = posAttr.getY(i);
+      const rSq = x * x + y * y;
+      const z = Math.sqrt(Math.max(0.001, patchRadius * patchRadius - rSq)) - patchRadius;
+      posAttr.setZ(i, z);
+    }
+    posAttr.needsUpdate = true;
+    patchGeo.computeVertexNormals();
+
+    const patchMaterial = new THREE.MeshStandardMaterial({
+      map: highResTexture,
+      alphaMap: featherAlphaTexture,
+      transparent: true,
+      opacity: 0,
+      roughness: 0.65,
+      metalness: 0.05,
+      depthWrite: false,
+    });
+    const patchMesh = new THREE.Mesh(patchGeo, patchMaterial);
+
+    const coorgNormal = latLonToVector3(COORG_LAT, COORG_LON, 1.0).normalize();
+    patchMesh.position.copy(coorgNormal.clone().multiplyScalar(patchRadius));
+
+    // True Geographic North alignment
+    const northPole = new THREE.Vector3(0, 1, 0);
+    const eastVector = new THREE.Vector3().crossVectors(northPole, coorgNormal).normalize();
+    const northVector = new THREE.Vector3().crossVectors(coorgNormal, eastVector).normalize();
+    const rotMatrix = new THREE.Matrix4().makeBasis(eastVector, northVector, coorgNormal);
+    patchMesh.rotation.setFromRotationMatrix(rotMatrix);
+
+    earthGroup.add(patchMesh);
+    highResPatchMeshRef.current = patchMesh;
+    highResPatchMaterialRef.current = patchMaterial;
+
+    // 7c. Atmospheric Fresnel Rim Glow Sphere with Dynamic Fade (Eliminates blue screen flash)
     const atmosphereGeometry = new THREE.SphereGeometry(EARTH_RADIUS * 1.025, 64, 64);
     const atmosphereMaterial = new THREE.ShaderMaterial({
       uniforms: {
@@ -258,7 +337,7 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     cloudsMeshRef.current = cloudsMesh;
 
     // 9. Map Pin Sprite & Coordinates for Coorg
-    const coorgPos = latLonToVector3(COORG_LAT, COORG_LON, EARTH_RADIUS + 0.005);
+    const coorgPos = latLonToVector3(COORG_LAT, COORG_LON, EARTH_RADIUS + 0.007);
     const pinTexture = create2DPinTexture();
     let pinSprite: THREE.Sprite | null = null;
 
@@ -319,6 +398,12 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
         const atmoFade = p < 0.3 ? 1.0 : Math.max(0, 1.0 - (p - 0.3) / 0.25);
         atmosphereMaterialRef.current.uniforms.uFade.value = atmoFade;
         atmosphereMeshRef.current.visible = atmoFade > 0.01;
+      }
+
+      // HIGH-RESOLUTION TERRAIN BLEND: Seamlessly fade in high-res satellite map as we zoom into India & Coorg
+      if (highResPatchMaterialRef.current) {
+        const patchFade = p < 0.30 ? 0 : Math.min(1, (p - 0.30) / 0.26);
+        highResPatchMaterialRef.current.opacity = patchFade;
       }
 
       // PURE CINEMATIC ROTATION & CAMERA CHOREOGRAPHY
@@ -410,6 +495,10 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
       atmosphereMaterial.dispose();
       cloudsGeometry.dispose();
       cloudsMaterial.dispose();
+      patchGeo.dispose();
+      patchMaterial.dispose();
+      featherAlphaTexture.dispose();
+      highResTexture.dispose();
       if (pinTexture) pinTexture.dispose();
     };
   }, []);
