@@ -233,16 +233,17 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     highResTexture.magFilter = THREE.LinearFilter;
     highResTexture.generateMipmaps = true;
 
-    // Radial feather alpha mask to blend the high-resolution imagery seamlessly into the globe
+    // Ultra-soft exponential radial feather mask to ensure zero visible seams or hard circle edges
     const featherCanvas = document.createElement('canvas');
     featherCanvas.width = 512;
     featherCanvas.height = 512;
     const fCtx = featherCanvas.getContext('2d');
     if (fCtx) {
-      const grad = fCtx.createRadialGradient(256, 256, 120, 256, 256, 250);
+      const grad = fCtx.createRadialGradient(256, 256, 20, 256, 256, 255);
       grad.addColorStop(0.0, 'rgba(255, 255, 255, 1.0)');
-      grad.addColorStop(0.7, 'rgba(255, 255, 255, 0.95)');
-      grad.addColorStop(0.9, 'rgba(255, 255, 255, 0.35)');
+      grad.addColorStop(0.35, 'rgba(255, 255, 255, 0.85)');
+      grad.addColorStop(0.65, 'rgba(255, 255, 255, 0.40)');
+      grad.addColorStop(0.88, 'rgba(255, 255, 255, 0.10)');
       grad.addColorStop(1.0, 'rgba(255, 255, 255, 0.0)');
       fCtx.fillStyle = grad;
       fCtx.fillRect(0, 0, 512, 512);
@@ -250,8 +251,8 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
     const featherAlphaTexture = new THREE.CanvasTexture(featherCanvas);
 
     const patchRadius = EARTH_RADIUS + 0.003;
-    const patchWidth = 0.92;
-    const patchGeo = new THREE.PlaneGeometry(patchWidth, patchWidth, 32, 32);
+    const patchWidth = 1.35; // Broad coverage so edges lie outside viewport during low-orbit zoom
+    const patchGeo = new THREE.PlaneGeometry(patchWidth, patchWidth, 36, 36);
     const posAttr = patchGeo.attributes.position;
     for (let i = 0; i < posAttr.count; i++) {
       const x = posAttr.getX(i);
@@ -400,9 +401,10 @@ export const RealisticEarthCanvas: React.FC<RealisticEarthCanvasProps> = ({
         atmosphereMeshRef.current.visible = atmoFade > 0.01;
       }
 
-      // HIGH-RESOLUTION TERRAIN BLEND: Seamlessly fade in high-res satellite map as we zoom into India & Coorg
+      // HIGH-RESOLUTION TERRAIN BLEND:
+      // Only fades in during low-orbit zoom (p >= 0.52), ensuring ZERO circular magnifying artifact in space view!
       if (highResPatchMaterialRef.current) {
-        const patchFade = p < 0.30 ? 0 : Math.min(1, (p - 0.30) / 0.26);
+        const patchFade = p < 0.52 ? 0 : Math.min(1, (p - 0.52) / 0.20);
         highResPatchMaterialRef.current.opacity = patchFade;
       }
 
