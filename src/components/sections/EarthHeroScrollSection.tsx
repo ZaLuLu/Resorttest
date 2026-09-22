@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ChevronRight, Compass, Volume2, MapPin, Move3d } from 'lucide-react';
+import { ChevronRight, Compass, Volume2, MapPin } from 'lucide-react';
 import { RealisticEarthCanvas } from '../3d/RealisticEarthCanvas';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,7 +16,6 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [isIndiaFocused, setIsIndiaFocused] = useState(false);
 
   useEffect(() => {
     if (!containerRef.current || !pinRef.current) return;
@@ -95,12 +94,8 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
         ref={pinRef}
         className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-[#050608] text-white touch-pan-y"
       >
-        {/* 3D Realistic Earth Canvas with Drag-to-Rotate & Inertia */}
-        <RealisticEarthCanvas
-          progress={scrollProgress}
-          onIndiaFocused={setIsIndiaFocused}
-          onTriggerZoom={handleTriggerZoom}
-        />
+        {/* 3D Realistic Earth Canvas with Pure Cinematic Scroll Scrub */}
+        <RealisticEarthCanvas progress={scrollProgress} />
 
         {/* PHASE 0: Space Orbit View - Luxury Brand Headline & Narrative */}
         <div
@@ -135,18 +130,19 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
           </div>
         </div>
 
-        {/* SUBTLE INTERACTION CUE (No manual clicks needed, triggers automatically) */}
-        <div
-          className="absolute inset-x-4 sm:inset-x-auto sm:right-10 md:right-14 lg:right-20 bottom-6 sm:bottom-10 z-20 pointer-events-none flex items-center gap-2 text-xs text-white/50 tracking-wider uppercase font-medium transition-all duration-200"
+        {/* Subtle Luxury Scroll Cue */}
+        <button
+          onClick={handleTriggerZoom}
+          className="absolute inset-x-4 sm:inset-x-auto sm:right-10 md:right-14 lg:right-20 bottom-6 sm:bottom-10 z-20 pointer-events-auto flex items-center gap-2 text-xs text-white/70 hover:text-white tracking-widest uppercase font-semibold transition-all duration-200 cursor-pointer group"
           style={{
             opacity: spaceIntroOpacity,
             display: spaceIntroOpacity > 0.01 ? 'flex' : 'none',
           }}
         >
-          <Move3d className="w-3.5 h-3.5 text-[#C7A583]" />
-          <span>Rotate globe towards India or scroll to enter</span>
-          <div className="w-6 h-[1px] bg-white/30 animate-pulse ml-1" />
-        </div>
+          <span>Scroll to Enter Sanctuary</span>
+          <span className="text-[#C7A583] group-hover:translate-y-0.5 transition-transform duration-200">↓</span>
+          <div className="w-8 h-[1px] bg-white/40 group-hover:bg-[#C7A583] transition-colors duration-200" />
+        </button>
 
         {/* PHASE 1 OVERLAY: Clean Regional Destination Arrival Badge */}
         <div
