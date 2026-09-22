@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ChevronRight, Compass, Volume2 } from 'lucide-react';
+import { Compass, Volume2, Sparkles, ArrowUpRight, Camera, ChevronDown } from 'lucide-react';
 import { RealisticEarthCanvas } from '../3d/RealisticEarthCanvas';
 import { SatelliteOrbitHUD } from '../3d/SatelliteOrbitHUD';
+import { LayaHeroLogo } from '../common/LayaHeroLogo';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,6 +18,35 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeBackdrop, setActiveBackdrop] = useState(0);
+
+  // Available high-resolution authentic resort grounds photography
+  const resortBackdrops = [
+    {
+      id: 'villas',
+      name: 'Suites & Villas',
+      image: '/images/resort/resort-exteriors.jpeg',
+      tag: 'Boutique Architecture',
+    },
+    {
+      id: 'lawn',
+      name: '500-Guest Lawn',
+      image: '/images/resort/garden-lawn.jpeg',
+      tag: 'Celebration Grounds',
+    },
+    {
+      id: 'pool',
+      name: 'Palm Pool Deck',
+      image: '/images/resort/swimming-pool.jpeg',
+      tag: 'Spring Relaxation',
+    },
+    {
+      id: 'terrace',
+      name: 'Bamboo Terrace',
+      image: '/images/resort/garden-terrace.jpeg',
+      tag: 'Morning Mist Verandah',
+    },
+  ];
 
   useEffect(() => {
     if (!containerRef.current || !pinRef.current) return;
@@ -66,15 +96,14 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
   const spaceIntroOpacity = p < 0.22 ? 1 : Math.max(0, 1 - (p - 0.22) / 0.14);
   const spaceIntroY = (p / 0.35) * -20;
 
-  // Phase 2: Natural Mist Dissolve to Resort Grounds (0.75 -> 1.0)
-  // Replaces the blue screen flash with a seamless warm golden mist dissolve
+  // Phase 2: Natural Mist Dissolve to Resort Grounds (0.74 -> 1.0)
   const resortBgOpacity = p < 0.74 ? 0 : Math.min(1, (p - 0.74) / 0.16);
-  const resortBgScale = 1.06 - Math.max(0, (p - 0.74) / 0.26) * 0.06;
+  const resortBgScale = 1.05 - Math.max(0, (p - 0.74) / 0.26) * 0.05;
 
-  // Phase 3: Monumental LAYA Branding & Hero CTAs (0.8 -> 1.0)
-  const layaBlockOpacity = p < 0.8 ? 0 : Math.min(1, (p - 0.8) / 0.14);
-  const layaBlockScale = 0.96 + Math.min(0.04, ((p - 0.8) / 0.2) * 0.04);
-  const layaBlockY = Math.max(0, (1 - (p - 0.8) / 0.2) * 24);
+  // Phase 3: Monumental LAYA Branding & Hero CTAs (0.78 -> 1.0)
+  const layaBlockOpacity = p < 0.78 ? 0 : Math.min(1, (p - 0.78) / 0.14);
+  const layaBlockScale = 0.97 + Math.min(0.03, ((p - 0.78) / 0.22) * 0.03);
+  const layaBlockY = Math.max(0, (1 - (p - 0.78) / 0.22) * 20);
 
   return (
     <div ref={containerRef} className="relative w-full bg-[#050608] select-none touch-pan-y">
@@ -92,7 +121,7 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
           onTriggerZoom={handleTriggerZoom}
         />
 
-        {/* PHASE 0: Space Orbit View - Direct, Non-Cliché Brand Headline */}
+        {/* PHASE 0: Space Orbit View - Direct Brand Headline */}
         <div
           className="absolute left-4 sm:left-10 md:left-14 lg:left-20 top-24 sm:top-1/2 sm:-translate-y-1/2 max-w-sm sm:max-w-md lg:max-w-xl z-20 pointer-events-none transition-all duration-200 space-y-3 sm:space-y-4 text-white"
           style={{
@@ -125,7 +154,7 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
           </div>
         </div>
 
-        {/* PHASE 2 & 3: Seamless Mist Transition into Resort Grounds */}
+        {/* PHASE 2 & 3: High-End Sanctuary Grounds Presentation */}
         <div
           className="absolute inset-0 z-30 pointer-events-auto overflow-hidden transition-opacity duration-300"
           style={{
@@ -133,92 +162,112 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
             display: resortBgOpacity > 0.01 ? 'block' : 'none',
           }}
         >
-          {/* High-Resolution Authentic Resort Grounds Photography */}
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-out"
-            style={{
-              backgroundImage: `url('/images/resort/resort-exteriors.jpeg')`,
-              transform: `scale(${resortBgScale})`,
-            }}
-          />
+          {/* Layered Background Imagery with Cinematic Crossfade */}
+          {resortBackdrops.map((backdrop, idx) => (
+            <div
+              key={backdrop.id}
+              className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out ${
+                activeBackdrop === idx ? 'opacity-100' : 'opacity-0'
+              }`}
+              style={{
+                backgroundImage: `url('${backdrop.image}')`,
+                transform: `scale(${resortBgScale})`,
+                transitionProperty: 'opacity, transform',
+                transitionDuration: '1000ms, 700ms',
+              }}
+            />
+          ))}
 
-          {/* Warm Morning Mist Scrim (replaces harsh blue screen with soft golden ambient light) */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/65 to-black/25 md:to-transparent pointer-events-none z-10" />
-          <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-black/70 via-black/30 to-transparent pointer-events-none z-10" />
-          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none z-10" />
+          {/* Luxury Editorial Lighting & Vignette Scrim (Replaces flat lighting with deep Aman-style warmth) */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0.4)_0%,_rgba(7,14,13,0.85)_100%)] pointer-events-none z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#060D0B] via-[#060D0B]/40 to-black/60 pointer-events-none z-10" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,_rgba(212,175,55,0.12)_0%,_transparent_60%)] pointer-events-none z-10" />
 
-          {/* Clean Editorial Hero Content Layer */}
+          {/* Centered Luxury Brand Presentation Layer */}
           <div
-            className="relative h-full w-full flex flex-col justify-between pt-20 sm:pt-28 pb-6 sm:pb-10 px-5 sm:px-12 lg:px-16 text-white z-20 max-w-7xl mx-auto overflow-y-auto sm:overflow-hidden"
+            className="relative h-full w-full flex flex-col justify-between pt-16 sm:pt-20 pb-6 sm:pb-8 px-4 sm:px-8 text-white z-20 max-w-6xl mx-auto overflow-y-auto sm:overflow-hidden text-center"
             style={{
               opacity: layaBlockOpacity,
               transform: `translateY(${layaBlockY}px) scale(${layaBlockScale})`,
               transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
             }}
           >
-            {/* Top spacer */}
+            {/* Top clean negative space (coordinates removed for pristine sky) */}
             <div className="h-2 sm:h-4" />
 
-            {/* Left-Aligned Hero Editorial Block */}
-            <div className="my-auto max-w-xl lg:max-w-2xl text-left space-y-4 sm:space-y-5">
-              {/* Eyebrow Pill */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-semibold tracking-kicker uppercase text-[#C7A583]">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Kushalnagar · Coorg, Karnataka</span>
+            {/* Core Brand Centerpiece: Hand-Vectorized Laya Calligraphy Mark (Scaled to monumental presence) */}
+            <div className="my-auto flex flex-col items-center justify-center py-1 sm:py-2">
+              <div className="w-full max-w-[520px] sm:max-w-[680px] md:max-w-[800px] lg:max-w-[880px]">
+                <LayaHeroLogo
+                  triggerAnimation={scrollProgress >= 0.74}
+                  color="#FAF6EF"
+                  accentColor="#D4AF37"
+                />
               </div>
 
-              {/* Title & Subtitle */}
-              <div className="space-y-2">
-                <h2 className="text-5xl sm:text-7xl md:text-8xl font-display font-bold tracking-tight uppercase leading-none text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
-                  COORG LAYA
-                </h2>
-                <p className="text-lg sm:text-2xl font-accent italic font-semibold text-[#FAF6EF] leading-snug drop-shadow-sm">
-                  Riverside Stillness, Untouched Nature
-                </p>
-              </div>
-
-              <p className="text-xs sm:text-sm text-white/90 leading-relaxed max-w-lg font-normal prose-pretty">
-                Immerse in nature’s rhythm along the tranquil Kaveri riverside. Unwind in 15 boutique suites surrounded by lush Western Ghats flora, birdsong, and open starlit lawns.
-              </p>
-
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1">
+              {/* Centered Luxury Estate Action Buttons (Replaces generic glass pills) */}
+              <div className="flex flex-wrap items-center justify-center gap-3.5 sm:gap-5 pt-4 sm:pt-6">
+                {/* Primary CTA: Deep Forest Emerald with Gold Edge & Luminous Sheen */}
                 <button
                   onClick={onOpenEnquiry}
-                  className="px-6 sm:px-7 py-3 rounded-full bg-[#0F3C28] hover:bg-[#165338] text-white font-semibold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 flex items-center gap-2 border border-[#A3733E]/60 shadow-lg hover:scale-105 active:scale-95 cursor-pointer"
+                  className="group relative px-7 sm:px-9 py-3.5 sm:py-4 rounded-full bg-gradient-to-b from-[#14422F] to-[#0A261B] hover:from-[#1A543C] hover:to-[#0F3526] text-[#FAF6EF] font-bold text-xs sm:text-sm tracking-[0.15em] uppercase transition-all duration-300 flex items-center gap-3 border border-[#D4AF37]/65 shadow-[0_12px_32px_rgba(0,0,0,0.65),_inset_0_1px_1px_rgba(255,255,255,0.25)] hover:shadow-[0_14px_38px_rgba(212,175,55,0.35)] hover:scale-[1.03] active:scale-[0.98] cursor-pointer"
                 >
-                  <span>Book Stay / Enquire</span>
-                  <ChevronRight className="w-4 h-4 text-[#C7A583]" />
+                  <Sparkles className="w-4 h-4 text-[#D4AF37] group-hover:rotate-12 transition-transform duration-300" />
+                  <span>Reserve Your Stay</span>
+                  <ArrowUpRight className="w-4 h-4 text-[#D4AF37] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </button>
 
+                {/* Secondary CTA: Brushed Brass Hairline Wireframe & Obsidian Backing */}
                 <a
                   href="#birdsong"
-                  className="px-5 sm:px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/25 text-white font-medium text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 flex items-center gap-2 hover:scale-105 active:scale-95 cursor-pointer"
+                  className="group relative px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#081210]/85 hover:bg-[#112320] text-[#FAF6EF] font-medium text-xs sm:text-sm tracking-[0.12em] uppercase transition-all duration-300 flex items-center gap-2.5 border border-[#C7A583]/45 shadow-[0_10px_28px_rgba(0,0,0,0.55)] hover:border-[#D4AF37] hover:scale-[1.03] active:scale-[0.98] cursor-pointer"
                 >
-                  <Volume2 className="w-4 h-4 text-[#C7A583]" />
-                  <span>Birdsong Audio</span>
+                  <Volume2 className="w-4 h-4 text-[#D4AF37] group-hover:scale-110 transition-transform" />
+                  <span>Kaveri & Birdsong Audio</span>
                 </a>
               </div>
             </div>
 
-            {/* Bottom Highlights Capsules - Authentic Resort Specs */}
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/15">
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                <span className="px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-medium text-white/90">
-                  🏡 15 Private Suites (Up to ~45 Guests)
+            {/* Bottom Bar: Ambient Photo Switcher & Curated Estate Specs */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-white/10 text-xs text-white/80">
+              
+              {/* Subtle Resort Backdrop Switcher */}
+              <div className="flex items-center gap-1.5 sm:gap-2 bg-black/40 border border-white/10 px-2.5 py-1 rounded-full backdrop-blur-md">
+                <Camera className="w-3.5 h-3.5 text-[#C7A583] ml-1 mr-0.5" />
+                <span className="text-[10px] uppercase font-semibold text-white/60 hidden md:inline">
+                  View Grounds:
                 </span>
-                <span className="px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-medium text-white/90">
-                  🌿 500-Guest Riverfront Lawn
-                </span>
-                <span className="px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-medium text-white/90">
-                  🏊 Palm Swimming Pool
-                </span>
+                {resortBackdrops.map((item, idx) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveBackdrop(idx)}
+                    className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-all duration-200 cursor-pointer ${
+                      activeBackdrop === idx
+                        ? 'bg-[#D4AF37] text-[#0A1412] font-bold shadow-sm'
+                        : 'text-white/70 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {item.name}
+                  </button>
+                ))}
               </div>
-              <div className="hidden sm:flex items-center gap-2 text-xs font-semibold text-white/85 tracking-widest uppercase">
+
+              {/* Anchored Estate Specifications */}
+              <div className="flex items-center gap-2 sm:gap-3 text-[11px] sm:text-xs font-medium text-[#FAF6EF]/90">
+                <span className="hidden sm:inline">🏡 15 Private Suites</span>
+                <span className="hidden sm:inline text-[#D4AF37]">·</span>
+                <span>🌿 500-Guest River Lawn</span>
+                <span className="text-[#D4AF37]">·</span>
+                <span>🏊 Palm Spring Pool</span>
+              </div>
+
+              {/* Scroll Indicator */}
+              <div className="hidden lg:flex items-center gap-1.5 text-[11px] font-semibold tracking-widest uppercase text-[#C7A583]">
                 <span>Scroll to Explore</span>
-                <span className="animate-bounce">↓</span>
+                <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
               </div>
             </div>
+
           </div>
         </div>
       </div>
