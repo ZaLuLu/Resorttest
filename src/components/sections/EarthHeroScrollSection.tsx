@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ChevronRight, Compass, Volume2, MapPin } from 'lucide-react';
+import { ChevronRight, Compass, Volume2 } from 'lucide-react';
 import { RealisticEarthCanvas } from '../3d/RealisticEarthCanvas';
+import { SatelliteOrbitHUD } from '../3d/SatelliteOrbitHUD';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -65,18 +66,6 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
   const spaceIntroOpacity = p < 0.22 ? 1 : Math.max(0, 1 - (p - 0.22) / 0.14);
   const spaceIntroY = (p / 0.35) * -20;
 
-  // Phase 1: Regional Approach Telemetry Badge (0.32 -> 0.72)
-  let destinationTextOpacity = 0;
-  if (p >= 0.32 && p <= 0.72) {
-    if (p < 0.42) {
-      destinationTextOpacity = (p - 0.32) / 0.1;
-    } else if (p > 0.6) {
-      destinationTextOpacity = Math.max(0, 1 - (p - 0.6) / 0.12);
-    } else {
-      destinationTextOpacity = 1;
-    }
-  }
-
   // Phase 2: Natural Mist Dissolve to Resort Grounds (0.75 -> 1.0)
   // Replaces the blue screen flash with a seamless warm golden mist dissolve
   const resortBgOpacity = p < 0.74 ? 0 : Math.min(1, (p - 0.74) / 0.16);
@@ -97,9 +86,15 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
         {/* 3D Realistic Earth Canvas with Pure Cinematic Scroll Scrub */}
         <RealisticEarthCanvas progress={scrollProgress} />
 
-        {/* PHASE 0: Space Orbit View - Luxury Brand Headline & Narrative */}
+        {/* SATELLITE ORBIT HUD: Live corner coordinates, descending altitude & prominent scroll button */}
+        <SatelliteOrbitHUD
+          progress={scrollProgress}
+          onTriggerZoom={handleTriggerZoom}
+        />
+
+        {/* PHASE 0: Space Orbit View - Direct, Non-Cliché Brand Headline */}
         <div
-          className="absolute left-4 sm:left-10 md:left-14 lg:left-20 top-20 sm:top-1/2 sm:-translate-y-1/2 max-w-sm sm:max-w-md lg:max-w-lg z-20 pointer-events-none transition-all duration-200 space-y-3 sm:space-y-4 text-white"
+          className="absolute left-4 sm:left-10 md:left-14 lg:left-20 top-24 sm:top-1/2 sm:-translate-y-1/2 max-w-sm sm:max-w-md lg:max-w-xl z-20 pointer-events-none transition-all duration-200 space-y-3 sm:space-y-4 text-white"
           style={{
             opacity: spaceIntroOpacity,
             transform: `translateY(calc(0% + ${spaceIntroY}px))`,
@@ -112,60 +107,21 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
             <span>Kushalnagar · Kodagu, Karnataka</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-display font-bold tracking-tight text-white leading-[1.1] heading-balance">
-            Where Time Slows to{' '}
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-display font-bold tracking-tight text-white leading-[1.12] heading-balance">
+            Find the Most Peaceful{' '}
             <span className="font-accent italic font-semibold text-[#FAF6EF] block sm:inline">
-              Nature’s Rhythm
+              Resort in Coorg
             </span>
           </h1>
 
           <p className="text-xs sm:text-base text-white/85 leading-relaxed font-normal prose-pretty">
-            A secluded sanctuary along the Kaveri River corridor. 15 private suites wrapped in lush Western Ghats flora, birdsong, and open celebration grounds.
+            From orbit to the Western Ghats. A secluded 15-suite sanctuary nestled along the tranquil banks of River Kaveri.
           </p>
 
           <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] sm:text-xs font-medium text-[#C7A583]">
             <span className="px-2.5 py-1 rounded-md bg-black/40 border border-white/10">15 Suites</span>
             <span className="px-2.5 py-1 rounded-md bg-black/40 border border-white/10">500-Guest River Lawn</span>
             <span className="px-2.5 py-1 rounded-md bg-black/40 border border-white/10">Kaveri Proximity</span>
-          </div>
-        </div>
-
-        {/* Subtle Luxury Scroll Cue */}
-        <button
-          onClick={handleTriggerZoom}
-          className="absolute inset-x-4 sm:inset-x-auto sm:right-10 md:right-14 lg:right-20 bottom-6 sm:bottom-10 z-20 pointer-events-auto flex items-center gap-2 text-xs text-white/70 hover:text-white tracking-widest uppercase font-semibold transition-all duration-200 cursor-pointer group"
-          style={{
-            opacity: spaceIntroOpacity,
-            display: spaceIntroOpacity > 0.01 ? 'flex' : 'none',
-          }}
-        >
-          <span>Scroll to Enter Sanctuary</span>
-          <span className="text-[#C7A583] group-hover:translate-y-0.5 transition-transform duration-200">↓</span>
-          <div className="w-8 h-[1px] bg-white/40 group-hover:bg-[#C7A583] transition-colors duration-200" />
-        </button>
-
-        {/* PHASE 1 OVERLAY: Clean Regional Destination Arrival Badge */}
-        <div
-          className="absolute left-4 sm:left-12 md:left-16 lg:left-24 top-1/2 -translate-y-1/2 max-w-xs sm:max-w-sm z-20 pointer-events-none transition-all duration-150"
-          style={{
-            opacity: destinationTextOpacity,
-            display: destinationTextOpacity > 0.01 ? 'block' : 'none',
-          }}
-        >
-          <div className="p-5 sm:p-6 rounded-3xl bg-black/75 backdrop-blur-xl border border-white/20 space-y-2 text-white shadow-2xl">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] sm:text-[11px] uppercase tracking-kicker text-[#C7A583] font-bold">
-                Destination Approach
-              </span>
-              <span className="text-[10px] text-white/60 font-mono">12.3375° N, 75.8062° E</span>
-            </div>
-            <h3 className="text-xl sm:text-2xl font-display font-bold text-white tracking-tight flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-[#E63946]" />
-              Kushalnagar, Coorg
-            </h3>
-            <p className="text-xs text-white/85 font-normal leading-relaxed pt-1">
-              Gateway to River Kaveri, Tibetan monasteries, and verdant coffee estates. Descending to resort grounds.
-            </p>
           </div>
         </div>
 
