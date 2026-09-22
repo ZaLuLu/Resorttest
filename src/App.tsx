@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Lenis from 'lenis';
 import { ResortNavbar } from './components/layout/ResortNavbar';
 import { ResortFooter } from './components/layout/ResortFooter';
 import { ScrollToTop } from './components/common/ScrollToTop';
@@ -23,35 +22,6 @@ import { NotFoundPage } from './pages/NotFoundPage';
 export const App: React.FC = () => {
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
 
-  // Initialize Lenis Momentum Smooth Scroll
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-
-    const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      touchMultiplier: 1.5,
-    });
-
-    (window as any).__lenis = lenis;
-
-    let animationFrameId: number;
-
-    function raf(time: number) {
-      lenis.raf(time);
-      animationFrameId = requestAnimationFrame(raf);
-    }
-
-    animationFrameId = requestAnimationFrame(raf);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      delete (window as any).__lenis;
-      lenis.destroy();
-    };
-  }, []);
 
   const handleOpenEnquiry = () => {
     setIsEnquiryOpen(true);

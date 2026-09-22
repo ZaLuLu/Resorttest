@@ -78,24 +78,23 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
     return () => clearInterval(timer);
   }, [resortBackdrops.length]);
 
+  const handleScrollToExplore = () => {
+    const welcomeEl = document.getElementById('welcome-section');
+    if (welcomeEl) {
+      welcomeEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const handleTriggerZoom = () => {
     if (!containerRef.current) return;
     const isMobile = window.innerWidth < 768;
     const scrollDistance = isMobile ? 1600 : 3000;
     const targetY = containerRef.current.offsetTop + scrollDistance * 0.85;
 
-    const lenis = (window as any).__lenis;
-    if (lenis) {
-      lenis.scrollTo(targetY, {
-        duration: 2.8,
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      });
-    } else {
-      window.scrollTo({
-        top: targetY,
-        behavior: 'smooth',
-      });
-    }
+    window.scrollTo({
+      top: targetY,
+      behavior: 'smooth',
+    });
   };
 
   const p = scrollProgress;
@@ -252,10 +251,15 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
               </div>
 
               {/* Right: Scroll Indicator */}
-              <div className="flex items-center gap-1.5 text-[11px] font-semibold tracking-widest uppercase text-[#C7A583]">
+              <button
+                onClick={handleScrollToExplore}
+                type="button"
+                className="flex items-center gap-1.5 text-[11px] font-semibold tracking-widest uppercase text-[#C7A583] hover:text-[#FAF6EF] transition-colors cursor-pointer group"
+                aria-label="Scroll to explore resort grounds"
+              >
                 <span>Scroll to Explore</span>
-                <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
-              </div>
+                <ChevronDown className="w-3.5 h-3.5 animate-bounce group-hover:translate-y-0.5 transition-transform" />
+              </button>
             </div>
 
           </div>
