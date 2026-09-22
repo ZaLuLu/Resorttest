@@ -121,36 +121,40 @@ export const EarthHeroScrollSection: React.FC<EarthHeroScrollSectionProps> = ({
           onTriggerZoom={handleTriggerZoom}
         />
 
-        {/* PHASE 0: Space Orbit View - Direct Brand Headline */}
+        {/* PHASE 0: Space Orbit View - Elevated Visibility with Prominent Golden Laya */}
         <div
-          className="absolute left-4 sm:left-10 md:left-14 lg:left-20 top-24 sm:top-1/2 sm:-translate-y-1/2 max-w-sm sm:max-w-md lg:max-w-xl z-20 pointer-events-none transition-all duration-200 space-y-3 sm:space-y-4 text-white"
+          className="absolute left-5 sm:left-12 md:left-16 lg:left-24 top-16 sm:top-[34%] sm:-translate-y-1/2 max-w-sm sm:max-w-md lg:max-w-xl z-20 pointer-events-none transition-all duration-200 space-y-4 text-white"
           style={{
             opacity: spaceIntroOpacity,
             transform: `translateY(calc(0% + ${spaceIntroY}px))`,
             display: spaceIntroOpacity > 0.01 ? 'block' : 'none',
           }}
         >
-          {/* Authentic Location Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-semibold tracking-kicker uppercase text-[#FAF6EF] shadow-lg">
-            <Compass className="w-3.5 h-3.5 text-[#C7A583]" />
-            <span>Kushalnagar · Kodagu, Karnataka</span>
+          {/* Subtle Hairline Geographic Origin */}
+          <div className="flex items-center gap-2.5 text-[11px] sm:text-xs font-mono tracking-[0.25em] uppercase text-[#FFD23F]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FFD23F]" />
+            <span>Western Ghats · Uncharted Stillness</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-display font-bold tracking-tight text-white leading-[1.12] heading-balance">
-            Find the Most Peaceful{' '}
-            <span className="font-accent italic font-semibold text-[#FAF6EF] block sm:inline">
-              Resort in Coorg
+            Hidden in the misty canopy,{' '}
+            <span className="block mt-2 font-accent italic font-bold">
+              <span className="text-[#FFD23F] text-5xl sm:text-7xl md:text-8xl drop-shadow-[0_4px_24px_rgba(255,210,63,0.35)]">
+                Laya
+              </span>{' '}
+              <span className="text-[#FAF6EF]/90 text-3xl sm:text-5xl md:text-6xl font-medium">
+                awaits.
+              </span>
             </span>
           </h1>
 
-          <p className="text-xs sm:text-base text-white/85 leading-relaxed font-normal prose-pretty">
-            From orbit to the Western Ghats. A secluded 15-suite sanctuary nestled along the tranquil banks of River Kaveri.
+          <p className="text-xs sm:text-base text-white/80 leading-relaxed font-normal prose-pretty pt-1">
+            Along a secluded curve of River Kaveri lies an untamed rhythm of flowing waters and morning birdsong. Far from the world’s noise, waiting to be discovered.
           </p>
 
-          <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] sm:text-xs font-medium text-[#C7A583]">
-            <span className="px-2.5 py-1 rounded-md bg-black/40 border border-white/10">15 Suites</span>
-            <span className="px-2.5 py-1 rounded-md bg-black/40 border border-white/10">500-Guest River Lawn</span>
-            <span className="px-2.5 py-1 rounded-md bg-black/40 border border-white/10">Kaveri Proximity</span>
+          <div className="flex items-center gap-2.5 text-xs font-mono tracking-widest uppercase text-[#FAF6EF]/60 pt-1">
+            <span className="w-6 h-px bg-[#FFD23F]/60" />
+            <span>Descend to explore</span>
           </div>
         </div>
 
